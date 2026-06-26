@@ -32,10 +32,30 @@
                 href="login.html">Đăng nhập</a>
             <a class="hidden md:block bg-primary text-on-primary font-label-md text-label-md px-5 py-2.5 rounded-[12px] hover:bg-primary/90 transition-all shadow-[0_4px_20px_rgba(53,37,205,0.2)] active:scale-95"
                 href="register.html">Đăng ký</a>
-            <button class="md:hidden text-on-surface p-2">
+            <button id="mobile-menu-btn" class="md:hidden text-on-surface p-2">
                 <span class="material-symbols-outlined">menu</span>
             </button>
         `;
+    }
+
+    function mobileMenuHtml(isAuth, user) {
+        if (!isAuth) {
+            return `
+                <div id="mobile-menu" class="md:hidden hidden fixed inset-0 top-16 bg-surface/95 backdrop-blur-md z-50 flex flex-col p-margin-mobile gap-2 pt-6">
+                    <a href="login.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Đăng nhập</a>
+                    <a href="register.html" class="bg-primary text-on-primary font-label-md text-label-md px-5 py-3 rounded-xl hover:bg-primary/90 transition-all shadow-md text-center">Đăng ký</a>
+                    <hr class="my-2 border-outline-variant/30">
+                    <a href="index.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Tổng quan</a>
+                    <a href="cv.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Phân tích CV</a>
+                    <a href="interview.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Phỏng vấn AI</a>
+                    <a href="scenarios.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Tình huống</a>
+                    <a href="star.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">STAR</a>
+                    <a href="report.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Báo cáo</a>
+                    <a href="pricing.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Bảng giá</a>
+                </div>
+            `;
+        }
+        return '';
     }
 
     function authNavHtml(user) {
@@ -62,7 +82,7 @@
                     <button id="logout-btn" class="w-full text-left px-4 py-2 text-label-md text-error hover:bg-surface-container-low transition-colors">Đăng xuất</button>
                 </div>
             </div>
-            <button class="md:hidden text-on-surface p-2">
+            <button id="mobile-menu-btn" class="md:hidden text-on-surface p-2">
                 <span class="material-symbols-outlined">menu</span>
             </button>
         `;
@@ -84,6 +104,29 @@
             const user = getAuth();
             if (slot) {
                 slot.innerHTML = user ? authNavHtml(user) : guestNavHtml();
+
+                // Inject mobile menu overlay for guests
+                if (!user) {
+                    const menuDiv = document.createElement('div');
+                    menuDiv.id = 'mobile-overlay';
+                    document.body.appendChild(menuDiv);
+                    menuDiv.outerHTML = mobileMenuHtml(false, user);
+                }
+
+                // Mobile menu button handler
+                const mobileBtn = document.getElementById('mobile-menu-btn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileBtn && mobileMenu) {
+                    mobileBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                    mobileMenu.addEventListener('click', (e) => {
+                        if (e.target === mobileMenu || e.target.tagName === 'A') {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    });
+                }
 
                 if (user) {
                     const btn = document.getElementById('user-menu-btn');
