@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Gợi ý trả lời theo STAR - Nexora AI</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -13,8 +12,9 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <script src="js/common.js"></script>
+    <link href="css/tailwind.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
     <style>
         body { background-color: #f9f9ff; }
         .star-badge { border-radius: 100px; padding: 4px 12px; }
@@ -27,7 +27,7 @@
     <nav class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm z-50 transition-all duration-200">
         <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex items-center gap-stack-md">
-                <a class="text-headline-md font-headline-md font-bold text-primary" href="index.html">Nexora</a>
+                <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             </div>
             <div class="hidden md:flex gap-stack-sm items-center">
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
@@ -39,35 +39,19 @@
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="scenarios.html">Tình huống</a>
                 <a class="text-primary font-bold border-b-2 border-primary pb-1 px-3 py-2 font-label-md text-label-md"
-                    href="star.html?auth=1">STAR</a>
+                    href="star.html">STAR</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="report.html">Báo cáo</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="pricing.html">Bảng giá</a>
             </div>
-            <!-- Guest nav -->
-            <div class="hidden md:flex items-center gap-3" data-show-when="guest" data-initially-hidden>
-                <a class="text-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container/10 transition-colors"
-                    href="login.html?redirect=star">Đăng nhập</a>
-                <a class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors shadow-sm active:scale-95"
-                    href="register.html">Bắt đầu miễn phí</a>
-            </div>
-            <!-- Auth nav -->
-            <div class="hidden md:flex items-center gap-3" data-show-when="auth" data-initially-hidden>
-                <div class="flex flex-col items-end">
-                    <span class="font-label-md text-label-md text-on-surface font-bold">Quốc Bảo</span>
-                    <span class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Gói Chuyên nghiệp</span>
-                </div>
-                <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold border-2 border-surface-container-high shadow-sm">QB</div>
-            </div>
-            <button class="md:hidden text-on-surface">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
+            <!-- Nav trailing (rendered by js/common.js) -->
+            <div id="nav-slot" class="flex items-center gap-3"></div>
         </div>
     </nav>
 
     <!-- ================= MAIN ================= -->
-    <main class="flex-grow pt-24 pb-stack-lg max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+    <main class="flex-grow pt-24 pb-stack-lg max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter" data-nx-stagger>
 
         <!-- Header -->
         <div class="lg:col-span-12 mb-stack-md">
@@ -94,8 +78,7 @@
                     placeholder="Nhập câu chuyện của bạn ở đây... Ví dụ: Em từng làm một dự án ở trường về quản lý thư viện..."></textarea>
                 <div class="mt-stack-md flex justify-end">
                     <button id="improve-btn"
-                        class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2 opacity-50 cursor-not-allowed"
-                        disabled>
+                        class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2">
                         <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1">auto_fix_high</span>
                         Cải thiện câu trả lời
                     </button>
@@ -216,15 +199,20 @@
                 </div>
             </div>
 
-            <!-- STATE: Guest lock overlay (chỉ hiện khi chưa đăng nhập) -->
-            <div data-state="guest-lock" class="hidden absolute inset-0 z-10 flex items-center justify-center p-6">
+            <!-- Guest blur overlay: phủ nhẹ lên kết quả STAR, có backdrop-blur + nút đăng nhập -->
+            <div data-guest-overlay class="hidden absolute inset-0 z-10 flex items-center justify-center p-6 rounded-[24px] overflow-hidden">
                 <div class="absolute inset-0 bg-surface/40 backdrop-blur-md rounded-[24px]"></div>
-                <div class="relative z-20 bg-surface-container-lowest p-8 rounded-2xl shadow-xl border border-outline-variant/30 text-center max-w-sm">
-                    <span class="material-symbols-outlined text-primary text-[48px] mb-4 block">lock</span>
-                    <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Tính năng giới hạn</h3>
-                    <p class="font-body-md text-on-surface-variant mb-6">Vui lòng đăng nhập để sử dụng tính năng tối ưu câu trả lời bằng AI</p>
+                <div class="relative z-20 bg-surface-container-lowest px-8 py-10 rounded-3xl shadow-2xl border border-outline-variant/30 text-center max-w-md w-full">
+                    <div class="w-14 h-14 mx-auto mb-5 rounded-full bg-primary-container/30 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[28px]" style="font-variation-settings:'FILL'1">lock</span>
+                    </div>
+                    <h3 class="font-headline-md text-[26px] font-bold text-on-surface mb-3 leading-tight">Tính năng giới hạn</h3>
+                    <p class="font-body-md text-[14px] text-on-surface-variant mb-6 leading-relaxed">
+                        Vui lòng đăng nhập để sử dụng tính năng tối ưu câu trả lời bằng AI
+                    </p>
                     <a href="login.html"
-                        class="w-full h-12 bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center">
+                        class="w-full h-12 bg-primary text-on-primary font-label-md text-label-md rounded-xl font-semibold hover:bg-primary/90 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">login</span>
                         Đăng nhập ngay
                     </a>
                 </div>
@@ -237,7 +225,7 @@
     <footer class="w-full py-stack-lg border-t border-outline-variant/50 bg-surface-container-lowest">
         <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
             <div class="col-span-1 md:col-span-2">
-                <span class="text-headline-md font-headline-md font-bold text-primary mb-4 block">Nexora</span>
+                <img src="img/logo.png" alt="Nexora" class="h-8 w-auto">
                 <p class="font-body-md text-body-md text-on-surface-variant">© 2024 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.</p>
             </div>
             <div class="flex flex-col gap-2">
@@ -254,94 +242,92 @@
 
     <script>
         (function () {
-            // Auth: from URL param ?auth=1
-            const params = new URLSearchParams(window.location.search);
-            const isAuth = params.get('auth') === '1';
-
-            // Auth nav toggle — only affect elements marked as initially hidden (prevents FOUC)
-            document.querySelectorAll('[data-show-when][data-initially-hidden]').forEach(el => {
-                el.classList.remove('hidden');
-                const target = el.dataset.showWhen;
-                el.classList.toggle('hidden', (target === 'guest') ? isAuth : !isAuth);
-            });
-
+            function checkAuth() {
+                try {
+                    return !!JSON.parse(localStorage.getItem('nexora_auth') || 'null');
+                } catch (e) { return false; }
+            }
             const improveBtn = document.getElementById('improve-btn');
             const rawInput = document.getElementById('raw-input');
             const stateEmpty = document.querySelector('[data-state="empty"]');
             const stateLoading = document.querySelector('[data-state="loading"]');
             const stateResult = document.querySelector('[data-state="result"]');
-            const stateGuestLock = document.querySelector('[data-state="guest-lock"]');
+            const guestOverlay = document.querySelector('[data-guest-overlay]');
             const copyBtn = document.querySelector('[data-copy-btn]');
             const saveBtn = document.querySelector('[data-save-btn]');
+            const params = new URLSearchParams(window.location.search);
 
-            if (!isAuth) {
-                // Guest: lock overlay + disable input
-                rawInput.disabled = true;
-                rawInput.placeholder = 'Vui lòng đăng nhập để sử dụng tính năng này...';
+            // Show empty state by default
+            stateEmpty.classList.remove('hidden');
+
+            // Enable/disable button based on input
+            function refreshButtonState() {
+                const hasText = rawInput.value.trim().length > 0;
+                improveBtn.disabled = !hasText;
+                improveBtn.classList.toggle('opacity-50', !hasText);
+                improveBtn.classList.toggle('cursor-not-allowed', !hasText);
+            }
+            rawInput.addEventListener('input', refreshButtonState);
+            refreshButtonState();
+
+            // Auto-fill demo if ?demo=1
+            if (params.get('demo') === '1') {
+                rawInput.value = 'Em từng làm một dự án ở trường về quản lý thư viện. Lúc đó nhóm em có 4 người nhưng 2 bạn bỏ cuộc giữa chừng. Deadline thì sắp tới mà code chưa xong. Em phải thức đêm code bù phần của các bạn và chia lại task cho bạn còn lại. Cuối cùng tụi em cũng nộp được bài đúng hạn và cô giáo cho điểm A vì giao diện đẹp.';
+                refreshButtonState();
+                stateEmpty.classList.add('hidden');
+                stateLoading.classList.remove('hidden');
                 improveBtn.disabled = true;
-                improveBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            } else {
-                // Authenticated: show empty, enable input
-                stateEmpty.classList.remove('hidden');
-                rawInput.disabled = false;
-
-                // Auto-fill demo if ?demo=1
-                if (params.get('demo') === '1') {
-                    rawInput.value = 'Em từng làm một dự án ở trường về quản lý thư viện. Lúc đó nhóm em có 4 người nhưng 2 bạn bỏ cuộc giữa chừng. Deadline thì sắp tới mà code chưa xong. Em phải thức đêm code bù phần của các bạn và chia lại task cho bạn còn lại. Cuối cùng tụi em cũng nộp được bài đúng hạn và cô giáo cho điểm A vì giao diện đẹp.';
+                setTimeout(() => {
+                    stateLoading.classList.add('hidden');
+                    stateResult.classList.remove('hidden');
                     improveBtn.disabled = false;
-                    improveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                    // Auto-trigger
-                    stateEmpty.classList.add('hidden');
-                    stateLoading.classList.remove('hidden');
-                    setTimeout(() => {
-                        stateLoading.classList.add('hidden');
-                        stateResult.classList.remove('hidden');
-                    }, 1800);
-                }
+                    if (!checkAuth()) {
+                        guestOverlay.classList.remove('hidden');
+                    }
+                }, 1800);
+            }
 
-                // Enable/disable button based on input
-                rawInput.addEventListener('input', () => {
-                    const hasText = rawInput.value.trim().length > 0;
-                    improveBtn.disabled = !hasText;
-                    improveBtn.classList.toggle('opacity-50', !hasText);
-                    improveBtn.classList.toggle('cursor-not-allowed', !hasText);
-                });
+            // Submit
+            improveBtn.addEventListener('click', () => {
+                if (!rawInput.value.trim()) return;
+                stateEmpty.classList.add('hidden');
+                stateLoading.classList.remove('hidden');
+                improveBtn.disabled = true;
 
-                // Submit
-                improveBtn.addEventListener('click', () => {
-                    if (!rawInput.value.trim()) return;
-                    stateEmpty.classList.add('hidden');
-                    stateLoading.classList.remove('hidden');
-                    improveBtn.disabled = true;
+                setTimeout(() => {
+                    stateLoading.classList.add('hidden');
+                    stateResult.classList.remove('hidden');
+                    improveBtn.disabled = false;
+                    // Guest: chỉ hiện overlay che mờ SAU KHI có kết quả STAR
+                    if (!checkAuth()) {
+                        guestOverlay.classList.remove('hidden');
+                    }
+                }, 1800);
+            });
 
-                    setTimeout(() => {
-                        stateLoading.classList.add('hidden');
-                        stateResult.classList.remove('hidden');
-                    }, 1800);
-                });
-
-                // Copy
+            // Copy (chỉ Auth mới dùng được)
+            if (checkAuth()) {
                 copyBtn?.addEventListener('click', () => {
-                    const texts = [
-                        'SITUATION (TÌNH HUỐNG):\n' + stateResult.querySelectorAll('p')[0].textContent,
-                        '\nTASK (NHIỆM VỤ):\n' + stateResult.querySelectorAll('p')[1].textContent,
-                        '\nACTION (HÀNH ĐỘNG):\n' + stateResult.querySelectorAll('li')[0].textContent + '\n' + stateResult.querySelectorAll('li')[1].textContent + '\n' + stateResult.querySelectorAll('li')[2].textContent,
-                        '\nRESULT (KẾT QUẢ):\n' + stateResult.querySelectorAll('p')[4].textContent
-                    ].join('\n');
-                    navigator.clipboard?.writeText(texts).then(() => {
-                        copyBtn.querySelector('span').textContent = 'check';
-                        setTimeout(() => {
-                            copyBtn.querySelector('span').textContent = 'content_copy';
-                        }, 1500);
+                    const sections = stateResult.querySelectorAll('div.relative.pl-6');
+                    const texts = [];
+                    sections.forEach(sec => {
+                        const title = sec.querySelector('h3')?.textContent || '';
+                        const para = sec.querySelector('p')?.textContent || '';
+                        const items = Array.from(sec.querySelectorAll('li')).map(li => '- ' + li.textContent).join('\n');
+                        texts.push(title + ':\n' + (para ? para : items));
+                    });
+                    navigator.clipboard?.writeText(texts.join('\n\n')).then(() => {
+                        const icon = copyBtn.querySelector('span');
+                        icon.textContent = 'check';
+                        setTimeout(() => { icon.textContent = 'content_copy'; }, 1500);
                     });
                 });
 
-                // Save
+                // Save (chỉ Auth mới dùng được)
                 saveBtn?.addEventListener('click', () => {
-                    saveBtn.querySelector('span').textContent = 'bookmark_added';
-                    setTimeout(() => {
-                        saveBtn.querySelector('span').textContent = 'bookmark';
-                    }, 1500);
+                    const icon = saveBtn.querySelector('span');
+                    icon.textContent = 'bookmark_added';
+                    setTimeout(() => { icon.textContent = 'bookmark'; }, 1500);
                 });
             }
         })();

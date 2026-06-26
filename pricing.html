@@ -5,14 +5,16 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Nexora AI - Bảng giá</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap"
-        rel="stylesheet">
-    <script src="js/common.js"></script>
+    <link href="css/tailwind.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
     <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -31,11 +33,7 @@
         class="bg-surface/80 backdrop-blur-md dark:bg-on-background/80 fixed top-0 w-full h-16 shadow-sm border-b border-outline-variant/30 dark:border-outline/20 z-50">
         <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <!-- Brand -->
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary text-[28px] icon-fill">stream</span>
-                <a class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed tracking-tight"
-                    href="index.html">Nexora</a>
-            </div>
+            <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             <!-- Navigation Links -->
             <nav class="hidden md:flex items-center gap-stack-md">
                 <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
@@ -47,28 +45,15 @@
                 <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
                     href="scenarios.html">Tình huống</a>
                 <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
-                    href="star.html?auth=1">STAR</a>
+                    href="star.html">STAR</a>
                 <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
                     href="report.html">Báo cáo</a>
                 <!-- Active Tab -->
                 <a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary dark:border-primary-fixed pb-1 px-3 py-2 font-label-md text-label-md"
                     href="pricing.html">Bảng giá</a>
             </nav>
-            <!-- Trailing Action: User Profile -->
-            <div class="flex items-center gap-3">
-                <button
-                    class="hidden md:flex text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors">
-                    <span class="material-symbols-outlined">notifications</span>
-                </button>
-                <div
-                    class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/20 cursor-pointer hover:bg-surface-container-high transition-colors">
-                    <img class="w-8 h-8 rounded-full object-cover border border-outline-variant/30"
-                        data-alt="A professional corporate headshot of a young Vietnamese professional male named Quoc Bao."
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4AWTIF7caumgRR37JupctVP4feZPThEIEyyRIsTUcHGzqJRg6jYG5gwKbhwG76xa6QeQt5CT0vkjt4542HOUzq8zTAaiSluGt3vpKWVPko286-qUSJLCO8KvWDzKKf5O5CUHhyWawD5qM3OsICO4qKwl8mCFg7b-G_61DCrnV-eiKKv4qX5umU8YawlGSvg3GV0-nOJQPOsS9yTUHVEfOk7TtBvQf_r9uSeBWb1ZW_wKL8yGEtkJQxVk7o2_XUVCgB1-mabFFMAjU">
-                    <span class="font-label-md text-label-md text-on-surface hidden md:block">Quốc Bảo</span>
-                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">expand_more</span>
-                </div>
-            </div>
+            <!-- Trailing Action (rendered by js/common.js) -->
+            <div id="nav-slot" class="flex items-center gap-3"></div>
         </div>
     </header>
 
@@ -86,7 +71,7 @@
         </section>
 
         <!-- Pricing Grid -->
-        <section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-[80px]">
+        <section data-nx-section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-[80px]">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter md:gap-stack-lg items-center relative z-10">
 
                 <!-- Tier 1: Miễn phí -->

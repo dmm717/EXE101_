@@ -5,16 +5,16 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Nexora - Phân tích CV</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link
         href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
         rel="stylesheet">
-    <script src="js/common.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
 </head>
 
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
@@ -23,8 +23,7 @@
     <nav class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30 z-50">
         <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex items-center gap-stack-md">
-                <a class="text-headline-md font-headline-md font-bold text-primary tracking-tight"
-                    href="index.html">Nexora</a>
+                <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             </div>
             <div class="hidden md:flex items-center gap-stack-sm">
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
@@ -36,38 +35,15 @@
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="scenarios.html">Tình huống</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
-                    href="star.html?auth=1">STAR</a>
+                    href="star.html">STAR</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="report.html">Báo cáo</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="pricing.html">Bảng giá</a>
             </div>
 
-            <!-- Chưa đăng nhập -->
-            <div class="hidden md:flex items-center gap-3" data-show-when="guest">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors px-3 py-2"
-                    href="login.html">Đăng nhập</a>
-                <a class="bg-primary text-on-primary px-5 py-2 rounded-full font-label-md text-label-md hover:bg-primary/90 transition-all active:scale-[0.98] shadow-sm"
-                    href="register.html">Đăng ký</a>
-            </div>
-
-            <!-- Đã đăng nhập -->
-            <div class="hidden md:flex items-center gap-3" data-show-when="auth">
-                <div class="flex flex-col items-end">
-                    <span class="font-label-md text-label-md text-on-surface font-semibold">Quốc Bảo</span>
-                    <span
-                        class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Gói
-                        Chuyên nghiệp</span>
-                </div>
-                <div
-                    class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold border-2 border-surface-container-high shadow-sm">
-                    QB
-                </div>
-            </div>
-
-            <button class="md:hidden text-on-surface">
-                <span class="material-symbols-outlined" data-icon="menu">menu</span>
-            </button>
+            <!-- Nav trailing (rendered by js/common.js) -->
+            <div id="nav-slot" class="flex items-center gap-3"></div>
         </div>
     </nav>
 
@@ -75,7 +51,7 @@
     <main class="flex-grow pt-[80px] pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
 
         <!-- ============== KẾT QUẢ PHÂN TÍCH ============== -->
-        <section id="analysis-result">
+        <section id="analysis-result" class="hidden">
             <!-- Header -->
             <header class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-stack-md">
                 <div>
@@ -88,21 +64,18 @@
                 </div>
                 <div class="flex gap-stack-sm flex-wrap">
                     <!-- Chưa đăng nhập -->
-                    <a data-show-when="guest"
-                        class="flex items-center gap-2 bg-surface text-primary border border-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
+                    <a class="guest-only flex items-center gap-2 bg-surface text-primary border border-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
                         href="login.html">
                         <span class="material-symbols-outlined text-[18px]">login</span>
                         Đăng nhập để chỉnh sửa
                     </a>
                     <!-- Đã đăng nhập -->
-                    <a data-show-when="auth"
-                        class="flex items-center gap-2 bg-surface text-primary border border-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
+                    <a class="auth-only flex items-center gap-2 bg-surface text-primary border border-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
                         href="#">
                         <span class="material-symbols-outlined text-[18px]">edit_document</span>
                         Chỉnh sửa CV
                     </a>
-                    <a data-show-when="auth"
-                        class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container shadow-md transition-colors"
+                    <a class="auth-only flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container shadow-md transition-colors"
                         href="interview.html">
                         <span class="material-symbols-outlined text-[18px]">calendar_add_on</span>
                         Tạo kế hoạch phỏng vấn
@@ -308,7 +281,7 @@
         </section>
 
         <!-- ============== FORM UPLOAD (khu vực bắt đầu) ============== -->
-        <section id="upload-section" class="space-y-stack-md flex flex-col mx-auto max-w-4xl w-full">
+        <section id="upload-section" data-nx-section class="space-y-stack-md flex flex-col mx-auto max-w-4xl w-full">
             <div>
                 <h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-stack-sm">
                     Phân tích độ phù hợp</h1>
@@ -406,18 +379,17 @@
 
     <script>
         (function () {
-            const auth = new URLSearchParams(window.location.search).get('auth') === '1'
-                || document.documentElement.dataset.auth === 'true';
-            document.documentElement.dataset.auth = auth ? 'true' : 'false';
-            document.querySelectorAll('[data-show-when]').forEach(el => {
-                const target = el.dataset.showWhen;
-                el.classList.toggle('hidden', (target === 'auth') ? !auth : auth);
-            });
-
             const btn = document.getElementById('analyze-btn');
             if (btn) {
                 btn.addEventListener('click', () => {
-                    document.getElementById('analysis-result').scrollIntoView({ behavior: 'smooth' });
+                    const result = document.getElementById('analysis-result');
+                    const upload = document.getElementById('upload-section');
+                    result.classList.remove('hidden');
+                    result.classList.add('nx-fade-up');
+                    if (upload) upload.classList.add('hidden');
+                    requestAnimationFrame(() => {
+                        result.scrollIntoView({ behavior: 'smooth' });
+                    });
                 });
             }
         })();

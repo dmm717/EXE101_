@@ -10,9 +10,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
         rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="js/common.js"></script>
+    <link href="css/tailwind.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
 </head>
 
 <body
@@ -38,10 +38,7 @@
         <!-- Header -->
         <div class="text-center mb-stack-lg">
             <div class="inline-flex items-center justify-center mb-stack-sm">
-                <span class="material-symbols-outlined text-primary text-4xl mr-2"
-                    style="font-variation-settings: 'FILL' 1;">psychology</span>
-                <a class="font-display text-headline-lg font-bold text-primary tracking-tight"
-                    href="index.html">Nexora</a>
+                <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             </div>
             <h1 class="font-headline-md text-headline-md text-on-surface mb-2">Chào mừng trở lại!</h1>
             <p class="font-body-md text-body-md text-on-surface-variant">Tiếp tục hành trình chinh phục sự nghiệp cùng
@@ -74,7 +71,7 @@
         </div>
 
         <!-- Form -->
-        <form class="space-y-stack-md" onsubmit="event.preventDefault(); window.location.href='cv.html?auth=1';">
+        <form id="login-form" class="space-y-stack-md">
             <div>
                 <label class="block font-label-md text-label-md text-on-surface mb-2" for="email">Email</label>
                 <div class="relative">
@@ -122,6 +119,17 @@
             </p>
         </div>
     </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var emailInput = document.getElementById('email');
+            var email = (emailInput && emailInput.value) ? emailInput.value : 'user@nexora.ai';
+            var name = email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) || 'User';
+            window.NexoraAuth.setAuth({ name: name, email: email, plan: 'Pro' });
+            window.location.href = 'cv.html';
+        });
+    </script>
 </body>
 
 </html>

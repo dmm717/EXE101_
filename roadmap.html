@@ -5,16 +5,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Lộ trình cải thiện - Nexora AI</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <script src="js/common.js"></script>
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"><link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
     <style>
         body { background-color: #F5F3FF; }
         .bg-pattern {
@@ -29,7 +26,7 @@
     <nav class="bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm fixed top-0 w-full h-16 z-50 transition-all duration-200">
         <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
             <div class="flex items-center gap-stack-md">
-                <a class="text-headline-md font-headline-md font-bold text-primary" href="index.html">Nexora</a>
+                <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             </div>
             <div class="hidden md:flex items-center gap-stack-sm">
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
@@ -41,22 +38,14 @@
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="scenarios.html">Tình huống</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
-                    href="star.html?auth=1">STAR</a>
+                    href="star.html">STAR</a>
                 <a class="text-primary font-bold border-b-2 border-primary pb-1 px-3 py-2 font-label-md text-label-md"
                     href="report.html">Báo cáo</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
                     href="pricing.html">Bảng giá</a>
             </div>
-            <div class="hidden md:flex items-center gap-3">
-                <div class="flex flex-col items-end">
-                    <span class="font-label-md text-label-md text-on-surface font-semibold">Quốc Bảo</span>
-                    <span class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Gói Chuyên nghiệp</span>
-                </div>
-                <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold border-2 border-surface-container-high shadow-sm">QB</div>
-            </div>
-            <button class="md:hidden text-on-surface">
-                <span class="material-symbols-outlined">menu</span>
-            </button>
+            <!-- Nav trailing (rendered by js/common.js) -->
+            <div id="nav-slot" class="flex items-center gap-3"></div>
         </div>
     </nav>
 
@@ -101,7 +90,7 @@
             <div class="lg:col-span-2 flex flex-col gap-stack-lg">
 
                 <!-- Tổng quan kỹ năng -->
-                <section class="bg-surface rounded-[24px] p-stack-md md:p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 flex flex-col gap-stack-md">
+                <section data-nx-section class="bg-surface rounded-[24px] p-stack-md md:p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 flex flex-col gap-stack-md">
                     <div class="flex items-center justify-between border-b border-outline-variant/20 pb-4">
                         <h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL'1">radar</span>
@@ -151,7 +140,7 @@
                 </section>
 
                 <!-- Lộ trình timeline -->
-                <section class="bg-surface rounded-[24px] p-stack-md md:p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 flex flex-col gap-stack-md relative overflow-hidden">
+                <section data-nx-section class="bg-surface rounded-[24px] p-stack-md md:p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 flex flex-col gap-stack-md relative overflow-hidden">
                     <div class="absolute right-0 top-0 w-64 h-64 bg-surface-container-highest/30 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
                     <h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2 mb-4 relative z-10">
                         <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL'1">route</span>
@@ -325,7 +314,7 @@
     <footer class="bg-surface-container-low w-full py-stack-lg border-t border-outline-variant/30 mt-auto">
         <div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-container-max mx-auto font-label-sm text-label-sm gap-4">
             <div class="flex items-center gap-2">
-                <span class="font-headline-md text-headline-md font-bold text-primary">Nexora</span>
+                <img src="img/logo.png" alt="Nexora" class="h-8 w-auto">
                 <span class="text-secondary">© 2024 Nexora AI. Tất cả quyền được bảo lưu.</span>
             </div>
             <div class="flex items-center gap-stack-md text-secondary flex-wrap justify-center">

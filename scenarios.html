@@ -12,9 +12,8 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="js/common.js"></script>
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"><link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
 </head>
 
 <body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col">
@@ -23,12 +22,7 @@
     <nav class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30 z-50">
         <div class="flex justify-between items-center h-16 px-margin-desktop max-w-container-max mx-auto">
             <!-- Brand -->
-            <div class="flex items-center gap-2">
-                <span class="material-symbols-outlined text-primary"
-                    style="font-variation-settings: 'FILL' 1;">neurology</span>
-                <a class="text-headline-md font-headline-md font-bold text-primary"
-                    href="index.html">Nexora</a>
-            </div>
+            <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             <!-- Links (Desktop) -->
             <div class="hidden md:flex items-center gap-6 h-full">
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
@@ -40,17 +34,14 @@
                 <a class="text-primary font-bold border-b-2 border-primary flex items-center h-full text-label-md font-label-md mt-[2px]"
                     href="scenarios.html">Tình huống</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
-                    href="star.html?auth=1">STAR</a>
+                    href="star.html">STAR</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
                     href="report.html">Báo cáo</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
                     href="pricing.html">Bảng giá</a>
             </div>
-            <!-- Action -->
-            <button
-                class="bg-primary text-on-primary px-4 py-2 rounded-lg text-label-md font-label-md hover:opacity-90 transition-all duration-200 active:scale-95">
-                Bắt đầu miễn phí
-            </button>
+            <!-- Nav trailing (rendered by js/common.js) -->
+            <div id="nav-slot" class="flex items-center gap-3"></div>
         </div>
     </nav>
 
@@ -243,8 +234,7 @@
         class="bg-surface-container-lowest dark:bg-on-background w-full py-stack-lg border-t border-outline-variant/50 mt-auto">
         <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter items-start">
             <div class="col-span-1 md:col-span-2">
-                <span
-                    class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed block mb-2">Nexora</span>
+                <img src="img/logo.png" alt="Nexora" class="h-8 w-auto">
                 <p
                     class="text-on-surface-variant text-body-md font-body-md max-w-sm opacity-80 hover:opacity-100 transition-opacity">
                     © 2024 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.

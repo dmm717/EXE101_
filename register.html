@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html class="light" lang="vi">
+<html lang="vi">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Nexora - Tạo tài khoản mới</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link
         href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <script src="js/common.js"></script>
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet"><link href="css/styles.css" rel="stylesheet">
+    <style>
+        body { background-color: #F5F3FF; }
+    </style>
+    <script src="js/common.js" defer></script>
 </head>
 
 <body
-    class="bg-background min-h-screen flex items-center justify-center p-margin-mobile md:p-margin-desktop font-body-md text-on-surface">
+    class="font-body-md text-body-md antialiased bg-background min-h-screen flex items-center justify-center p-margin-mobile md:p-margin-desktop font-body-md text-on-surface">
     <div
         class="w-full max-w-md bg-surface-container-lowest rounded-[24px] shadow-[0px_4px_20px_rgba(0,0,0,0.05)] p-stack-lg border border-outline-variant/30">
 
         <!-- Header -->
         <div class="text-center mb-stack-lg">
             <div class="flex justify-center mb-stack-sm">
-                <a class="text-primary font-display text-[32px] font-bold" href="index.html">Nexora</a>
+                <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             </div>
             <h1 class="font-headline-lg text-headline-lg text-on-surface mb-unit">Tạo tài khoản mới</h1>
             <p class="font-body-md text-body-md text-on-surface-variant">Bắt đầu luyện tập phỏng vấn thực chiến ngay hôm
@@ -32,7 +36,7 @@
 
         <!-- Social Signup -->
         <button
-            class="w-full flex items-center justify-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-lg py-3 px-4 hover:bg-surface-container-low transition-colors duration-200 shadow-sm group">
+            class="w-full flex items-center justify-center gap-2 bg-surface-container-lowest border border-outline-variant rounded-xl py-3 px-4 hover:bg-surface-container-low transition-colors duration-200 shadow-sm group">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                     fill="#4285F4"></path>
@@ -56,7 +60,7 @@
         </div>
 
         <!-- Form -->
-        <form class="space-y-stack-md" onsubmit="event.preventDefault(); window.location.href='cv.html?auth=1';">
+        <form id="register-form" class="space-y-stack-md">
             <!-- Basic Info -->
             <div class="space-y-stack-md">
                 <div class="space-y-1">
@@ -66,7 +70,7 @@
                             <span class="material-symbols-outlined text-outline text-[20px]">person</span>
                         </div>
                         <input
-                            class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                            class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                             id="fullname" name="fullname" placeholder="Nhập họ và tên" type="text">
                     </div>
                 </div>
@@ -77,7 +81,7 @@
                             <span class="material-symbols-outlined text-outline text-[20px]">mail</span>
                         </div>
                         <input
-                            class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                            class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                             id="email" name="email" placeholder="Nhập địa chỉ email" type="email">
                     </div>
                 </div>
@@ -88,7 +92,7 @@
                             <span class="material-symbols-outlined text-outline text-[20px]">call</span>
                         </div>
                         <input
-                            class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                            class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                             id="phone" name="phone" placeholder="Nhập số điện thoại" type="tel">
                     </div>
                 </div>
@@ -99,13 +103,13 @@
                 <div class="space-y-1">
                     <label class="block font-label-md text-label-md text-on-surface" for="dob">Ngày sinh</label>
                     <input
-                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                         id="dob" name="dob" type="date">
                 </div>
                 <div class="space-y-1">
                     <label class="block font-label-md text-label-md text-on-surface" for="gender">Giới tính</label>
                     <select
-                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                         id="gender" name="gender">
                         <option value="">Chọn</option>
                         <option value="male">Nam</option>
@@ -123,13 +127,13 @@
                     <label class="block font-label-md text-label-md text-on-surface" for="university">Trường đại
                         học</label>
                     <input
-                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                         id="university" name="university" placeholder="Tên trường đại học" type="text">
                 </div>
                 <div class="space-y-1">
                     <label class="block font-label-md text-label-md text-on-surface" for="major">Ngành học</label>
                     <input
-                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                        class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                         id="major" name="major" placeholder="Ngành học của bạn" type="text">
                 </div>
                 <div class="grid grid-cols-2 gap-4">
@@ -137,13 +141,13 @@
                         <label class="block font-label-md text-label-md text-on-surface" for="grad_year">Năm tốt
                             nghiệp</label>
                         <input
-                            class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                            class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                             id="grad_year" name="grad_year" placeholder="YYYY" type="number">
                     </div>
                     <div class="space-y-1">
                         <label class="block font-label-md text-label-md text-on-surface" for="gpa">Điểm GPA</label>
                         <input
-                            class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                            class="w-full px-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                             id="gpa" name="gpa" placeholder="0.0" step="0.1" type="number">
                     </div>
                 </div>
@@ -157,7 +161,7 @@
                         <span class="material-symbols-outlined text-outline text-[20px]">lock</span>
                     </div>
                     <input
-                        class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
+                        class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-xl font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all shadow-sm"
                         id="password" name="password" placeholder="Tạo mật khẩu" type="password">
                 </div>
             </div>
@@ -177,7 +181,7 @@
                 </label>
             </div>
             <button
-                class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-lg hover:bg-on-tertiary-fixed-variant transition-all duration-200 shadow-[0px_4px_10px_rgba(53,37,205,0.2)] hover:shadow-[0px_6px_15px_rgba(53,37,205,0.3)] mt-stack-md"
+                class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 px-4 rounded-xl hover:bg-primary/90 transition-all duration-200 shadow-[0px_4px_10px_rgba(53,37,205,0.2)] hover:shadow-[0px_6px_15px_rgba(53,37,205,0.3)] mt-stack-md"
                 type="submit">
                 Đăng ký tài khoản
             </button>
@@ -192,5 +196,14 @@
         </div>
     </div>
 </body>
+
+<script>
+    document.getElementById('register-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const fullname = (document.getElementById('fullname').value || '').trim() || 'Người dùng mới';
+        window.NexoraAuth.setAuth({ name: fullname, plan: 'Pro' });
+        window.location.href = 'cv.html';
+    });
+</script>
 
 </html>
