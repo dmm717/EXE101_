@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Gợi ý trả lời theo STAR - Nexora AI</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="js/common.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        body { background-color: #f9f9ff; }
+        .star-badge { border-radius: 100px; padding: 4px 12px; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-body-md text-body-md bg-background text-on-background">
+
+    <!-- ================= TOP NAV ================= -->
+    <nav class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm z-50 transition-all duration-200">
+        <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <div class="flex items-center gap-stack-md">
+                <a class="text-headline-md font-headline-md font-bold text-primary" href="index.html">Nexora</a>
+            </div>
+            <div class="hidden md:flex gap-stack-sm items-center">
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="index.html">Tổng quan</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="cv.html">Phân tích CV</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="interview.html">Phỏng vấn AI</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="scenarios.html">Tình huống</a>
+                <a class="text-primary font-bold border-b-2 border-primary pb-1 px-3 py-2 font-label-md text-label-md"
+                    href="star.html?auth=1">STAR</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="report.html">Báo cáo</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="pricing.html">Bảng giá</a>
+            </div>
+            <!-- Guest nav -->
+            <div class="hidden md:flex items-center gap-3" data-show-when="guest" data-initially-hidden>
+                <a class="text-primary font-label-md text-label-md px-4 py-2 rounded-lg hover:bg-primary-container/10 transition-colors"
+                    href="login.html?redirect=star">Đăng nhập</a>
+                <a class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors shadow-sm active:scale-95"
+                    href="register.html">Bắt đầu miễn phí</a>
+            </div>
+            <!-- Auth nav -->
+            <div class="hidden md:flex items-center gap-3" data-show-when="auth" data-initially-hidden>
+                <div class="flex flex-col items-end">
+                    <span class="font-label-md text-label-md text-on-surface font-bold">Quốc Bảo</span>
+                    <span class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Gói Chuyên nghiệp</span>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold border-2 border-surface-container-high shadow-sm">QB</div>
+            </div>
+            <button class="md:hidden text-on-surface">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ================= MAIN ================= -->
+    <main class="flex-grow pt-24 pb-stack-lg max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+
+        <!-- Header -->
+        <div class="lg:col-span-12 mb-stack-md">
+            <h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-stack-sm">
+                Xây dựng câu trả lời STAR
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+                Biến câu chuyện kinh nghiệm của bạn thành một câu trả lời phỏng vấn chuyên nghiệp, có cấu trúc chặt chẽ và sức thuyết phục cao với trợ lý AI.
+            </p>
+        </div>
+
+        <!-- Left Column: Input -->
+        <div class="lg:col-span-5 flex flex-col gap-stack-md">
+            <div class="bg-surface-container-lowest rounded-[24px] p-stack-md shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col h-full">
+                <div class="flex items-center gap-2 mb-stack-md">
+                    <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL'0">edit_document</span>
+                    <h2 class="font-headline-md text-[20px] font-semibold text-on-surface">Câu trả lời thô</h2>
+                </div>
+                <p class="font-body-md text-body-md text-on-surface-variant mb-stack-sm">
+                    Nhập câu chuyện hoặc kinh nghiệm bạn muốn kể. Đừng quá lo lắng về câu cú, AI sẽ giúp bạn sắp xếp lại.
+                </p>
+                <textarea id="raw-input"
+                    class="w-full flex-grow rounded-xl border border-outline-variant bg-surface-bright p-4 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary focus:border-primary transition-all resize-none min-h-[300px]"
+                    placeholder="Nhập câu chuyện của bạn ở đây... Ví dụ: Em từng làm một dự án ở trường về quản lý thư viện..."></textarea>
+                <div class="mt-stack-md flex justify-end">
+                    <button id="improve-btn"
+                        class="bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2 opacity-50 cursor-not-allowed"
+                        disabled>
+                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL'1">auto_fix_high</span>
+                        Cải thiện câu trả lời
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mẹo viết câu trả lời tốt -->
+            <div class="bg-surface-container-low rounded-xl p-stack-md border border-primary-fixed">
+                <h3 class="font-label-md text-label-md text-primary font-bold mb-3 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+                    Mẹo viết câu trả lời tốt
+                </h3>
+                <ul class="space-y-2 font-body-md text-[14px] text-on-surface-variant">
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-primary mt-0.5 flex-shrink-0">check_circle</span>
+                        Tập trung vào <strong>hành động cá nhân</strong> (dùng "Tôi", hạn chế dùng "Chúng tôi").
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-primary mt-0.5 flex-shrink-0">check_circle</span>
+                        Đưa ra các <strong>con số cụ thể</strong> để chứng minh kết quả (ví dụ: tăng 20%, quản lý 5 người).
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-[16px] text-primary mt-0.5 flex-shrink-0">check_circle</span>
+                        Nêu bật <strong>bài học rút ra</strong> nếu kết quả không như mong đợi.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column: STAR Output -->
+        <div class="lg:col-span-7 relative">
+            <div class="bg-surface-container-lowest rounded-[24px] p-stack-md shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-primary-fixed h-full bg-gradient-to-br from-white to-surface-container-low/30 relative overflow-hidden">
+
+                <!-- AI Accent Line -->
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-tertiary"></div>
+
+                <div class="flex items-center justify-between mb-stack-lg pl-3">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL'1">psychology</span>
+                        <h2 class="font-headline-md text-[20px] font-semibold text-primary">Gợi ý theo STAR</h2>
+                    </div>
+                    <div class="flex gap-2">
+                        <button data-copy-btn class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="Sao chép">
+                            <span class="material-symbols-outlined text-[20px]">content_copy</span>
+                        </button>
+                        <button data-save-btn class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors" title="Lưu lại">
+                            <span class="material-symbols-outlined text-[20px]">bookmark</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STATE: Empty (hiện khi chưa submit) -->
+                <div data-state="empty" class="flex flex-col items-center justify-center py-12 text-center px-6">
+                    <div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-[40px]" style="font-variation-settings:'FILL'0">magic_button</span>
+                    </div>
+                    <h3 class="font-headline-md text-[20px] text-on-surface mb-2">Sẵn sàng tối ưu câu trả lời của bạn</h3>
+                    <p class="font-body-md text-on-surface-variant max-w-md">
+                        Hãy nhập câu trả lời thô bên trái và nhấn "Cải thiện câu trả lời" để AI giúp bạn cấu trúc theo phương pháp STAR.
+                    </p>
+                </div>
+
+                <!-- STATE: Loading -->
+                <div data-state="loading" class="hidden flex flex-col items-center justify-center py-12 text-center px-6">
+                    <div class="w-20 h-20 bg-primary-container/10 rounded-full flex items-center justify-center mb-4">
+                        <span class="material-symbols-outlined text-primary text-[40px] animate-spin">progress_activity</span>
+                    </div>
+                    <h3 class="font-headline-md text-[20px] text-on-surface mb-2">AI đang xử lý...</h3>
+                    <p class="font-body-md text-on-surface-variant max-w-md">
+                        Hệ thống đang phân tích và cấu trúc lại câu trả lời của bạn theo mô hình STAR.
+                    </p>
+                </div>
+
+                <!-- STATE: Result (hiện sau khi submit) -->
+                <div data-state="result" class="hidden space-y-stack-md pl-3">
+
+                    <!-- Situation -->
+                    <div class="relative pl-6 border-l-2 border-outline-variant/30 pb-4">
+                        <div class="absolute -left-[13px] top-0 bg-surface-container-lowest border-2 border-primary text-primary w-6 h-6 rounded-full flex items-center justify-center font-bold text-[12px]">S</div>
+                        <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Situation (Tình huống)</h3>
+                        <p class="font-body-md text-[14px] text-on-surface-variant bg-surface-container px-4 py-3 rounded-lg border border-outline-variant/20">
+                            Trong học kỳ trước, tôi đảm nhận vai trò Trưởng nhóm phát triển phần mềm Quản lý Thư viện cho đồ án môn học. Nhóm ban đầu có 4 thành viên, với thời hạn hoàn thành dự án là 4 tuần. Tuy nhiên, khi dự án mới đi được một nửa chặng đường, 2 thành viên trong nhóm bất ngờ rút lui vì lý do cá nhân.
+                        </p>
+                    </div>
+
+                    <!-- Task -->
+                    <div class="relative pl-6 border-l-2 border-outline-variant/30 pb-4">
+                        <div class="absolute -left-[13px] top-0 bg-surface-container-lowest border-2 border-tertiary text-tertiary w-6 h-6 rounded-full flex items-center justify-center font-bold text-[12px]">T</div>
+                        <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Task (Nhiệm vụ)</h3>
+                        <p class="font-body-md text-[14px] text-on-surface-variant bg-tertiary-fixed/30 px-4 py-3 rounded-lg border border-tertiary/20">
+                            Thử thách đặt ra là tôi và 1 thành viên còn lại phải hoàn thành toàn bộ khối lượng công việc của 4 người trong 2 tuần cuối cùng để đảm bảo nộp đồ án đúng hạn, đồng thời vẫn phải duy trì chất lượng code và giao diện phần mềm.
+                        </p>
+                    </div>
+
+                    <!-- Action -->
+                    <div class="relative pl-6 border-l-2 border-outline-variant/30 pb-4">
+                        <div class="absolute -left-[13px] top-0 bg-surface-container-lowest border-2 border-secondary text-secondary w-6 h-6 rounded-full flex items-center justify-center font-bold text-[12px]">A</div>
+                        <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Action (Hành động)</h3>
+                        <div class="font-body-md text-[14px] text-on-surface-variant bg-secondary-fixed/30 px-4 py-3 rounded-lg border border-outline-variant/20 space-y-2">
+                            <p>Để giải quyết khủng hoảng này, tôi đã thực hiện các bước sau:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li><strong>Đánh giá &amp; Tái phân bổ:</strong> Rà soát lại toàn bộ backlog, loại bỏ các tính năng "nice-to-have" và tập trung vào các tính năng cốt lõi (Core MVP). Tôi chia lại công việc dựa trên thế mạnh của 2 người.</li>
+                                <li><strong>Quản lý thời gian:</strong> Áp dụng phương pháp Pomodoro và thiết lập lịch làm việc cường độ cao (pair-programming vào buổi tối) để tăng tốc độ xử lý bug.</li>
+                                <li><strong>Chủ động gánh vác:</strong> Trực tiếp tiếp quản phần backend phức tạp mà thành viên cũ để lại, đồng thời tinh chỉnh lại giao diện UI/UX để phần mềm trông chuyên nghiệp hơn.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Result -->
+                    <div class="relative pl-6">
+                        <div class="absolute -left-[13px] top-0 bg-primary text-on-primary w-6 h-6 rounded-full flex items-center justify-center font-bold text-[12px] shadow-sm">R</div>
+                        <h3 class="font-label-md text-label-md font-bold text-on-surface mb-1">Result (Kết quả)</h3>
+                        <p class="font-body-md text-[14px] text-on-surface-variant bg-primary-container/10 px-4 py-3 rounded-lg border border-primary/20">
+                            Kết quả, chúng tôi đã hoàn thành và nộp dự án đúng deadline. Phần mềm hoạt động mượt mà không có bug nghiêm trọng. Giảng viên đã đánh giá xuất sắc (Điểm A) và đặc biệt khen ngợi giao diện người dùng trực quan. Quan trọng hơn, tôi học được kỹ năng quản lý khủng hoảng và khả năng làm việc dưới áp lực cao.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- STATE: Guest lock overlay (chỉ hiện khi chưa đăng nhập) -->
+            <div data-state="guest-lock" class="hidden absolute inset-0 z-10 flex items-center justify-center p-6">
+                <div class="absolute inset-0 bg-surface/40 backdrop-blur-md rounded-[24px]"></div>
+                <div class="relative z-20 bg-surface-container-lowest p-8 rounded-2xl shadow-xl border border-outline-variant/30 text-center max-w-sm">
+                    <span class="material-symbols-outlined text-primary text-[48px] mb-4 block">lock</span>
+                    <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Tính năng giới hạn</h3>
+                    <p class="font-body-md text-on-surface-variant mb-6">Vui lòng đăng nhập để sử dụng tính năng tối ưu câu trả lời bằng AI</p>
+                    <a href="login.html"
+                        class="w-full h-12 bg-primary text-on-primary font-label-md text-label-md px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center">
+                        Đăng nhập ngay
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="w-full py-stack-lg border-t border-outline-variant/50 bg-surface-container-lowest">
+        <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+            <div class="col-span-1 md:col-span-2">
+                <span class="text-headline-md font-headline-md font-bold text-primary mb-4 block">Nexora</span>
+                <p class="font-body-md text-body-md text-on-surface-variant">© 2024 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.</p>
+            </div>
+            <div class="flex flex-col gap-2">
+                <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Về chúng tôi</a>
+                <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Điều khoản sử dụng</a>
+            </div>
+            <div class="flex flex-col gap-2">
+                <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Chính sách bảo mật</a>
+                <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Liên hệ</a>
+                <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Hướng dẫn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            // Auth: from URL param ?auth=1
+            const params = new URLSearchParams(window.location.search);
+            const isAuth = params.get('auth') === '1';
+
+            // Auth nav toggle — only affect elements marked as initially hidden (prevents FOUC)
+            document.querySelectorAll('[data-show-when][data-initially-hidden]').forEach(el => {
+                el.classList.remove('hidden');
+                const target = el.dataset.showWhen;
+                el.classList.toggle('hidden', (target === 'guest') ? isAuth : !isAuth);
+            });
+
+            const improveBtn = document.getElementById('improve-btn');
+            const rawInput = document.getElementById('raw-input');
+            const stateEmpty = document.querySelector('[data-state="empty"]');
+            const stateLoading = document.querySelector('[data-state="loading"]');
+            const stateResult = document.querySelector('[data-state="result"]');
+            const stateGuestLock = document.querySelector('[data-state="guest-lock"]');
+            const copyBtn = document.querySelector('[data-copy-btn]');
+            const saveBtn = document.querySelector('[data-save-btn]');
+
+            if (!isAuth) {
+                // Guest: lock overlay + disable input
+                rawInput.disabled = true;
+                rawInput.placeholder = 'Vui lòng đăng nhập để sử dụng tính năng này...';
+                improveBtn.disabled = true;
+                improveBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                // Authenticated: show empty, enable input
+                stateEmpty.classList.remove('hidden');
+                rawInput.disabled = false;
+
+                // Auto-fill demo if ?demo=1
+                if (params.get('demo') === '1') {
+                    rawInput.value = 'Em từng làm một dự án ở trường về quản lý thư viện. Lúc đó nhóm em có 4 người nhưng 2 bạn bỏ cuộc giữa chừng. Deadline thì sắp tới mà code chưa xong. Em phải thức đêm code bù phần của các bạn và chia lại task cho bạn còn lại. Cuối cùng tụi em cũng nộp được bài đúng hạn và cô giáo cho điểm A vì giao diện đẹp.';
+                    improveBtn.disabled = false;
+                    improveBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    // Auto-trigger
+                    stateEmpty.classList.add('hidden');
+                    stateLoading.classList.remove('hidden');
+                    setTimeout(() => {
+                        stateLoading.classList.add('hidden');
+                        stateResult.classList.remove('hidden');
+                    }, 1800);
+                }
+
+                // Enable/disable button based on input
+                rawInput.addEventListener('input', () => {
+                    const hasText = rawInput.value.trim().length > 0;
+                    improveBtn.disabled = !hasText;
+                    improveBtn.classList.toggle('opacity-50', !hasText);
+                    improveBtn.classList.toggle('cursor-not-allowed', !hasText);
+                });
+
+                // Submit
+                improveBtn.addEventListener('click', () => {
+                    if (!rawInput.value.trim()) return;
+                    stateEmpty.classList.add('hidden');
+                    stateLoading.classList.remove('hidden');
+                    improveBtn.disabled = true;
+
+                    setTimeout(() => {
+                        stateLoading.classList.add('hidden');
+                        stateResult.classList.remove('hidden');
+                    }, 1800);
+                });
+
+                // Copy
+                copyBtn?.addEventListener('click', () => {
+                    const texts = [
+                        'SITUATION (TÌNH HUỐNG):\n' + stateResult.querySelectorAll('p')[0].textContent,
+                        '\nTASK (NHIỆM VỤ):\n' + stateResult.querySelectorAll('p')[1].textContent,
+                        '\nACTION (HÀNH ĐỘNG):\n' + stateResult.querySelectorAll('li')[0].textContent + '\n' + stateResult.querySelectorAll('li')[1].textContent + '\n' + stateResult.querySelectorAll('li')[2].textContent,
+                        '\nRESULT (KẾT QUẢ):\n' + stateResult.querySelectorAll('p')[4].textContent
+                    ].join('\n');
+                    navigator.clipboard?.writeText(texts).then(() => {
+                        copyBtn.querySelector('span').textContent = 'check';
+                        setTimeout(() => {
+                            copyBtn.querySelector('span').textContent = 'content_copy';
+                        }, 1500);
+                    });
+                });
+
+                // Save
+                saveBtn?.addEventListener('click', () => {
+                    saveBtn.querySelector('span').textContent = 'bookmark_added';
+                    setTimeout(() => {
+                        saveBtn.querySelector('span').textContent = 'bookmark';
+                    }, 1500);
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

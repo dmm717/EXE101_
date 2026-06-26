@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Nexora AI - Bảng giá</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap"
+        rel="stylesheet">
+    <script src="js/common.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+
+    <!-- TopNavBar (Shared Component) -->
+    <header
+        class="bg-surface/80 backdrop-blur-md dark:bg-on-background/80 fixed top-0 w-full h-16 shadow-sm border-b border-outline-variant/30 dark:border-outline/20 z-50">
+        <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <!-- Brand -->
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[28px] icon-fill">stream</span>
+                <a class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed tracking-tight"
+                    href="index.html">Nexora</a>
+            </div>
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-stack-md">
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
+                    href="index.html">Tổng quan</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
+                    href="cv.html">Phân tích CV</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
+                    href="interview.html">Phỏng vấn AI</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
+                    href="scenarios.html">Tình huống</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
+                    href="star.html?auth=1">STAR</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors hover:bg-primary-container/10 dark:hover:bg-primary-fixed/10 rounded-lg px-3 py-2 font-label-md text-label-md"
+                    href="report.html">Báo cáo</a>
+                <!-- Active Tab -->
+                <a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary dark:border-primary-fixed pb-1 px-3 py-2 font-label-md text-label-md"
+                    href="pricing.html">Bảng giá</a>
+            </nav>
+            <!-- Trailing Action: User Profile -->
+            <div class="flex items-center gap-3">
+                <button
+                    class="hidden md:flex text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <div
+                    class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant/20 cursor-pointer hover:bg-surface-container-high transition-colors">
+                    <img class="w-8 h-8 rounded-full object-cover border border-outline-variant/30"
+                        data-alt="A professional corporate headshot of a young Vietnamese professional male named Quoc Bao."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4AWTIF7caumgRR37JupctVP4feZPThEIEyyRIsTUcHGzqJRg6jYG5gwKbhwG76xa6QeQt5CT0vkjt4542HOUzq8zTAaiSluGt3vpKWVPko286-qUSJLCO8KvWDzKKf5O5CUHhyWawD5qM3OsICO4qKwl8mCFg7b-G_61DCrnV-eiKKv4qX5umU8YawlGSvg3GV0-nOJQPOsS9yTUHVEfOk7TtBvQf_r9uSeBWb1ZW_wKL8yGEtkJQxVk7o2_XUVCgB1-mabFFMAjU">
+                    <span class="font-label-md text-label-md text-on-surface hidden md:block">Quốc Bảo</span>
+                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">expand_more</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-24 pb-stack-lg">
+
+        <!-- Hero Section -->
+        <section
+            class="text-center px-margin-mobile md:px-margin-desktop py-stack-lg md:py-[64px] max-w-3xl mx-auto">
+            <h1 class="font-display text-display text-on-surface mb-stack-sm md:mb-stack-md leading-tight">Đầu tư thông
+                minh cho<br><span class="text-primary">sự nghiệp của bạn</span></h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Chọn gói dịch vụ phù hợp để
+                mở khóa sức mạnh của Nexora AI. Chuẩn bị hoàn hảo cho mọi vòng phỏng vấn và giành lấy công việc mơ ước.
+            </p>
+        </section>
+
+        <!-- Pricing Grid -->
+        <section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-[80px]">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter md:gap-stack-lg items-center relative z-10">
+
+                <!-- Tier 1: Miễn phí -->
+                <div
+                    class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-sm border border-outline-variant/30 flex flex-col h-full hover:shadow-md transition-shadow duration-300">
+                    <div class="mb-stack-md">
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Miễn phí</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Trải nghiệm cơ bản cho người mới
+                            bắt đầu.</p>
+                    </div>
+                    <div class="mb-stack-lg">
+                        <div class="flex items-baseline gap-1">
+                            <span class="font-display text-display text-on-surface">0đ</span>
+                            <span class="font-body-md text-body-md text-on-surface-variant">/ tháng</span>
+                        </div>
+                    </div>
+                    <ul class="flex-grow flex flex-col gap-3 mb-stack-lg">
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Tạo hồ sơ cơ bản</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">2 lần phỏng vấn thử / tháng</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Thư viện câu hỏi chung</span>
+                        </li>
+                    </ul>
+                    <a class="w-full py-3 px-4 rounded-xl font-label-md text-label-md border border-outline-variant text-on-surface hover:bg-surface-container-low hover:border-outline transition-all duration-200 text-center"
+                        href="register.html">Bắt đầu ngay</a>
+                </div>
+
+                <!-- Tier 2: Cá nhân (Highlighted) -->
+                <div
+                    class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_10px_40px_rgba(53,37,205,0.1)] border-2 border-primary flex flex-col h-full relative transform md:scale-105 z-20">
+                    <div
+                        class="absolute top-0 right-0 -translate-y-1/2 translate-x-0 mr-stack-lg bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 shadow-sm">
+                        <span class="material-symbols-outlined text-[16px] icon-fill text-tertiary">star</span>
+                        Phổ biến nhất
+                    </div>
+                    <div class="mb-stack-md">
+                        <h3 class="font-headline-md text-headline-md text-primary mb-2">Cá nhân</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Đầy đủ công cụ AI để bứt phá vòng
+                            phỏng vấn.</p>
+                    </div>
+                    <div class="mb-stack-lg">
+                        <div class="flex items-baseline gap-1">
+                            <span class="font-display text-display text-on-surface">99k</span>
+                            <span class="font-body-md text-body-md text-on-surface-variant">/ tháng</span>
+                        </div>
+                    </div>
+                    <ul class="flex-grow flex flex-col gap-4 mb-stack-lg">
+                        <li class="flex items-start gap-2">
+                            <span
+                                class="material-symbols-outlined text-primary mt-0.5 text-[20px] icon-fill">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface font-medium">Mọi tính năng gói Miễn
+                                phí</span>
+                        </li>
+                        <li class="flex items-start gap-2 bg-primary-fixed/30 p-2 rounded-lg -mx-2">
+                            <span
+                                class="material-symbols-outlined text-tertiary mt-0.5 text-[20px] icon-fill">auto_awesome</span>
+                            <span class="font-body-md text-body-md text-on-surface"><strong>Luyện phỏng vấn không giới
+                                    hạn</strong> với Nexora AI</span>
+                        </li>
+                        <li class="flex items-start gap-2 bg-primary-fixed/20 p-2 rounded-lg -mx-2">
+                            <span
+                                class="material-symbols-outlined text-tertiary mt-0.5 text-[20px] icon-fill">analytics</span>
+                            <span class="font-body-md text-body-md text-on-surface"><strong>Phân tích chuyên sâu kỹ
+                                    năng</strong> &amp; cảm xúc</span>
+                        </li>
+                        <li class="flex items-start gap-2 bg-primary-fixed/20 p-2 rounded-lg -mx-2">
+                            <span
+                                class="material-symbols-outlined text-tertiary mt-0.5 text-[20px] icon-fill">construction</span>
+                            <span class="font-body-md text-body-md text-on-surface">Trợ lý <strong>STAR Answer
+                                    Builder</strong> thông minh</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span
+                                class="material-symbols-outlined text-primary mt-0.5 text-[20px] icon-fill">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Báo cáo cải thiện cá nhân hóa</span>
+                        </li>
+                    </ul>
+                    <a class="w-full py-3 px-4 rounded-xl font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 text-center"
+                        href="register.html">Nâng cấp Cá nhân</a>
+                </div>
+
+                <!-- Tier 3: Doanh nghiệp -->
+                <div
+                    class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-sm border border-outline-variant/30 flex flex-col h-full hover:shadow-md transition-shadow duration-300">
+                    <div class="mb-stack-md">
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Doanh nghiệp</h3>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Giải pháp đào tạo &amp; đánh giá ứng
+                            viên cho tổ chức.</p>
+                    </div>
+                    <div class="mb-stack-lg">
+                        <div class="flex items-baseline gap-1 mt-2">
+                            <span class="font-headline-lg text-headline-lg text-on-surface">Liên hệ</span>
+                        </div>
+                    </div>
+                    <ul class="flex-grow flex flex-col gap-3 mb-stack-lg">
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Quản lý nhiều tài khoản (SSO)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Tùy chỉnh bộ câu hỏi chuyên
+                                ngành</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Dashboard phân tích tổng thể
+                                team</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="material-symbols-outlined text-outline mt-0.5 text-[20px]">check_circle</span>
+                            <span class="font-body-md text-body-md text-on-surface">Hỗ trợ kỹ thuật ưu tiên 24/7</span>
+                        </li>
+                    </ul>
+                    <button
+                        class="w-full py-3 px-4 rounded-xl font-label-md text-label-md bg-surface-container hover:bg-surface-container-high text-primary font-medium transition-all duration-200">Liên
+                        hệ bộ phận Sales</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Shared Component) -->
+    <footer
+        class="bg-surface-container-lowest dark:bg-on-background w-full py-stack-lg border-t border-outline-variant/50 flat no shadows mt-auto">
+        <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+            <!-- Brand Column -->
+            <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary text-[24px] icon-fill">stream</span>
+                    <span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed">Nexora
+                        AI</span>
+                </div>
+                <p class="font-label-sm text-label-sm text-on-surface-variant opacity-80 hover:opacity-100 transition-opacity">
+                    © 2024 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.
+                </p>
+            </div>
+            <!-- Links Column -->
+            <div class="col-span-1 md:col-span-3 flex flex-wrap justify-start md:justify-end gap-stack-lg md:gap-gutter pt-2">
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:underline"
+                    href="#">Về chúng tôi</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:underline"
+                    href="#">Điều khoản sử dụng</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:underline"
+                    href="#">Chính sách bảo mật</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:underline"
+                    href="#">Liên hệ</a>
+                <a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:underline"
+                    href="#">Hướng dẫn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

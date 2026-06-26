@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="vi" data-auth="false">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Nexora - Phân tích CV</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <script src="js/common.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+
+    <!-- TopNavBar -->
+    <nav class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30 z-50">
+        <div class="flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+            <div class="flex items-center gap-stack-md">
+                <a class="text-headline-md font-headline-md font-bold text-primary tracking-tight"
+                    href="index.html">Nexora</a>
+            </div>
+            <div class="hidden md:flex items-center gap-stack-sm">
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="index.html">Tổng quan</a>
+                <a class="text-primary font-bold border-b-2 border-primary pb-1 px-3 py-2 font-label-md text-label-md"
+                    href="cv.html">Phân tích CV</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="interview.html">Phỏng vấn AI</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="scenarios.html">Tình huống</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="star.html?auth=1">STAR</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="report.html">Báo cáo</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors px-3 py-2 rounded-lg hover:bg-primary-container/10 font-label-md text-label-md"
+                    href="pricing.html">Bảng giá</a>
+            </div>
+
+            <!-- Chưa đăng nhập -->
+            <div class="hidden md:flex items-center gap-3" data-show-when="guest">
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors px-3 py-2"
+                    href="login.html">Đăng nhập</a>
+                <a class="bg-primary text-on-primary px-5 py-2 rounded-full font-label-md text-label-md hover:bg-primary/90 transition-all active:scale-[0.98] shadow-sm"
+                    href="register.html">Đăng ký</a>
+            </div>
+
+            <!-- Đã đăng nhập -->
+            <div class="hidden md:flex items-center gap-3" data-show-when="auth">
+                <div class="flex flex-col items-end">
+                    <span class="font-label-md text-label-md text-on-surface font-semibold">Quốc Bảo</span>
+                    <span
+                        class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">Gói
+                        Chuyên nghiệp</span>
+                </div>
+                <div
+                    class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-bold border-2 border-surface-container-high shadow-sm">
+                    QB
+                </div>
+            </div>
+
+            <button class="md:hidden text-on-surface">
+                <span class="material-symbols-outlined" data-icon="menu">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-[80px] pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+
+        <!-- ============== KẾT QUẢ PHÂN TÍCH ============== -->
+        <section id="analysis-result">
+            <!-- Header -->
+            <header class="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-stack-md">
+                <div>
+                    <p class="font-label-md text-label-md text-secondary mb-1 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">badge</span>
+                        Vị trí: Fresher Business Analyst
+                    </p>
+                    <h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
+                        Kết quả phân tích độ phù hợp</h1>
+                </div>
+                <div class="flex gap-stack-sm flex-wrap">
+                    <!-- Chưa đăng nhập -->
+                    <a data-show-when="guest"
+                        class="flex items-center gap-2 bg-surface text-primary border border-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
+                        href="login.html">
+                        <span class="material-symbols-outlined text-[18px]">login</span>
+                        Đăng nhập để chỉnh sửa
+                    </a>
+                    <!-- Đã đăng nhập -->
+                    <a data-show-when="auth"
+                        class="flex items-center gap-2 bg-surface text-primary border border-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
+                        href="#">
+                        <span class="material-symbols-outlined text-[18px]">edit_document</span>
+                        Chỉnh sửa CV
+                    </a>
+                    <a data-show-when="auth"
+                        class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container shadow-md transition-colors"
+                        href="interview.html">
+                        <span class="material-symbols-outlined text-[18px]">calendar_add_on</span>
+                        Tạo kế hoạch phỏng vấn
+                    </a>
+                </div>
+            </header>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+                <!-- Cột 1: Score & Keywords -->
+                <div class="flex flex-col gap-gutter lg:col-span-1">
+                    <!-- Tổng quan điểm -->
+                    <div
+                        class="bg-surface-container-lowest rounded-2xl p-stack-md shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-surface-container-high relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <span class="material-symbols-outlined text-[100px] text-primary">analytics</span>
+                        </div>
+                        <h2 class="font-headline-md text-headline-md text-on-surface mb-stack-sm">Tổng quan</h2>
+                        <p class="font-body-md text-body-md text-secondary mb-stack-lg">Mức độ phù hợp với JD</p>
+                        <div class="flex justify-center items-center relative mb-stack-md">
+                            <div
+                                class="w-40 h-40 rounded-full border-[12px] border-surface-container flex items-center justify-center relative">
+                                <div class="absolute inset-0 rounded-full"
+                                    style="background: conic-gradient(#4f46e5 73%, transparent 0); border-radius: 50%; padding: 12px; -webkit-mask: radial-gradient(transparent 55%, black 56%); mask: radial-gradient(transparent 55%, black 56%);">
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <span class="font-display text-display text-primary font-bold">73<span
+                                            class="text-headline-md">%</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-surface-container-low rounded-xl p-3 text-center">
+                            <p
+                                class="font-label-md text-label-md text-on-surface-variant flex items-center justify-center gap-1">
+                                <span class="material-symbols-outlined text-primary text-[16px]">check_circle</span>
+                                Khá tốt - Cần tối ưu thêm từ khóa
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Phân tích từ khóa -->
+                    <div class="glass-card rounded-2xl p-stack-md">
+                        <h2
+                            class="font-headline-md text-headline-md text-on-surface mb-stack-md flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">key</span>
+                            Phân tích từ khóa
+                        </h2>
+                        <div class="mb-stack-md">
+                            <h3
+                                class="font-label-md text-label-md text-secondary mb-2 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px] text-[#16a34a]">check</span>
+                                Từ khóa khớp (Matched)
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-[#dcfce7] text-[#166534] px-3 py-1 rounded-full font-label-sm text-label-sm">SQL</span>
+                                <span class="bg-[#dcfce7] text-[#166534] px-3 py-1 rounded-full font-label-sm text-label-sm">REST API</span>
+                                <span class="bg-[#dcfce7] text-[#166534] px-3 py-1 rounded-full font-label-sm text-label-sm">Git</span>
+                                <span class="bg-[#dcfce7] text-[#166534] px-3 py-1 rounded-full font-label-sm text-label-sm">Requirement Gathering</span>
+                                <span class="bg-[#dcfce7] text-[#166534] px-3 py-1 rounded-full font-label-sm text-label-sm">Teamwork</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h3
+                                class="font-label-md text-label-md text-secondary mb-2 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px] text-error">warning</span>
+                                Từ khóa còn thiếu (Missing)
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm border border-error/20">Banking Domain</span>
+                                <span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm border border-error/20">BPMN</span>
+                                <span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm border border-error/20">Stakeholder Management</span>
+                                <span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm border border-error/20">Process Modeling</span>
+                                <span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm border border-error/20">KPI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cột 2 & 3: Chi tiết + Gợi ý -->
+                <div class="flex flex-col gap-gutter lg:col-span-2">
+                    <!-- Đánh giá chi tiết -->
+                    <div
+                        class="bg-surface-container-lowest rounded-2xl p-stack-md shadow-[0px_4px_20px_rgba(0,0,0,0.05)] h-full">
+                        <h2
+                            class="font-headline-md text-headline-md text-on-surface mb-stack-md flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">fact_check</span>
+                            Đánh giá chi tiết
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+                            <!-- Điểm mạnh -->
+                            <div class="bg-surface-container-low rounded-xl p-stack-md border border-surface-variant">
+                                <h3
+                                    class="font-label-md text-label-md text-on-surface mb-3 flex items-center gap-2">
+                                    <span
+                                        class="material-symbols-outlined text-primary bg-primary-fixed p-1 rounded-full text-[16px]">thumb_up</span>
+                                    Điểm mạnh
+                                </h3>
+                                <ul class="space-y-3 font-body-md text-body-md text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-primary mt-0.5">arrow_right</span>
+                                        <span>Có nền tảng kỹ thuật cơ bản (SQL, API) phù hợp với BA.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-primary mt-0.5">arrow_right</span>
+                                        <span>Đã có kinh nghiệm tham gia các dự án học thuật thực tế.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-primary mt-0.5">arrow_right</span>
+                                        <span>Bố cục CV trình bày rõ ràng, dễ đọc, mạch lạc.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Điểm cần cải thiện -->
+                            <div class="bg-[#fff1f2] rounded-xl p-stack-md border border-[#ffe4e6]">
+                                <h3
+                                    class="font-label-md text-label-md text-on-surface mb-3 flex items-center gap-2">
+                                    <span
+                                        class="material-symbols-outlined text-error bg-error-container p-1 rounded-full text-[16px]">trending_up</span>
+                                    Điểm cần cải thiện
+                                </h3>
+                                <ul class="space-y-3 font-body-md text-body-md text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-error mt-0.5">arrow_right</span>
+                                        <span>Thiếu ví dụ thực chiến trong môi trường doanh nghiệp.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-error mt-0.5">arrow_right</span>
+                                        <span>Chưa thể hiện kết quả công việc bằng số liệu cụ thể (Metrics/Impact).</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-[18px] text-error mt-0.5">arrow_right</span>
+                                        <span>Cần làm rõ hơn vai trò cá nhân trong các dự án nhóm.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Suggestions -->
+                    <div class="ai-feedback-block rounded-2xl p-stack-md shadow-[0px_4px_20px_rgba(0,0,0,0.05)]">
+                        <h2
+                            class="font-headline-md text-headline-md text-on-surface mb-stack-md flex items-center gap-2">
+                            <span class="material-symbols-outlined ai-gradient-text"
+                                style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            <span class="ai-gradient-text font-bold">Nexora AI</span> Gợi ý chỉnh sửa CV
+                        </h2>
+                        <div class="space-y-stack-sm">
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/30 hover:border-primary-fixed transition-colors">
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="bg-primary-container text-on-primary-container w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
+                                        1</div>
+                                    <div>
+                                        <h4 class="font-label-md text-label-md text-on-surface mb-1">Bổ sung Impact
+                                            (Tác động) bằng số liệu</h4>
+                                        <p class="font-body-md text-body-md text-secondary">Thay vì viết "Tham gia lấy
+                                            yêu cầu", hãy sửa thành: "Thu thập yêu cầu từ 3 phòng ban, giúp giảm 15%
+                                            thời gian xử lý quy trình nội bộ".</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/30 hover:border-primary-fixed transition-colors">
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="bg-primary-container text-on-primary-container w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
+                                        2</div>
+                                    <div>
+                                        <h4 class="font-label-md text-label-md text-on-surface mb-1">Cấu trúc lại
+                                            theo phương pháp STAR</h4>
+                                        <p class="font-body-md text-body-md text-secondary">Mô tả dự án học thuật theo
+                                            dạng: <strong class="text-on-surface">S</strong>ituation (Tình huống) -
+                                            <strong class="text-on-surface">T</strong>ask (Nhiệm vụ) -
+                                            <strong class="text-on-surface">A</strong>ction (Hành động) -
+                                            <strong class="text-on-surface">R</strong>esult (Kết quả).
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="bg-surface-container-lowest p-4 rounded-xl shadow-sm border border-outline-variant/30 hover:border-primary-fixed transition-colors">
+                                <div class="flex items-start gap-3">
+                                    <div
+                                        class="bg-primary-container text-on-primary-container w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
+                                        3</div>
+                                    <div>
+                                        <h4 class="font-label-md text-label-md text-on-surface mb-1">Lồng ghép từ
+                                            khóa chuyên ngành</h4>
+                                        <p class="font-body-md text-body-md text-secondary">Bổ sung các thuật ngữ như
+                                            <span class="bg-surface-container px-2 py-0.5 rounded text-sm">BPMN</span>,
+                                            <span class="bg-surface-container px-2 py-0.5 rounded text-sm">Process
+                                                Modeling</span> vào phần kỹ năng hoặc mô tả công việc để tăng tỷ lệ pass
+                                            vòng lọc hồ sơ.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============== FORM UPLOAD (khu vực bắt đầu) ============== -->
+        <section id="upload-section" class="space-y-stack-md flex flex-col mx-auto max-w-4xl w-full">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-stack-sm">
+                    Phân tích độ phù hợp</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant">Tải lên CV của bạn và mô tả công việc
+                    (JD) để Nexora AI đánh giá mức độ tương thích và đưa ra gợi ý tối ưu.</p>
+            </div>
+
+            <!-- Upload CV Card -->
+            <div class="glass-panel rounded-[24px] p-stack-md flex flex-col gap-stack-sm relative overflow-hidden">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-headline-md text-headline-md text-on-surface text-[18px]">1. Tải lên CV</h3>
+                    <span
+                        class="bg-surface-container-highest text-on-surface-variant px-2 py-1 rounded-full font-label-sm text-label-sm">PDF,
+                        DOCX</span>
+                </div>
+                <div class="border-2 border-dashed border-outline-variant rounded-xl p-stack-md flex flex-col items-center justify-center text-center gap-stack-sm transition-colors hover:border-primary cursor-pointer bg-surface/50 h-[160px]"
+                    id="drop-zone">
+                    <div class="bg-primary-container/10 p-3 rounded-full text-primary mb-1">
+                        <span class="material-symbols-outlined text-[32px]"
+                            data-icon="upload_file">upload_file</span>
+                    </div>
+                    <p class="font-label-md text-label-md text-on-surface font-semibold">Kéo thả file hoặc nhấn để
+                        chọn</p>
+                    <p class="font-body-md text-body-md text-on-surface-variant text-[13px]">Dung lượng tối đa 5MB</p>
+                </div>
+                <div
+                    class="hidden border border-primary-fixed bg-surface-container-low rounded-xl p-3 flex items-center justify-between mt-2"
+                    id="uploaded-file">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary"
+                            data-icon="description">description</span>
+                        <div>
+                            <p class="font-label-md text-label-md text-on-surface">Hoang_Quoc_Bao_CV.pdf</p>
+                            <p class="font-body-md text-body-md text-on-surface-variant text-[12px]">1.2 MB</p>
+                        </div>
+                    </div>
+                    <button class="text-error hover:bg-error-container rounded-full p-1"
+                        onclick="document.getElementById('uploaded-file').classList.add('hidden')">
+                        <span class="material-symbols-outlined" data-icon="close">close</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- JD Card -->
+            <div class="glass-panel rounded-[24px] p-stack-md flex flex-col gap-stack-sm">
+                <h3 class="font-headline-md text-headline-md text-on-surface text-[18px]">2. Mô tả công việc (JD)</h3>
+                <textarea
+                    class="w-full min-h-[180px] bg-surface-container-low border border-outline-variant rounded-xl p-4 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary-fixed-dim focus:border-primary transition-shadow resize-y"
+                    placeholder="Dán mô tả công việc vào đây... Ví dụ: Vị trí Business Analyst tại ngân hàng ABC, yêu cầu 2 năm kinh nghiệm BPMN, Stakeholder Management..."></textarea>
+            </div>
+
+            <!-- Submit -->
+            <button
+                class="w-full bg-primary text-on-primary font-label-md text-label-md font-bold rounded-xl py-3 px-4 shadow-md hover:shadow-lg hover:bg-on-primary-fixed-variant transition-all duration-200 active:scale-95 flex justify-center items-center gap-2"
+                id="analyze-btn">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                Phân tích ngay với AI
+            </button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-lowest w-full py-stack-lg border-t border-outline-variant/50 mt-auto">
+        <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter font-body-md text-body-md">
+            <div class="col-span-1 md:col-span-2">
+                <p class="text-headline-md font-headline-md font-bold text-primary mb-2 flex items-center gap-2">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">neurology</span>
+                    Nexora AI
+                </p>
+                <p class="text-on-surface-variant">© 2024 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt
+                    Nam.</p>
+            </div>
+            <div class="col-span-1">
+                <h4 class="font-label-md text-label-md text-on-surface mb-4 font-semibold">Công ty</h4>
+                <ul class="space-y-2">
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm hover:underline"
+                            href="#">Về chúng tôi</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm hover:underline"
+                            href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="col-span-1">
+                <h4 class="font-label-md text-label-md text-on-surface mb-4 font-semibold">Hỗ trợ</h4>
+                <ul class="space-y-2">
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm hover:underline"
+                            href="#">Hướng dẫn</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm hover:underline"
+                            href="#">Điều khoản sử dụng</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm text-label-sm hover:underline"
+                            href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            const auth = new URLSearchParams(window.location.search).get('auth') === '1'
+                || document.documentElement.dataset.auth === 'true';
+            document.documentElement.dataset.auth = auth ? 'true' : 'false';
+            document.querySelectorAll('[data-show-when]').forEach(el => {
+                const target = el.dataset.showWhen;
+                el.classList.toggle('hidden', (target === 'auth') ? !auth : auth);
+            });
+
+            const btn = document.getElementById('analyze-btn');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.getElementById('analysis-result').scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>
