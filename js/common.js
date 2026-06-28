@@ -192,11 +192,14 @@
     const style = document.createElement('style');
     style.id = 'nexora-anim-css';
     style.textContent = `
-        html { scroll-behavior: smooth !important; }
+        /* Smooth scroll chỉ áp cho cuộn neo trong trang, không áp lúc load trang */
+        @media (prefers-reduced-motion: no-preference) {
+            html:focus-within { scroll-behavior: smooth; }
+        }
         body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
         @keyframes nexora-fade-up {
-            from { opacity: 0; transform: translateY(24px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes nexora-fade-in {
@@ -225,7 +228,7 @@
         }
 
         /* Apply animations: duration rõ ràng, easing mượt */
-        .nx-fade-up { animation: nexora-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .nx-fade-up { animation: nexora-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .nx-fade-in { animation: nexora-fade-in 0.6s ease-out both; }
         .nx-scale-in { animation: nexora-scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .nx-slide-right { animation: nexora-slide-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -244,11 +247,11 @@
             transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
                         box-shadow 0.3s ease,
                         border-color 0.3s ease;
-            will-change: transform;
         }
         .nx-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            will-change: transform;
         }
         .nx-btn {
             transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease;
@@ -294,53 +297,54 @@
     `;
     document.head.appendChild(style);
 
-    // Auto-stagger: phần tử có [data-nx-stagger] sẽ fade-up lần lượt
-    // Sections with [data-nx-section] fade-up khi vào viewport
+    // Reveal-on-scroll: animation chỉ HIỆN nội dung, không bao giờ để nội dung kẹt ẩn.
+    // First-paint guard: nếu JS chậm hoặc thiếu IntersectionObserver, nội dung vẫn hiện đầy đủ.
     function initStagger() {
-        // 1. data-nx-stagger: cha chứa nhiều child cần animate tuần tự
-        document.querySelectorAll('[data-nx-stagger]').forEach((group, gi) => {
-            Array.from(group.children).forEach((child, i) => {
-                child.style.animationDelay = (i * 80 + gi * 60) + 'ms';
-                child.classList.add('nx-fade-up');
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const hasIO = 'IntersectionObserver' in window;
+
+        // Nếu không hỗ trợ IO hoặc người dùng tắt motion: bỏ qua animation, để nội dung hiện nguyên.
+        if (!hasIO || reduceMotion) return;
+
+        const revealOnce = (el) => {
+            // Chỉ animate một lần; không re-hide phần tử đã hiện.
+            if (el.dataset.nxRevealed) return;
+            el.dataset.nxRevealed = '1';
+            el.classList.add('nx-fade-up');
+        };
+
+        // 1. data-nx-stagger: cha chứa nhiều child animate tuần tự khi vào viewport
+        const staggerObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                Array.from(e.target.children).forEach((child, i) => {
+                    child.style.animationDelay = (i * 70) + 'ms';
+                    revealOnce(child);
+                });
+                staggerObs.unobserve(e.target);
             });
-        });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('[data-nx-stagger]').forEach(el => staggerObs.observe(el));
 
-        // 2. data-nx-section: section lớn fade-up khi vào viewport
-        if ('IntersectionObserver' in window) {
-            const sectionObs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('nx-fade-up');
-                        sectionObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-            document.querySelectorAll('[data-nx-section]').forEach(el => sectionObs.observe(el));
-
-            // 3. data-nx-card: card trong viewport fade-up + stagger tự động
-            const cardObs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('nx-fade-up');
-                        cardObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-            document.querySelectorAll('[data-nx-card]').forEach(el => cardObs.observe(el));
-        }
+        // 2. data-nx-section + 3. data-nx-card: reveal khi vào viewport (animate một lần)
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                revealOnce(e.target);
+                revealObs.unobserve(e.target);
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+        document.querySelectorAll('[data-nx-section], [data-nx-card]').forEach(el => revealObs.observe(el));
 
         // 4. Bar grow: progress bar chạy animation khi vào viewport
-        if ('IntersectionObserver' in window) {
-            const barObs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('nx-bar-grow');
-                        barObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.4 });
-            document.querySelectorAll('[data-nx-bar]').forEach(el => barObs.observe(el));
-        }
+        const barObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                e.target.classList.add('nx-bar-grow');
+                barObs.unobserve(e.target);
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('[data-nx-bar]').forEach(el => barObs.observe(el));
     }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initStagger);
@@ -631,6 +635,57 @@
         }, true);
     }
 
+    function initNavigationPerformance() {
+        const internalLinks = Array.from(document.querySelectorAll('a[href]')).filter(link => {
+            const href = link.getAttribute('href') || '';
+            return href.endsWith('.html') || href.includes('.html?');
+        });
+        const prefetched = new Set();
+
+        const prefetch = (href) => {
+            const url = new URL(href, location.href);
+            if (url.origin !== location.origin || url.pathname === location.pathname || prefetched.has(url.href)) return;
+            prefetched.add(url.href);
+            const hint = document.createElement('link');
+            hint.rel = 'prefetch';
+            hint.href = url.href;
+            hint.as = 'document';
+            document.head.appendChild(hint);
+        };
+
+        internalLinks.forEach(link => {
+            link.addEventListener('pointerenter', () => prefetch(link.href), { once: true });
+            link.addEventListener('focus', () => prefetch(link.href), { once: true });
+        });
+
+        const warmMainRoutes = () => {
+            ['index.html', 'cv.html', 'interview.html', 'scenarios.html', 'star.html', 'report.html', 'pricing.html']
+                .forEach(prefetch);
+        };
+        if ('requestIdleCallback' in window) requestIdleCallback(warmMainRoutes, { timeout: 1500 });
+        else setTimeout(warmMainRoutes, 600);
+    }
+
+    function initSharedNavStyle() {
+        const nav = document.querySelector('body > nav, body > header');
+        if (!nav) return;
+        nav.classList.add('nx-top-nav');
+        const container = nav.querySelector(':scope > div');
+        container?.classList.add('nx-nav-container');
+        const rows = Array.from(nav.querySelectorAll('.hidden'));
+        const desktopRow = rows.find(row => row.querySelectorAll(':scope > a[href*=".html"]').length >= 6);
+        if (!desktopRow) return;
+        desktopRow.classList.add('nx-desktop-nav');
+        const currentFile = location.pathname.split('/').pop() || 'index.html';
+        desktopRow.querySelectorAll(':scope > a[href]').forEach(link => {
+            const linkFile = new URL(link.href, location.href).pathname.split('/').pop() || 'index.html';
+            link.classList.add('nx-desktop-nav-link');
+            link.classList.toggle('nx-desktop-nav-current', linkFile === currentFile);
+            if (linkFile === currentFile) link.setAttribute('aria-current', 'page');
+            else link.removeAttribute('aria-current');
+        });
+    }
+
     function init() {
         initCvUpload();
         initInterviewCv();
@@ -638,6 +693,8 @@
         initScenarioFilters();
         initPageActions();
         initRegisterValidation();
+        initNavigationPerformance();
+        initSharedNavStyle();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
