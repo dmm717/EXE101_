@@ -119,6 +119,27 @@
     --nx-shadow: 0 18px 55px rgba(37, 32, 92, 0.10);
 }
 
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root) {
+    animation: nx-page-out 130ms ease both;
+}
+
+::view-transition-new(root) {
+    animation: nx-page-in 180ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes nx-page-out {
+    to { opacity: .72; transform: translateY(-2px); }
+}
+
+@keyframes nx-page-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 html {
     background: #f9f9ff;
 }
@@ -157,9 +178,237 @@ a[class*="bg-primary"]:active,
     outline-offset: 3px;
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
 nav {
     border-bottom-color: rgba(71, 68, 91, .12) !important;
     box-shadow: 0 8px 28px rgba(37, 32, 92, .055);
+}
+
+body > :is(nav, header):first-of-type {
+    height: 64px !important;
+    background: rgba(249, 249, 255, .92) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-bottom: 1px solid rgba(71, 68, 91, .12) !important;
+    box-shadow: 0 8px 28px rgba(37, 32, 92, .055) !important;
+}
+
+body > :is(nav, header):first-of-type > div {
+    width: 100% !important;
+    height: 64px !important;
+    max-width: 1280px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: clamp(16px, 3vw, 40px) !important;
+    padding-right: clamp(16px, 3vw, 40px) !important;
+}
+
+@media (min-width: 1024px) {
+    body > :is(nav, header):first-of-type > div,
+    .nx-nav-container {
+        display: grid !important;
+        grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr) !important;
+        align-items: center !important;
+    }
+
+    body > :is(nav, header):first-of-type > div > :first-child {
+        justify-self: start;
+    }
+
+    body > :is(nav, header):first-of-type > div > :is(.nx-desktop-nav, [class~="lg:flex"]) {
+        justify-self: center;
+    }
+
+    body > :is(nav, header):first-of-type > div > #nav-slot {
+        justify-self: end;
+    }
+}
+
+:is(.nx-desktop-nav, body > :is(nav, header):first-of-type [class~="lg:flex"]) {
+    height: 64px !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+:is(.nx-desktop-nav, body > :is(nav, header):first-of-type [class~="lg:flex"]) > a {
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    border: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 8px 8px 4px 4px !important;
+    color: #464555 !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+}
+
+.nx-nav-container {
+    width: 100%;
+    padding-left: clamp(16px, 3vw, 40px) !important;
+    padding-right: clamp(16px, 3vw, 40px) !important;
+}
+
+.nx-desktop-nav {
+    gap: 8px !important;
+}
+
+.nx-desktop-nav-link {
+    box-sizing: border-box;
+    padding: 8px 12px !important;
+    border: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 8px 8px 4px 4px !important;
+    color: #464555 !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+}
+
+.nx-desktop-nav-link:hover {
+    color: #3525cd !important;
+    background: rgba(79, 70, 229, .07) !important;
+}
+
+.nx-desktop-nav-link.nx-desktop-nav-current {
+    color: #3525cd !important;
+    font-weight: 700 !important;
+    border-bottom-color: #3525cd !important;
+    background: rgba(79, 70, 229, .055) !important;
+}
+
+.nx-mobile-nav-current {
+    color: #3525cd !important;
+    font-weight: 700 !important;
+    background: rgba(79, 70, 229, .08) !important;
+}
+
+.nx-menu-open {
+    overflow: hidden;
+}
+
+/* Dashboard layout */
+.dashboard-stats-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+}
+
+.dashboard-stat-card {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    align-content: center;
+    align-items: center;
+    min-height: 112px;
+    column-gap: 16px;
+    padding: 16px;
+}
+
+.dashboard-stat-icon {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+}
+
+.dashboard-stat-content {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    grid-template-rows: auto auto;
+    align-content: center;
+    align-self: center;
+    min-width: 0;
+    row-gap: 4px;
+}
+
+.dashboard-stat-label {
+    display: block;
+    align-self: stretch;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dashboard-stat-value {
+    align-self: start;
+    line-height: 32px;
+}
+
+.dashboard-filter-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dashboard-select-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.dashboard-select {
+    width: 100%;
+    height: 48px;
+    min-width: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none !important;
+    cursor: pointer;
+    border-radius: 12px;
+    padding: 0 44px 0 16px;
+    line-height: 1.4;
+}
+
+.dashboard-select-icon {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    top: 50%;
+    right: 14px;
+    width: 20px;
+    height: 20px;
+    color: #555366;
+    font-size: 20px;
+    line-height: 1;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+.dashboard-select::-ms-expand {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .dashboard-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-filter-row {
+        flex-direction: row;
+    }
+
+    .dashboard-select-wrap {
+        width: 190px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
 
 .glass-panel,

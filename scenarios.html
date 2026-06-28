@@ -24,7 +24,7 @@
             <!-- Brand -->
             <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             <!-- Links (Desktop) -->
-            <div class="hidden md:flex items-center gap-6 h-full">
+            <div class="hidden lg:flex items-center gap-6 h-full">
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
                     href="index.html">Tổng quan</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
@@ -61,20 +61,20 @@
         <div
             class="bg-surface rounded-xl shadow-sm border border-outline-variant/30 p-stack-sm mb-stack-lg overflow-x-auto no-scrollbar">
             <div class="flex items-center gap-3 min-w-max">
-                <button class="px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-colors">Tất
+                <button data-scenario-filter="all" class="px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-colors">Tất
                     cả</button>
-                <button
+                <button data-scenario-filter="banking"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">Ngân
                     hàng</button>
-                <button
+                <button data-scenario-filter="ecommerce"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">eCommerce</button>
-                <button
+                <button data-scenario-filter="saas-fintech"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">SaaS &amp;
                     Fintech</button>
-                <button
+                <button data-scenario-filter="retail"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">Bán
                     lẻ</button>
-                <button
+                <button data-scenario-filter="logistics"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">Logistics</button>
             </div>
         </div>
@@ -83,7 +83,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
 
             <!-- Card 1: Banking -->
-            <div
+            <div data-case-card data-case-category="banking"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] hover:border-primary-fixed transition-all duration-300 group">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
@@ -110,14 +110,14 @@
                         class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
                             class="material-symbols-outlined text-[14px]">schedule</span> 45 Phút</span>
                 </div>
-                <button
-                    class="w-full bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container">
+                <a href="case.html?id=ekyc-onboarding"
+                    class="w-full min-h-12 bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container inline-flex items-center justify-center">
                     Bắt đầu case
-                </button>
+                </a>
             </div>
 
             <!-- Card 2: eCommerce -->
-            <div
+            <div data-case-card data-case-category="ecommerce"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] hover:border-primary-fixed transition-all duration-300 group">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
@@ -143,14 +143,14 @@
                         class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
                             class="material-symbols-outlined text-[14px]">schedule</span> 60 Phút</span>
                 </div>
-                <button
-                    class="w-full bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container">
+                <a href="case.html?id=order-crisis"
+                    class="w-full min-h-12 bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container inline-flex items-center justify-center">
                     Bắt đầu case
-                </button>
+                </a>
             </div>
 
             <!-- Card 3: Premium Locked (Glassmorphism overlay) -->
-            <div
+            <div data-case-card data-case-category="saas-fintech"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col relative overflow-hidden">
                 <!-- Content (Dimmed) -->
                 <div class="opacity-40 filter blur-[1px]">
@@ -185,7 +185,7 @@
                     <h4 class="font-headline-md text-headline-md text-on-background mb-1">Nội dung Độc quyền</h4>
                     <p class="font-body-md text-body-md text-on-surface-variant mb-4">Tính năng này dành cho gói Plus trở
                         lên.</p>
-                    <button
+                    <button data-upgrade-case
                         class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-md flex items-center gap-2">
                         <span>Nâng cấp ngay</span>
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
@@ -194,7 +194,7 @@
             </div>
 
             <!-- Card 4: Logistics -->
-            <div
+            <div data-case-card data-case-category="logistics"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] hover:border-primary-fixed transition-all duration-300 group">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
@@ -220,10 +220,10 @@
                         class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
                             class="material-symbols-outlined text-[14px]">schedule</span> 45 Phút</span>
                 </div>
-                <button
-                    class="w-full bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container">
+                <a href="case.html?id=ride-matching"
+                    class="w-full min-h-12 bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container inline-flex items-center justify-center">
                     Bắt đầu case
-                </button>
+                </a>
             </div>
 
         </div>

@@ -23,6 +23,7 @@
 
     function logout() {
         localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem('nexora_avatar');
         renderNav();
     }
 
@@ -32,13 +33,17 @@
                 href="login.html">Đăng nhập</a>
             <a class="hidden md:block bg-primary text-on-primary font-label-md text-label-md px-5 py-2.5 rounded-[12px] hover:bg-primary/90 transition-all shadow-[0_4px_20px_rgba(53,37,205,0.2)] active:scale-95"
                 href="register.html">Đăng ký</a>
-            <button id="mobile-menu-btn" class="md:hidden text-on-surface p-2">
+            <button id="mobile-menu-btn" class="lg:hidden text-on-surface p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl hover:bg-surface-container-low transition-colors"
+                type="button" aria-label="Mở menu" aria-controls="mobile-menu" aria-expanded="false">
                 <span class="material-symbols-outlined">menu</span>
             </button>
         `;
     }
 
     function mobileMenuHtml(isAuth, user) {
+        const homeLink = isAuth
+            ? '<a href="dashboard.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Trang chủ</a>'
+            : '<a href="index.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Tổng quan</a>';
         const account = isAuth ? `
                     <div class="flex items-center gap-3 rounded-2xl bg-surface-container-low p-4 mb-2">
                         <div class="w-11 h-11 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold">${(user?.name || 'U').charAt(0).toUpperCase()}</div>
@@ -52,12 +57,13 @@
                     <a href="register.html" class="bg-primary text-on-primary font-label-md text-label-md px-5 py-3 rounded-xl hover:bg-primary/90 transition-all shadow-md text-center">Đăng ký</a>
                     </div>`;
         const logoutAction = isAuth ? `
-                    <hr class="my-2 border-outline-variant/30">
-                    <button id="mobile-logout-btn" class="text-left text-error px-4 py-3 font-label-md text-label-md rounded-xl hover:bg-error-container">Đăng xuất</button>` : '';
+                <hr class="my-2 border-outline-variant/30">
+                <a href="account.html" class="text-on-surface block px-4 py-3 text-label-md hover:bg-surface-container-low transition-colors">Quản lý tài khoản</a>
+                <button id="mobile-logout-btn" class="text-left text-error px-4 py-3 font-label-md text-label-md rounded-xl hover:bg-error-container">Đăng xuất</button>` : '';
         return `
-                <div id="mobile-menu" class="md:hidden hidden fixed inset-0 top-16 bg-surface/98 backdrop-blur-md z-50 flex flex-col p-margin-mobile gap-1 pt-5 overflow-y-auto" aria-label="Menu di động">
+                <div id="mobile-menu" class="lg:hidden hidden fixed inset-0 top-16 bg-surface/98 backdrop-blur-md z-50 flex flex-col p-margin-mobile gap-1 pt-5 overflow-y-auto" aria-label="Menu di động">
                     ${account}
-                    <a href="index.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Tổng quan</a>
+                    ${homeLink}
                     <a href="cv.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Phân tích CV</a>
                     <a href="interview.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Phỏng vấn AI</a>
                     <a href="scenarios.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Tình huống</a>
@@ -77,6 +83,15 @@
             .join('')
             .toUpperCase();
         const plan = user.plan || 'Miễn phí';
+
+        // Read avatar from dedicated storage key (separate from user JSON to support large images)
+        let storedAvatar = null;
+        try { storedAvatar = localStorage.getItem('nexora_avatar') || null; } catch (e) {}
+        const avatarStyle = storedAvatar
+            ? `background-image:url('${storedAvatar}');background-size:cover;background-position:center;`
+            : '';
+        const avatarContent = storedAvatar ? '' : initials;
+
         return `
             <div class="hidden md:flex items-center gap-3 group relative">
                 <button id="user-menu-btn" class="flex items-center gap-3 hover:bg-surface-container-low rounded-xl px-2 py-1 transition-colors">
@@ -84,16 +99,18 @@
                         <span class="font-label-md text-label-md text-on-surface font-bold">${user.name}</span>
                         <span class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">${plan}</span>
                     </div>
-                    <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold border-2 border-surface-container-high shadow-sm">${initials}</div>
+                    <div id="nav-user-avatar" class="w-10 h-10 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold border-2 border-surface-container-high shadow-sm overflow-hidden" style="${avatarStyle}">${avatarContent}</div>
                 </button>
                 <div id="user-menu" class="hidden absolute right-0 top-full mt-2 w-56 bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant/30 py-2 z-50">
+                    <a href="account.html" class="block px-4 py-2 text-label-md text-on-surface hover:bg-surface-container-low transition-colors">Quản lý tài khoản</a>
                     <a href="report.html" class="block px-4 py-2 text-label-md text-on-surface hover:bg-surface-container-low transition-colors">Báo cáo của tôi</a>
                     <a href="pricing.html" class="block px-4 py-2 text-label-md text-on-surface hover:bg-surface-container-low transition-colors">Nâng cấp gói</a>
                     <hr class="my-1 border-outline-variant/30">
                     <button id="logout-btn" class="w-full text-left px-4 py-2 text-label-md text-error hover:bg-surface-container-low transition-colors">Đăng xuất</button>
                 </div>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden text-on-surface p-2">
+            <button id="mobile-menu-btn" class="lg:hidden text-on-surface p-2 min-w-11 min-h-11 inline-flex items-center justify-center rounded-xl hover:bg-surface-container-low transition-colors"
+                type="button" aria-label="Mở menu" aria-controls="mobile-menu" aria-expanded="false">
                 <span class="material-symbols-outlined">menu</span>
             </button>
         `;
@@ -106,6 +123,45 @@
         });
         document.querySelectorAll('.guest-only').forEach(el => {
             el.classList.toggle('hidden', auth);
+        });
+    }
+
+    function applyNavigationDestination(user) {
+        const nav = document.querySelector('body > nav, body > header');
+        if (!nav) return;
+
+        const destination = user ? 'dashboard.html' : 'index.html';
+        const label = user ? 'Trang chủ' : 'Tổng quan';
+        const logoLink = Array.from(nav.querySelectorAll('a')).find(link => link.querySelector('img[alt="Nexora"]'));
+        if (logoLink) logoLink.href = destination;
+
+        const desktopRow = Array.from(nav.querySelectorAll('.hidden')).find(row =>
+            row.querySelectorAll(':scope > a[href*=".html"]').length >= 6
+        );
+        if (!desktopRow) return;
+
+        const homeLink = Array.from(desktopRow.querySelectorAll(':scope > a[href]')).find(link => {
+            const file = new URL(link.href, location.href).pathname.split('/').pop();
+            return file === 'index.html' || file === 'dashboard.html';
+        });
+        if (homeLink) {
+            homeLink.href = destination;
+            homeLink.textContent = label;
+        }
+    }
+
+    function applyMobileNavigationState() {
+        const menu = document.getElementById('mobile-menu');
+        if (!menu) return;
+
+        const currentFile = location.pathname.split('/').pop() || 'index.html';
+        const activeFile = currentFile === 'case.html' ? 'scenarios.html' : currentFile;
+        menu.querySelectorAll(':scope > a[href]').forEach(link => {
+            const linkFile = new URL(link.href, location.href).pathname.split('/').pop() || 'index.html';
+            const isCurrent = linkFile === activeFile;
+            link.classList.toggle('nx-mobile-nav-current', isCurrent);
+            if (isCurrent) link.setAttribute('aria-current', 'page');
+            else link.removeAttribute('aria-current');
         });
     }
 
@@ -124,20 +180,31 @@
                 const mobileBtn = document.getElementById('mobile-menu-btn');
                 const mobileMenu = document.getElementById('mobile-menu');
                 if (mobileBtn && mobileMenu) {
+                    const setMobileMenuOpen = (open) => {
+                        mobileMenu.classList.toggle('hidden', !open);
+                        mobileBtn.setAttribute('aria-expanded', String(open));
+                        mobileBtn.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+                        mobileBtn.querySelector('.material-symbols-outlined').textContent = open ? 'close' : 'menu';
+                        document.body.classList.toggle('nx-menu-open', open);
+                    };
                     mobileBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        mobileMenu.classList.toggle('hidden');
-                        const open = !mobileMenu.classList.contains('hidden');
-                        mobileBtn.setAttribute('aria-expanded', String(open));
-                        document.body.classList.toggle('nx-menu-open', open);
+                        setMobileMenuOpen(mobileMenu.classList.contains('hidden'));
                     });
                     mobileMenu.addEventListener('click', (e) => {
                         if (e.target === mobileMenu || e.target.tagName === 'A') {
-                            mobileMenu.classList.add('hidden');
-                            document.body.classList.remove('nx-menu-open');
+                            setMobileMenuOpen(false);
+                        }
+                    });
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                            setMobileMenuOpen(false);
+                            mobileBtn.focus();
                         }
                     });
                 }
+
+                applyMobileNavigationState();
 
                 document.getElementById('mobile-logout-btn')?.addEventListener('click', () => {
                     logout();
@@ -164,6 +231,7 @@
                     }
                 }
             }
+            applyNavigationDestination(user);
             applyContentVisibility(user);
         } catch (err) {
             console.warn('Nexora nav render skipped:', err);
@@ -192,11 +260,14 @@
     const style = document.createElement('style');
     style.id = 'nexora-anim-css';
     style.textContent = `
-        html { scroll-behavior: smooth !important; }
+        /* Smooth scroll chỉ áp cho cuộn neo trong trang, không áp lúc load trang */
+        @media (prefers-reduced-motion: no-preference) {
+            html:focus-within { scroll-behavior: smooth; }
+        }
         body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
         @keyframes nexora-fade-up {
-            from { opacity: 0; transform: translateY(24px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes nexora-fade-in {
@@ -225,7 +296,7 @@
         }
 
         /* Apply animations: duration rõ ràng, easing mượt */
-        .nx-fade-up { animation: nexora-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        .nx-fade-up { animation: nexora-fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .nx-fade-in { animation: nexora-fade-in 0.6s ease-out both; }
         .nx-scale-in { animation: nexora-scale-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
         .nx-slide-right { animation: nexora-slide-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
@@ -244,11 +315,11 @@
             transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
                         box-shadow 0.3s ease,
                         border-color 0.3s ease;
-            will-change: transform;
         }
         .nx-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            will-change: transform;
         }
         .nx-btn {
             transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease;
@@ -294,53 +365,54 @@
     `;
     document.head.appendChild(style);
 
-    // Auto-stagger: phần tử có [data-nx-stagger] sẽ fade-up lần lượt
-    // Sections with [data-nx-section] fade-up khi vào viewport
+    // Reveal-on-scroll: animation chỉ HIỆN nội dung, không bao giờ để nội dung kẹt ẩn.
+    // First-paint guard: nếu JS chậm hoặc thiếu IntersectionObserver, nội dung vẫn hiện đầy đủ.
     function initStagger() {
-        // 1. data-nx-stagger: cha chứa nhiều child cần animate tuần tự
-        document.querySelectorAll('[data-nx-stagger]').forEach((group, gi) => {
-            Array.from(group.children).forEach((child, i) => {
-                child.style.animationDelay = (i * 80 + gi * 60) + 'ms';
-                child.classList.add('nx-fade-up');
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const hasIO = 'IntersectionObserver' in window;
+
+        // Nếu không hỗ trợ IO hoặc người dùng tắt motion: bỏ qua animation, để nội dung hiện nguyên.
+        if (!hasIO || reduceMotion) return;
+
+        const revealOnce = (el) => {
+            // Chỉ animate một lần; không re-hide phần tử đã hiện.
+            if (el.dataset.nxRevealed) return;
+            el.dataset.nxRevealed = '1';
+            el.classList.add('nx-fade-up');
+        };
+
+        // 1. data-nx-stagger: cha chứa nhiều child animate tuần tự khi vào viewport
+        const staggerObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                Array.from(e.target.children).forEach((child, i) => {
+                    child.style.animationDelay = (i * 70) + 'ms';
+                    revealOnce(child);
+                });
+                staggerObs.unobserve(e.target);
             });
-        });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('[data-nx-stagger]').forEach(el => staggerObs.observe(el));
 
-        // 2. data-nx-section: section lớn fade-up khi vào viewport
-        if ('IntersectionObserver' in window) {
-            const sectionObs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('nx-fade-up');
-                        sectionObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-            document.querySelectorAll('[data-nx-section]').forEach(el => sectionObs.observe(el));
-
-            // 3. data-nx-card: card trong viewport fade-up + stagger tự động
-            const cardObs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('nx-fade-up');
-                        cardObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-            document.querySelectorAll('[data-nx-card]').forEach(el => cardObs.observe(el));
-        }
+        // 2. data-nx-section + 3. data-nx-card: reveal khi vào viewport (animate một lần)
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                revealOnce(e.target);
+                revealObs.unobserve(e.target);
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+        document.querySelectorAll('[data-nx-section], [data-nx-card]').forEach(el => revealObs.observe(el));
 
         // 4. Bar grow: progress bar chạy animation khi vào viewport
-        if ('IntersectionObserver' in window) {
-            const barObs = new IntersectionObserver((entries) => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.classList.add('nx-bar-grow');
-                        barObs.unobserve(e.target);
-                    }
-                });
-            }, { threshold: 0.4 });
-            document.querySelectorAll('[data-nx-bar]').forEach(el => barObs.observe(el));
-        }
+        const barObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                e.target.classList.add('nx-bar-grow');
+                barObs.unobserve(e.target);
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('[data-nx-bar]').forEach(el => barObs.observe(el));
     }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initStagger);
@@ -545,36 +617,28 @@
         const filterWrap = document.querySelector('.no-scrollbar');
         const grid = filterWrap?.nextElementSibling;
         if (!filterWrap || !grid) return;
-        const cards = Array.from(grid.children);
+        const cards = Array.from(grid.querySelectorAll('[data-case-card]'));
         const empty = document.createElement('div');
         empty.className = 'hidden col-span-full rounded-2xl border border-outline-variant/30 bg-surface p-8 text-center';
         empty.innerHTML = '<span class="material-symbols-outlined text-primary text-[32px]">search_off</span><h3 class="font-headline-md text-on-surface mt-3">Chưa có case phù hợp</h3><p class="text-on-surface-variant mt-2">Thử một nhóm khác hoặc quay lại sau nhen.</p>';
         grid.appendChild(empty);
-        filterWrap.querySelectorAll('button').forEach(button => {
+        filterWrap.querySelectorAll('[data-scenario-filter]').forEach(button => {
             button.addEventListener('click', () => {
-                const category = cleanText(button);
-                filterWrap.querySelectorAll('button').forEach(item => {
+                const category = button.dataset.scenarioFilter;
+                filterWrap.querySelectorAll('[data-scenario-filter]').forEach(item => {
                     const active = item === button;
                     item.classList.toggle('bg-primary', active);
                     item.classList.toggle('text-on-primary', active);
                     item.classList.toggle('bg-surface-container', !active);
                 });
                 cards.forEach(card => {
-                    const normalized = cleanText(card).toLowerCase();
-                    const aliases = category === 'SaaS & Fintech' ? ['saas', 'fintech'] : [category.toLowerCase()];
-                    card.hidden = category !== 'Tất cả' && !aliases.some(alias => normalized.includes(alias));
+                    const cardCategory = card.dataset.caseCategory;
+                    card.hidden = category !== 'all' && cardCategory !== category;
                 });
                 empty.classList.toggle('hidden', cards.some(card => !card.hidden));
             });
         });
-        grid.querySelectorAll('button').forEach(button => {
-            const label = cleanText(button);
-            if (label.includes('Bắt đầu case')) button.addEventListener('click', () => {
-                const role = cleanText(button.closest('div.bg-surface')?.querySelector('h3')) || 'Case Study';
-                location.href = `interview.html?role=${encodeURIComponent(role)}`;
-            });
-            if (label.includes('Nâng cấp ngay')) button.addEventListener('click', () => location.href = 'pricing.html');
-        });
+        grid.querySelector('[data-upgrade-case]')?.addEventListener('click', () => location.href = 'pricing.html');
     }
 
     function initPageActions() {
@@ -605,7 +669,7 @@
                 button.type = 'button';
                 button.addEventListener('click', () => {
                     window.NexoraAuth?.setAuth({ name: 'Người dùng Demo', email: 'demo@nexora.vn', plan: 'Pro' });
-                    location.href = 'cv.html';
+                    location.href = 'dashboard.html';
                 });
             }
         });
@@ -631,6 +695,61 @@
         }, true);
     }
 
+    function initNavigationPerformance() {
+        const internalLinks = Array.from(document.querySelectorAll('a[href]')).filter(link => {
+            const href = link.getAttribute('href') || '';
+            return href.endsWith('.html') || href.includes('.html?');
+        });
+        const prefetched = new Set();
+
+        const prefetch = (href) => {
+            const url = new URL(href, location.href);
+            if (url.origin !== location.origin || url.pathname === location.pathname || prefetched.has(url.href)) return;
+            prefetched.add(url.href);
+            const hint = document.createElement('link');
+            hint.rel = 'prefetch';
+            hint.href = url.href;
+            hint.as = 'document';
+            document.head.appendChild(hint);
+        };
+
+        internalLinks.forEach(link => {
+            link.addEventListener('pointerenter', () => prefetch(link.href), { once: true });
+            link.addEventListener('focus', () => prefetch(link.href), { once: true });
+        });
+
+        const warmMainRoutes = () => {
+            const homeRoute = window.NexoraAuth?.getAuth() ? 'dashboard.html' : 'index.html';
+            [homeRoute, 'cv.html', 'interview.html', 'scenarios.html', 'star.html', 'report.html', 'pricing.html']
+                .forEach(prefetch);
+        };
+        if ('requestIdleCallback' in window) requestIdleCallback(warmMainRoutes, { timeout: 1500 });
+        else setTimeout(warmMainRoutes, 600);
+    }
+
+    function initSharedNavStyle() {
+        const nav = document.querySelector('body > nav, body > header');
+        if (!nav) return;
+        nav.classList.add('nx-top-nav');
+        const container = nav.querySelector(':scope > div');
+        container?.classList.add('nx-nav-container');
+        const rows = Array.from(nav.querySelectorAll('.hidden'));
+        const desktopRow = rows.find(row => row.querySelectorAll(':scope > a[href*=".html"]').length >= 6);
+        if (!desktopRow) return;
+        desktopRow.classList.remove('md:flex');
+        desktopRow.classList.add('lg:flex');
+        desktopRow.classList.add('nx-desktop-nav');
+        const currentFile = location.pathname.split('/').pop() || 'index.html';
+        const activeFile = currentFile === 'case.html' ? 'scenarios.html' : currentFile;
+        desktopRow.querySelectorAll(':scope > a[href]').forEach(link => {
+            const linkFile = new URL(link.href, location.href).pathname.split('/').pop() || 'index.html';
+            link.classList.add('nx-desktop-nav-link');
+            link.classList.toggle('nx-desktop-nav-current', linkFile === activeFile);
+            if (linkFile === activeFile) link.setAttribute('aria-current', 'page');
+            else link.removeAttribute('aria-current');
+        });
+    }
+
     function init() {
         initCvUpload();
         initInterviewCv();
@@ -638,6 +757,8 @@
         initScenarioFilters();
         initPageActions();
         initRegisterValidation();
+        initNavigationPerformance();
+        initSharedNavStyle();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

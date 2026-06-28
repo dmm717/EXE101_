@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+    <title>Làm case - Nexora AI</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
+    <script src="js/case-data.js" defer></script>
+    <script src="js/case.js" defer></script>
+</head>
+
+<body class="bg-background text-on-background font-body-md antialiased min-h-[100dvh]">
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-surface focus:px-4 focus:py-3 focus:text-primary focus:shadow-md">
+        Bỏ qua điều hướng
+    </a>
+
+    <nav class="fixed top-0 w-full h-16 bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30 z-50">
+        <div class="flex justify-between items-center h-16 px-margin-desktop max-w-container-max mx-auto">
+            <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
+            <div class="hidden lg:flex items-center gap-6 h-full">
+                <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
+                    href="index.html">Tổng quan</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
+                    href="cv.html">Phân tích CV</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
+                    href="interview.html">Phỏng vấn AI</a>
+                <a class="text-primary font-bold border-b-2 border-primary flex items-center h-full text-label-md font-label-md mt-[2px]"
+                    href="scenarios.html">Tình huống</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
+                    href="star.html">STAR</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
+                    href="report.html">Báo cáo</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
+                    href="pricing.html">Bảng giá</a>
+            </div>
+            <div id="nav-slot" class="flex items-center gap-3"></div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="min-h-[100dvh] pt-16">
+        <section id="case-workspace" class="mx-auto w-full max-w-5xl px-margin-mobile pb-8 pt-8 md:px-margin-desktop md:pb-12 md:pt-12">
+            <a href="scenarios.html"
+                class="inline-flex min-h-11 items-center gap-2 rounded-lg pr-3 text-label-md font-label-md text-primary hover:bg-primary-fixed/50 focus-visible:bg-primary-fixed/50">
+                <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
+                Quay lại Kho tình huống
+            </a>
+
+            <header class="mt-5">
+                <h1 id="case-title" class="max-w-4xl font-headline-lg text-headline-lg-mobile text-on-surface md:text-headline-lg"></h1>
+                <p id="case-description" class="mt-3 max-w-[70ch] text-body-md text-on-surface-variant"></p>
+                <div class="mt-4 flex flex-wrap items-center gap-2 text-label-sm font-label-sm">
+                    <span id="case-category" class="rounded-full bg-surface-container-high px-3 py-1.5 text-on-surface-variant"></span>
+                    <span id="case-difficulty" class="rounded-full bg-primary-fixed px-3 py-1.5 text-on-primary-fixed-variant"></span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full border border-outline-variant/50 px-3 py-1.5 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-[16px]" aria-hidden="true">schedule</span>
+                        <span id="case-duration"></span>
+                    </span>
+                </div>
+            </header>
+
+            <div class="mt-8 flex items-center gap-4 md:mt-10">
+                <p id="case-progress-label" class="shrink-0 text-label-md font-label-md tabular-nums text-on-surface-variant"></p>
+                <div id="case-progress" class="h-2 flex-1 overflow-hidden rounded-full bg-primary-fixed" role="progressbar"
+                    aria-label="Tiến độ làm case" aria-valuemin="1">
+                    <div id="case-progress-bar" class="h-full rounded-full bg-primary transition-[width] duration-200"></div>
+                </div>
+            </div>
+
+            <section class="mt-8 border-t border-outline-variant/40 pt-8 md:mt-10 md:pt-10" aria-labelledby="case-question-title">
+                <p id="case-question-number" class="text-label-md font-label-md text-primary"></p>
+                <h2 id="case-question-title" tabindex="-1"
+                    class="mt-3 max-w-[32ch] font-headline-lg text-headline-md text-on-surface md:text-headline-lg"></h2>
+                <p id="case-question-helper" class="mt-3 max-w-[70ch] text-body-md text-on-surface-variant"></p>
+
+                <div class="mt-7">
+                    <label for="case-answer" class="mb-2 block text-label-md font-label-md text-on-surface">Câu trả lời của bạn</label>
+                    <textarea id="case-answer" rows="8" maxlength="2000" aria-describedby="case-answer-help case-answer-error"
+                        class="w-full resize-y rounded-xl border border-outline-variant bg-surface p-4 text-body-md leading-relaxed text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        placeholder="Nhập câu trả lời của bạn..."></textarea>
+                    <div class="mt-2 flex items-start justify-between gap-4">
+                        <div>
+                            <p id="case-answer-help" class="text-label-sm text-on-surface-variant">Câu trả lời được lưu tự động trên thiết bị này.</p>
+                            <p id="case-answer-error" class="mt-1 hidden text-label-sm font-label-sm text-error" role="alert">Hãy nhập câu trả lời trước khi tiếp tục.</p>
+                        </div>
+                        <span id="case-character-count" class="shrink-0 text-label-sm tabular-nums text-on-surface-variant">0/2000</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="sticky bottom-0 mt-8 grid grid-cols-2 gap-x-3 border-t border-outline-variant/40 bg-background/95 pb-[max(16px,env(safe-area-inset-bottom))] pt-4 backdrop-blur-md md:static md:mt-10 md:flex md:items-center md:justify-between md:gap-4 md:bg-transparent md:pb-0 md:backdrop-blur-none">
+                <button id="case-previous" type="button"
+                    class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-primary px-5 text-label-md font-label-md text-primary hover:bg-primary-fixed/60 disabled:cursor-not-allowed disabled:border-outline-variant disabled:text-outline md:w-auto">
+                    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_back</span>
+                    Câu trước
+                </button>
+
+                <p id="case-save-status" class="col-span-2 row-start-1 my-2 flex min-h-6 items-center justify-center gap-2 text-label-sm text-on-surface-variant md:my-0" role="status" aria-live="polite">
+                    <span class="material-symbols-outlined text-[18px]" aria-hidden="true">cloud_done</span>
+                    <span>Đã lưu tự động</span>
+                </p>
+
+                <button id="case-next" type="button"
+                    class="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 text-label-md font-label-md text-on-primary shadow-[0_4px_8px_rgba(53,37,205,0.22)] hover:bg-primary-container disabled:cursor-not-allowed disabled:bg-primary-fixed disabled:text-on-primary-fixed-variant disabled:shadow-none md:w-auto">
+                    <span id="case-next-label">Câu tiếp theo</span>
+                    <span id="case-next-icon" class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_forward</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="case-complete" class="hidden mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-3xl flex-col items-center justify-center px-margin-mobile py-12 text-center md:px-margin-desktop" aria-labelledby="case-complete-title">
+            <div class="grid h-16 w-16 place-items-center rounded-2xl bg-primary-fixed text-primary">
+                <span class="material-symbols-outlined text-[36px]" aria-hidden="true">task_alt</span>
+            </div>
+            <h1 id="case-complete-title" tabindex="-1" class="mt-6 font-headline-lg text-headline-lg-mobile text-on-surface md:text-headline-lg">Bạn đã hoàn thành case</h1>
+            <p id="case-complete-message" class="mt-3 max-w-[58ch] text-body-md text-on-surface-variant"></p>
+            <div class="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
+                <button id="case-restart" type="button"
+                    class="inline-flex min-h-12 flex-1 items-center justify-center rounded-xl border border-primary px-5 text-label-md font-label-md text-primary hover:bg-primary-fixed/60">
+                    Làm lại case
+                </button>
+                <a href="scenarios.html"
+                    class="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-label-md font-label-md text-on-primary hover:bg-primary-container">
+                    Về Kho tình huống
+                    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_forward</span>
+                </a>
+            </div>
+        </section>
+
+        <section id="case-error" class="hidden mx-auto flex min-h-[calc(100dvh-4rem)] w-full max-w-2xl flex-col items-center justify-center px-margin-mobile py-12 text-center md:px-margin-desktop" aria-labelledby="case-error-title">
+            <div class="grid h-16 w-16 place-items-center rounded-2xl bg-error-container text-error">
+                <span class="material-symbols-outlined text-[36px]" aria-hidden="true">search_off</span>
+            </div>
+            <h1 id="case-error-title" class="mt-6 font-headline-lg text-headline-lg-mobile text-on-surface md:text-headline-lg">Không tìm thấy case này</h1>
+            <p class="mt-3 max-w-[58ch] text-body-md text-on-surface-variant">Case có thể đã được cập nhật hoặc đường dẫn không còn hợp lệ.</p>
+            <a href="scenarios.html"
+                class="mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-label-md font-label-md text-on-primary hover:bg-primary-container">
+                Quay lại Kho tình huống
+            </a>
+        </section>
+    </main>
+</body>
+
+</html>

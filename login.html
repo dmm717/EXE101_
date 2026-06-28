@@ -119,6 +119,37 @@
             </p>
         </div>
     </div>
+                </div>
+            </div>
+            <!-- Actions -->
+            <div class="flex items-center justify-between mt-stack-sm mb-stack-lg">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                        class="rounded text-primary focus:ring-primary border-outline-variant bg-surface-container-lowest w-4 h-4"
+                        type="checkbox">
+                    <span class="font-label-md text-label-md text-on-surface-variant">Ghi nhớ đăng nhập</span>
+                </label>
+                <a class="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant hover:underline transition-colors"
+                    href="#">Quên mật khẩu?</a>
+            </div>
+            <!-- Submit Button -->
+            <button
+                class="w-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-label-md font-bold rounded-xl py-3 px-4 shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 flex justify-center items-center gap-2"
+                type="submit">
+                Đăng nhập
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <div class="mt-stack-lg text-center">
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                Chưa có tài khoản?
+                <a class="font-label-md text-label-md text-primary font-bold hover:underline ml-1"
+                    href="register.html">Đăng ký ngay</a>
+            </p>
+        </div>
+    </div>
 
     <script>
         document.getElementById('login-form').addEventListener('submit', function (e) {
@@ -126,8 +157,12 @@
             var emailInput = document.getElementById('email');
             var email = (emailInput && emailInput.value) ? emailInput.value : 'user@nexora.ai';
             var name = email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) || 'User';
+            
+            // Clear any old avatar before logging in a new user
+            localStorage.removeItem('nexora_avatar');
+            
             window.NexoraAuth.setAuth({ name: name, email: email, plan: 'Pro' });
-            window.location.href = 'cv.html';
+            window.location.href = 'dashboard.html';
         });
     </script>
 </body>
