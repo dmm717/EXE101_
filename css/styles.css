@@ -208,6 +208,97 @@ nav {
     box-shadow: none !important;
 }
 
+.nx-logo-marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+.nx-logo-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: nx-logo-scroll 25s linear infinite;
+}
+
+.nx-logo-group {
+    display: flex;
+    align-items: center;
+    gap: clamp(34px, 5vw, 76px);
+    padding-right: clamp(34px, 5vw, 76px);
+}
+
+.nx-logo-item {
+    display: grid;
+    place-items: center;
+    width: clamp(72px, 7vw, 108px);
+    height: 56px;
+    flex: 0 0 auto;
+    opacity: .9;
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.nx-logo-item img {
+    display: block;
+    max-width: 100%;
+    max-height: 48px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.nx-logo-item.nx-logo-wide {
+    width: clamp(96px, 9vw, 138px);
+}
+
+.nx-brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #111827;
+}
+
+.nx-brand-lockup img {
+    width: 26px;
+    height: 30px;
+    flex: 0 0 auto;
+}
+
+.nx-brand-lockup strong {
+    font: 800 21px/1 Arial, sans-serif;
+    letter-spacing: -1.2px;
+}
+
+.nx-logo-item:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.nx-logo-marquee:hover .nx-logo-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes nx-logo-scroll {
+    to { transform: translateX(-50%); }
+}
+
+@media (max-width: 640px) {
+    .nx-logo-group {
+        gap: 30px;
+        padding-right: 30px;
+    }
+
+    .nx-logo-item {
+        width: 72px;
+        height: 48px;
+    }
+
+    .nx-logo-item img {
+        max-height: 40px;
+    }
+}
+
 .nx-plan-disabled {
     border: 1px solid rgba(53, 37, 205, .2) !important;
     background: #e2dfff !important;
