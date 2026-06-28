@@ -19,7 +19,7 @@
     class="bg-background text-on-surface font-body-md text-body-md min-h-screen flex items-center justify-center relative overflow-hidden">
 
     <!-- Abstract Background Pattern -->
-    <div class="absolute inset-0 pointer-events-none opacity-40">
+    <div class="absolute inset-0 pointer-events-none opacity-40 overflow-hidden">
         <div
             class="absolute -top-20 -left-20 w-96 h-96 bg-primary-fixed rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
         </div>
@@ -87,7 +87,7 @@
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">lock</span>
                     <input
                         class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-3 pl-10 pr-4 font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary-fixed-dim focus:border-primary transition-shadow"
-                        id="password" placeholder="••••••••" required type="password">
+                        id="password" minlength="6" autocomplete="current-password" placeholder="••••••••" required type="password">
                 </div>
             </div>
             <!-- Actions -->
