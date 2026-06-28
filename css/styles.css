@@ -109,3 +109,341 @@
 .report-bg {
     background-color: #F5F3FF;
 }
+
+/* MVP polish: consistent focus, interaction feedback and calmer surfaces */
+:root {
+    color-scheme: light;
+    --nx-accent: #3525cd;
+    --nx-ink: #111c2d;
+    --nx-border: rgba(71, 68, 91, 0.18);
+    --nx-shadow: 0 18px 55px rgba(37, 32, 92, 0.10);
+}
+
+html {
+    background: #f9f9ff;
+}
+
+body {
+    overflow-x: clip;
+}
+
+body.nx-menu-open {
+    overflow: hidden;
+}
+
+button,
+a,
+input,
+textarea,
+select,
+[role="button"] {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a[class*="bg-primary"],
+[role="button"] {
+    transition: transform 180ms cubic-bezier(.2, .8, .2, 1), box-shadow 220ms ease, background-color 220ms ease, border-color 220ms ease !important;
+}
+
+button:active,
+a[class*="bg-primary"]:active,
+[role="button"]:active {
+    transform: translateY(1px) scale(.985);
+}
+
+:focus-visible {
+    outline: 3px solid rgba(53, 37, 205, .28);
+    outline-offset: 3px;
+}
+
+nav {
+    border-bottom-color: rgba(71, 68, 91, .12) !important;
+    box-shadow: 0 8px 28px rgba(37, 32, 92, .055);
+}
+
+.glass-panel,
+.glass-card {
+    border-color: var(--nx-border);
+    box-shadow: var(--nx-shadow);
+}
+
+#drop-zone {
+    position: relative;
+}
+
+#drop-zone.nx-upload-ready {
+    border-color: #3525cd;
+    background: rgba(226, 223, 255, .46);
+}
+
+.nx-current-plan {
+    position: relative;
+    border-color: #3525cd !important;
+    background: linear-gradient(180deg, rgba(226, 223, 255, .42), #ffffff 34%);
+    box-shadow: 0 18px 55px rgba(53, 37, 205, .14) !important;
+}
+
+.nx-current-plan-badge {
+    position: absolute;
+    top: 0;
+    right: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transform: translateY(-50%);
+    padding: 7px 12px;
+    border-radius: 10px;
+    background: #3525cd;
+    color: #fff;
+    box-shadow: 0 8px 22px rgba(53, 37, 205, .22);
+    font: 700 12px/1 Inter, sans-serif;
+    white-space: nowrap;
+}
+
+.nx-plan-disabled,
+.nx-plan-disabled-subtle {
+    cursor: default !important;
+    pointer-events: none;
+    box-shadow: none !important;
+}
+
+.nx-logo-marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+.nx-logo-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: nx-logo-scroll 25s linear infinite;
+}
+
+.nx-logo-group {
+    display: flex;
+    align-items: center;
+    gap: clamp(34px, 5vw, 76px);
+    padding-right: clamp(34px, 5vw, 76px);
+}
+
+.nx-logo-item {
+    display: grid;
+    place-items: center;
+    width: clamp(72px, 7vw, 108px);
+    height: 56px;
+    flex: 0 0 auto;
+    opacity: .9;
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.nx-logo-item img {
+    display: block;
+    max-width: 100%;
+    max-height: 48px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.nx-logo-item.nx-logo-wide {
+    width: clamp(96px, 9vw, 138px);
+}
+
+.nx-brand-lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #111827;
+}
+
+.nx-brand-lockup img {
+    width: 26px;
+    height: 30px;
+    flex: 0 0 auto;
+}
+
+.nx-brand-lockup strong {
+    font: 800 21px/1 Arial, sans-serif;
+    letter-spacing: -1.2px;
+}
+
+.nx-logo-item:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.nx-logo-marquee:hover .nx-logo-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes nx-logo-scroll {
+    to { transform: translateX(-50%); }
+}
+
+@media (max-width: 640px) {
+    .nx-logo-group {
+        gap: 30px;
+        padding-right: 30px;
+    }
+
+    .nx-logo-item {
+        width: 72px;
+        height: 48px;
+    }
+
+    .nx-logo-item img {
+        max-height: 40px;
+    }
+}
+
+.nx-plan-disabled {
+    border: 1px solid rgba(53, 37, 205, .2) !important;
+    background: #e2dfff !important;
+    color: #3323cc !important;
+}
+
+.nx-plan-disabled-subtle {
+    border-color: rgba(71, 68, 91, .16) !important;
+    background: #f0f3ff !important;
+    color: #64636d !important;
+}
+
+.nx-toast {
+    position: fixed;
+    z-index: 500;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: min(420px, calc(100vw - 32px));
+    padding: 13px 16px;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 14px;
+    background: #20283a;
+    color: #f7f8ff;
+    box-shadow: 0 20px 50px rgba(17, 28, 45, .24);
+    font: 600 14px/1.45 Inter, sans-serif;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 220ms ease, transform 220ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.nx-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nx-toast-error {
+    background: #8f1d1d;
+}
+
+.nx-dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 450;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(17, 28, 45, .46);
+    backdrop-filter: blur(10px);
+}
+
+.nx-dialog {
+    position: relative;
+    width: min(100%, 480px);
+    padding: 32px;
+    border: 1px solid rgba(255, 255, 255, .75);
+    border-radius: 20px;
+    background: #fbfbff;
+    color: var(--nx-ink);
+    box-shadow: 0 28px 80px rgba(17, 28, 45, .24);
+    animation: nx-dialog-in 260ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.nx-dialog h2 {
+    margin: 18px 0 8px;
+    font: 700 24px/1.25 "Be Vietnam Pro", sans-serif;
+}
+
+.nx-dialog p {
+    margin: 0 0 24px;
+    color: #555366;
+    line-height: 1.65;
+}
+
+.nx-dialog-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #e2dfff;
+    color: var(--nx-accent);
+}
+
+.nx-dialog-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    color: #555366;
+    background: #f0f3ff;
+}
+
+.nx-dialog-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 12px;
+    background: var(--nx-accent);
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@keyframes nx-dialog-in {
+    from { opacity: 0; transform: translateY(12px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 640px) {
+    .nx-toast {
+        right: 16px;
+        bottom: 16px;
+        left: 16px;
+    }
+
+    .nx-dialog {
+        padding: 26px 22px 22px;
+        border-radius: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+    }
+}
+
+@media print {
+    nav, footer, button, .nx-toast, .nx-dialog-backdrop {
+        display: none !important;
+    }
+
+    body, main {
+        background: white !important;
+    }
+}

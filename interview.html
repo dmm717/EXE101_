@@ -78,12 +78,17 @@
             <div class="space-y-stack-sm">
                 <div class="bg-surface-container-lowest p-stack-md rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex gap-4 items-start">
                     <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-md text-label-md flex-shrink-0">1</div>
-                    <div class="w-full">
-                        <h3 class="font-label-md text-label-md text-on-surface font-semibold mb-2">Chọn CV</h3>
-                        <select id="step-cv" class="w-full bg-surface border border-outline-variant rounded-lg p-2 font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
-                            <option>CV_NguyenVanA_BA_2024.pdf</option>
-                            <option>Tải lên CV mới...</option>
-                        </select>
+                    <div class="w-full min-w-0">
+                        <h3 class="font-label-md text-label-md text-on-surface font-semibold mb-2">CV sử dụng</h3>
+                        <div class="flex items-center gap-3 rounded-xl border border-outline-variant/50 bg-surface p-3">
+                            <span class="material-symbols-outlined text-primary bg-primary-fixed/60 rounded-lg p-2">description</span>
+                            <div class="min-w-0 flex-1">
+                                <p id="step-cv-name" class="font-label-md text-on-surface font-semibold truncate">CV_NguyenVanA_BA_2024.pdf</p>
+                                <p id="step-cv-meta" class="text-label-sm text-on-surface-variant">CV đã phân tích</p>
+                            </div>
+                            <button id="step-cv-change" type="button" class="flex-shrink-0 px-3 py-2 rounded-lg border border-primary/30 text-primary font-label-sm hover:bg-primary-fixed/40">Đổi CV</button>
+                        </div>
+                        <input id="step-cv" class="sr-only" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                     </div>
                 </div>
                 <div class="bg-surface-container-lowest p-stack-md rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex gap-4 items-start">
@@ -136,12 +141,12 @@
             <div class="grid grid-cols-2 gap-stack-md mb-stack-lg relative z-10">
                 <div class="bg-surface-container p-4 rounded-xl border border-surface-container-high">
                     <p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Vị trí ứng tuyển</p>
-                    <p data-plan-role class="font-body-lg text-body-lg text-on-surface-variant font-semibold">—</p>
+                    <p data-plan-role class="font-body-lg text-body-lg text-on-surface-variant font-semibold">Chưa chọn</p>
                 </div>
                 <div class="bg-surface-container p-4 rounded-xl border border-surface-container-high">
                     <p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Mức độ phù hợp CV/JD</p>
                     <div class="flex items-center gap-2">
-                        <span data-plan-match class="font-body-lg text-body-lg text-on-surface-variant font-bold">—%</span>
+                        <span data-plan-match class="font-body-lg text-body-lg text-on-surface-variant font-bold">0%</span>
                         <div class="h-2 flex-grow bg-surface-variant rounded-full overflow-hidden">
                             <div data-plan-bar class="h-full bg-outline-variant w-0 rounded-full transition-all duration-700"></div>
                         </div>
@@ -188,12 +193,12 @@
     </main>
 
     <!-- ================= TRẠNG THÁI 3: PHÒNG PHỎNG VẤN ================= -->
-    <main data-view="live" class="hidden flex-1 flex pt-16 overflow-hidden">
-        <section data-nx-section class="flex-1 bg-surface-container-low flex flex-col overflow-hidden px-margin-desktop py-stack-lg gap-stack-lg relative">
+    <main data-view="live" class="hidden flex-1 pt-16">
+        <section data-nx-section class="min-h-[calc(100dvh-4rem)] bg-surface-container-low flex flex-col px-margin-mobile md:px-margin-desktop py-5 md:py-6 gap-5 relative">
             <div class="flex items-center justify-between flex-shrink-0">
                 <div>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm mb-2">Vai trò: <span data-live-role>Business Analyst</span></span>
-                    <h1 class="font-headline-md text-headline-md text-on-surface">Mô phỏng Phỏng vấn</h1>
+                    <span class="inline-flex items-center px-3 py-1 rounded-lg bg-secondary-container text-on-secondary-container font-label-sm text-label-sm mb-2">Vai trò: <span class="ml-1" data-live-role>Business Analyst</span></span>
+                    <h1 class="font-headline-md text-headline-md text-on-surface">Phỏng phỏng vấn AI</h1>
                 </div>
                 <div class="text-right">
                     <p class="font-label-sm text-label-sm text-on-surface-variant">Thời gian thực</p>
@@ -202,25 +207,27 @@
             </div>
 
             <!-- Video frame -->
-            <div class="relative w-full flex-1 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] bg-surface-container-highest border border-outline-variant/30 flex flex-col">
+            <div class="relative w-full min-h-[420px] md:min-h-[460px] rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(37,32,92,0.12)] bg-surface-container-highest border border-outline-variant/30">
                 <div data-phase-banner class="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-primary text-white px-6 py-2 rounded-full shadow-lg flex items-center gap-2">
                     <span class="material-symbols-outlined animate-spin-slow">record_voice_over</span>
                     <span data-phase-text class="font-bold">AI đang đặt câu hỏi...</span>
                 </div>
-                <img alt="AI Interviewer" class="absolute inset-0 w-full h-full object-cover"
-                    src="https://lh3.googleusercontent.com/aida/AP1WRLv7Q_zbweDUkszIJ14fh6FlCE68NbBFkeTUidwOEr8FmP0b6nz408VAwU7CUGqaPep4m6L_GjtPMzIbBgcb1iFqcAN1C-PwVbXoqNNKoEBKD5ob5ip55I9tKTDk224IV79fMJu5AGYp8cYKaqXfNrCasoP8BTTjGtJd44-R1Lm3qAYw7cEElQeY29CX-uLENTRHxcUOl6iBdY4MpfO6UiTZV_TMReKhVkPiHKwUBY3owMuEAhg40oHY_yvd">
+                <img alt="Người phỏng vấn AI trong phòng làm việc" class="absolute inset-0 w-full h-full object-cover object-[center_32%]"
+                    src="img/interview-room.png">
                 <!-- AI speaking badge -->
                 <div data-ai-badge class="absolute top-4 left-6 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-2 text-white text-label-sm font-bold uppercase tracking-wider border border-white/20">
                     <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span> AI Speaking
                 </div>
                 <!-- Candidate PiP -->
-                <div class="absolute top-4 right-6 w-48 h-32 rounded-lg overflow-hidden border-2 border-white/20 shadow-lg z-10 bg-black">
-                    <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/40 backdrop-blur-md rounded text-[10px] text-white font-bold uppercase tracking-wider">Bạn (Ứng viên)</div>
-                    <img alt="Candidate Feed" class="w-full h-full object-cover grayscale opacity-80"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG7Vf9VludCcweL2DP1bmgjECQTnJamonMOGK_wjc45a8T7KIkbrl36EvqG2UTwvC-BI7MfQvTg5bj1k9geV1CyeE4UQgzU_NRqqcStA2zbA7GyAuUAdcBKWQ3Qyw0Ez75dcvpbr_uPu9V3llSQoV64jbB46HSAits8Tx8ejsARS2cUtnG0Yqnu6Sv1EqXh1yy4SSgY6uf0Q6xpdQoowZe0B2gGBaVqemhFF5Irm5umxaguLxHV0LfHoC2zCxk4Xq9_8nOZrQwpx0V">
+                <div class="absolute top-4 right-4 md:right-6 w-36 md:w-48 h-24 md:h-32 rounded-xl overflow-hidden border-2 border-white/30 shadow-lg z-10 bg-[#172033]">
+                    <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/35 backdrop-blur-md rounded-md text-[10px] text-white font-bold">Bạn</div>
+                    <div class="w-full h-full flex flex-col items-center justify-center text-white/80 bg-[radial-gradient(circle_at_top,_#394564,_#172033_72%)]">
+                        <div data-candidate-initial class="w-11 h-11 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-lg font-bold">U</div>
+                        <span class="text-[10px] mt-2">Camera preview</span>
+                    </div>
                 </div>
                 <!-- Caption câu hỏi AI -->
-                <div class="absolute bottom-6 left-6 right-6 bg-black/60 backdrop-blur-md rounded-xl p-5 text-white border border-white/10 shadow-lg">
+                <div class="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 bg-[#111827]/85 backdrop-blur-md rounded-xl p-4 md:p-5 text-white border border-white/10 shadow-lg">
                     <div class="flex items-start gap-4">
                         <span class="material-symbols-outlined text-tertiary-fixed-dim text-[24px]">smart_toy</span>
                         <p class="font-body-lg text-body-lg leading-relaxed text-white">Đó là một cách tiếp cận hợp lý. Tuy nhiên, nếu hệ thống chữ ký số gặp lỗi trong quá trình phê duyệt ở phase 1 khiến giao dịch bị gián đoạn, trong khi stakeholder đang phàn nàn rằng bạn đã không làm tính năng phê duyệt đa cấp ngay từ đầu để tránh lỗi này. Bạn sẽ phản hồi ra sao?</p>
@@ -287,7 +294,7 @@
         <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
             <div class="col-span-1 md:col-span-2">
                 <img src="img/logo.png" alt="Nexora" class="h-8 w-auto">
-                <p class="font-body-md text-body-md text-on-surface-variant">© 2024 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">© 2026 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.</p>
             </div>
             <div class="flex flex-col gap-2">
                 <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors opacity-80 hover:opacity-100 hover:underline" href="#">Về chúng tôi</a>
@@ -316,10 +323,13 @@
                 setupMain.classList.add('hidden');
                 setupFooter.classList.add('hidden');
                 liveMain.classList.remove('hidden');
-                document.body.classList.add('h-screen', 'overflow-hidden');
+                document.body.classList.add('min-h-[100dvh]');
 
                 const role = params.get('role') || 'Business Analyst';
                 document.querySelectorAll('[data-live-role]').forEach(el => el.textContent = role);
+                const currentUser = window.NexoraAuth?.getAuth();
+                const candidateInitial = document.querySelector('[data-candidate-initial]');
+                if (candidateInitial) candidateInitial.textContent = (currentUser?.name || 'U').charAt(0).toUpperCase();
 
                 if (phase === 'listen') {
                     // Đến lượt user: banner + mic đỏ + finish enable
@@ -379,7 +389,7 @@
                 setupMain.classList.add('hidden');
                 setupFooter.classList.add('hidden');
                 doneModal.classList.remove('hidden');
-                document.body.classList.add('h-screen', 'overflow-hidden');
+                document.body.classList.add('min-h-[100dvh]');
             } else {
                 // setup: xử lý nút "Tạo kịch bản" -> render kế hoạch
                 const guestOverlay = document.querySelector('[data-guest-overlay]');
@@ -393,6 +403,12 @@
                 const genBtn = document.getElementById('generate-btn');
                 genBtn?.addEventListener('click', () => {
                     const isAuth = checkAuth();
+                    const jd = document.getElementById('step-jd').value.trim();
+                    if (!jd) {
+                        window.NexoraUI?.toast('Qb dán JD trước khi tạo kịch bản nhen.', 'error');
+                        document.getElementById('step-jd').focus();
+                        return;
+                    }
                     const role = document.getElementById('step-role').value || 'Business Analyst';
                     document.querySelector('[data-plan-role]').textContent = role;
                     document.querySelector('[data-plan-role]').classList.remove('text-on-surface-variant');

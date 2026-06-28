@@ -39,12 +39,24 @@
     }
 
     function mobileMenuHtml(isAuth, user) {
-        if (!isAuth) {
-            return `
-                <div id="mobile-menu" class="md:hidden hidden fixed inset-0 top-16 bg-surface/95 backdrop-blur-md z-50 flex flex-col p-margin-mobile gap-2 pt-6">
+        const account = isAuth ? `
+                    <div class="flex items-center gap-3 rounded-2xl bg-surface-container-low p-4 mb-2">
+                        <div class="w-11 h-11 rounded-xl bg-primary text-on-primary flex items-center justify-center font-bold">${(user?.name || 'U').charAt(0).toUpperCase()}</div>
+                        <div class="min-w-0">
+                            <p class="font-label-md text-on-surface font-bold truncate">${user?.name || 'Người dùng'}</p>
+                            <p class="text-label-sm text-on-surface-variant">Gói ${user?.plan || 'Miễn phí'}</p>
+                        </div>
+                    </div>` : `
+                    <div class="grid grid-cols-2 gap-3 mb-2">
                     <a href="login.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Đăng nhập</a>
                     <a href="register.html" class="bg-primary text-on-primary font-label-md text-label-md px-5 py-3 rounded-xl hover:bg-primary/90 transition-all shadow-md text-center">Đăng ký</a>
+                    </div>`;
+        const logoutAction = isAuth ? `
                     <hr class="my-2 border-outline-variant/30">
+                    <button id="mobile-logout-btn" class="text-left text-error px-4 py-3 font-label-md text-label-md rounded-xl hover:bg-error-container">Đăng xuất</button>` : '';
+        return `
+                <div id="mobile-menu" class="md:hidden hidden fixed inset-0 top-16 bg-surface/98 backdrop-blur-md z-50 flex flex-col p-margin-mobile gap-1 pt-5 overflow-y-auto" aria-label="Menu di động">
+                    ${account}
                     <a href="index.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Tổng quan</a>
                     <a href="cv.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Phân tích CV</a>
                     <a href="interview.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Phỏng vấn AI</a>
@@ -52,10 +64,9 @@
                     <a href="star.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">STAR</a>
                     <a href="report.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Báo cáo</a>
                     <a href="pricing.html" class="text-on-surface-variant hover:text-primary transition-colors px-4 py-3 font-label-md text-label-md">Bảng giá</a>
+                    ${logoutAction}
                 </div>
             `;
-        }
-        return '';
     }
 
     function authNavHtml(user) {
@@ -105,13 +116,9 @@
             if (slot) {
                 slot.innerHTML = user ? authNavHtml(user) : guestNavHtml();
 
-                // Inject mobile menu overlay for guests
-                if (!user) {
-                    const menuDiv = document.createElement('div');
-                    menuDiv.id = 'mobile-overlay';
-                    document.body.appendChild(menuDiv);
-                    menuDiv.outerHTML = mobileMenuHtml(false, user);
-                }
+                // Rebuild one mobile menu for both guest and authenticated states.
+                document.getElementById('mobile-menu')?.remove();
+                document.body.insertAdjacentHTML('beforeend', mobileMenuHtml(!!user, user));
 
                 // Mobile menu button handler
                 const mobileBtn = document.getElementById('mobile-menu-btn');
@@ -120,13 +127,22 @@
                     mobileBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
                         mobileMenu.classList.toggle('hidden');
+                        const open = !mobileMenu.classList.contains('hidden');
+                        mobileBtn.setAttribute('aria-expanded', String(open));
+                        document.body.classList.toggle('nx-menu-open', open);
                     });
                     mobileMenu.addEventListener('click', (e) => {
                         if (e.target === mobileMenu || e.target.tagName === 'A') {
                             mobileMenu.classList.add('hidden');
+                            document.body.classList.remove('nx-menu-open');
                         }
                     });
                 }
+
+                document.getElementById('mobile-logout-btn')?.addEventListener('click', () => {
+                    logout();
+                    window.location.href = 'index.html';
+                });
 
                 if (user) {
                     const btn = document.getElementById('user-menu-btn');
@@ -331,4 +347,299 @@
     } else {
         initStagger();
     }
+})();
+
+/* ============================================
+   NEXORA - MVP INTERACTIONS & FEEDBACK
+   ============================================ */
+(function () {
+    'use strict';
+
+    const cleanText = (el) => (el?.innerText || '').replace(/\s+/g, ' ').trim();
+
+    function toast(message, tone = 'default') {
+        document.querySelector('.nx-toast')?.remove();
+        const el = document.createElement('div');
+        el.className = `nx-toast ${tone === 'error' ? 'nx-toast-error' : ''}`;
+        el.setAttribute('role', 'status');
+        el.innerHTML = `<span class="material-symbols-outlined">${tone === 'error' ? 'error' : 'check_circle'}</span><span>${message}</span>`;
+        document.body.appendChild(el);
+        requestAnimationFrame(() => el.classList.add('is-visible'));
+        setTimeout(() => {
+            el.classList.remove('is-visible');
+            setTimeout(() => el.remove(), 240);
+        }, 2600);
+    }
+
+    function showDialog(title, body, action) {
+        document.querySelector('.nx-dialog-backdrop')?.remove();
+        const wrap = document.createElement('div');
+        wrap.className = 'nx-dialog-backdrop';
+        wrap.innerHTML = `
+            <section class="nx-dialog" role="dialog" aria-modal="true" aria-labelledby="nx-dialog-title">
+                <button class="nx-dialog-close" type="button" aria-label="Đóng"><span class="material-symbols-outlined">close</span></button>
+                <div class="nx-dialog-icon"><span class="material-symbols-outlined">auto_awesome</span></div>
+                <h2 id="nx-dialog-title">${title}</h2>
+                <p>${body}</p>
+                ${action ? `<a class="nx-dialog-action" href="${action.href}">${action.label}</a>` : '<button class="nx-dialog-action" type="button" data-dialog-ok>Đã hiểu</button>'}
+            </section>`;
+        document.body.appendChild(wrap);
+        const close = () => wrap.remove();
+        wrap.querySelector('.nx-dialog-close').addEventListener('click', close);
+        wrap.querySelector('[data-dialog-ok]')?.addEventListener('click', close);
+        wrap.addEventListener('click', (event) => { if (event.target === wrap) close(); });
+        wrap.querySelector('.nx-dialog-close').focus();
+    }
+
+    window.NexoraUI = { toast, showDialog };
+
+    function initCvUpload() {
+        const zone = document.getElementById('drop-zone');
+        const analyze = document.getElementById('analyze-btn');
+        if (!zone || !analyze) return;
+
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+        fileInput.className = 'sr-only';
+        fileInput.id = 'cv-file-input';
+        zone.appendChild(fileInput);
+        zone.setAttribute('role', 'button');
+        zone.setAttribute('tabindex', '0');
+        zone.setAttribute('aria-label', 'Chọn CV từ máy');
+
+        let selectedFile = null;
+        const uploaded = document.getElementById('uploaded-file');
+        const fileName = uploaded?.querySelector('p');
+        const fileMeta = uploaded?.querySelectorAll('p')[1];
+        const jd = document.querySelector('#upload-section textarea');
+
+        const updateState = () => {
+            const ready = !!selectedFile && !!jd?.value.trim();
+            analyze.classList.toggle('opacity-50', !ready);
+            analyze.classList.toggle('cursor-not-allowed', !ready);
+            analyze.setAttribute('aria-disabled', String(!ready));
+        };
+
+        const useFile = (file) => {
+            if (!file) return;
+            const allowed = /\.(pdf|doc|docx)$/i.test(file.name);
+            if (!allowed) return toast('Chỉ hỗ trợ file PDF, DOC hoặc DOCX.', 'error');
+            if (file.size > 5 * 1024 * 1024) return toast('CV cần nhỏ hơn 5MB nhen.', 'error');
+            selectedFile = file;
+            localStorage.setItem('nexora_cv_name', file.name);
+            if (fileName) fileName.textContent = file.name;
+            if (fileMeta) fileMeta.textContent = `${(file.size / 1024 / 1024).toFixed(1)} MB`;
+            uploaded?.classList.remove('hidden');
+            zone.classList.add('nx-upload-ready');
+            updateState();
+            toast('Đã thêm CV. Giờ dán JD để phân tích.');
+        };
+
+        zone.addEventListener('click', () => fileInput.click());
+        zone.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                fileInput.click();
+            }
+        });
+        fileInput.addEventListener('change', () => useFile(fileInput.files[0]));
+        ['dragenter', 'dragover'].forEach(name => zone.addEventListener(name, () => zone.classList.add('drop-zone-active')));
+        ['dragleave', 'drop'].forEach(name => zone.addEventListener(name, () => zone.classList.remove('drop-zone-active')));
+        zone.addEventListener('dragover', event => event.preventDefault());
+        zone.addEventListener('drop', event => {
+            event.preventDefault();
+            useFile(event.dataTransfer.files[0]);
+        });
+        jd?.addEventListener('input', updateState);
+        uploaded?.querySelector('button')?.addEventListener('click', () => {
+            selectedFile = null;
+            fileInput.value = '';
+            zone.classList.remove('nx-upload-ready');
+            updateState();
+        });
+        analyze.addEventListener('click', (event) => {
+            if (!selectedFile || !jd?.value.trim()) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                toast(!selectedFile ? 'Qb chọn CV trước nhen.' : 'Qb dán mô tả công việc trước nhen.', 'error');
+            }
+        }, true);
+        updateState();
+    }
+
+    function initInterviewCv() {
+        const candidateInitial = document.querySelector('[data-candidate-initial]');
+        const currentUser = window.NexoraAuth?.getAuth();
+        if (candidateInitial) candidateInitial.textContent = (currentUser?.name || 'U').charAt(0).toUpperCase();
+        const input = document.getElementById('step-cv');
+        const changeBtn = document.getElementById('step-cv-change');
+        const nameEl = document.getElementById('step-cv-name');
+        const metaEl = document.getElementById('step-cv-meta');
+        if (!input || !changeBtn || !nameEl) return;
+
+        const savedName = localStorage.getItem('nexora_cv_name');
+        if (savedName) nameEl.textContent = savedName;
+
+        changeBtn.addEventListener('click', () => input.click());
+        input.addEventListener('change', () => {
+            const file = input.files?.[0];
+            if (!file) return;
+            if (!/\.(pdf|doc|docx)$/i.test(file.name)) {
+                input.value = '';
+                return toast('Chỉ hỗ trợ file PDF, DOC hoặc DOCX.', 'error');
+            }
+            if (file.size > 5 * 1024 * 1024) {
+                input.value = '';
+                return toast('CV cần nhỏ hơn 5MB nhen.', 'error');
+            }
+            nameEl.textContent = file.name;
+            if (metaEl) metaEl.textContent = 'CV mới, sẵn sàng sử dụng';
+            localStorage.setItem('nexora_cv_name', file.name);
+            toast('Đã đổi CV cho buổi phỏng vấn này.');
+        });
+    }
+
+    function initPricingPlan() {
+        const cards = Array.from(document.querySelectorAll('[data-plan-card]'));
+        if (!cards.length) return;
+        const user = window.NexoraAuth?.getAuth();
+        if (!user) return;
+        const aliases = { 'Miễn phí': 'Free', Free: 'Free', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
+        const current = aliases[user.plan] || 'Free';
+        const order = { Free: 0, Pro: 1, Business: 2 };
+
+        cards.forEach(card => {
+            const plan = card.dataset.planCard;
+            const action = card.querySelector('[data-plan-action]');
+            if (plan === current) {
+                card.classList.add('nx-current-plan');
+                let badge = card.querySelector('[data-plan-badge]');
+                if (!badge) {
+                    badge = document.createElement('div');
+                    badge.dataset.planBadge = '';
+                    badge.className = 'nx-current-plan-badge';
+                    card.appendChild(badge);
+                }
+                badge.className = 'nx-current-plan-badge';
+                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${user.plan}`;
+                if (action) {
+                    action.textContent = 'Đang sử dụng';
+                    action.removeAttribute('href');
+                    action.setAttribute('aria-disabled', 'true');
+                    action.classList.add('nx-plan-disabled');
+                    action.addEventListener('click', event => event.preventDefault());
+                }
+            } else if (action && order[plan] < order[current]) {
+                action.textContent = 'Đã bao gồm trong gói';
+                action.removeAttribute('href');
+                action.setAttribute('aria-disabled', 'true');
+                action.classList.add('nx-plan-disabled-subtle');
+                action.addEventListener('click', event => event.preventDefault());
+            }
+        });
+    }
+
+    function initScenarioFilters() {
+        if (!/scenarios\.html$/.test(location.pathname)) return;
+        const filterWrap = document.querySelector('.no-scrollbar');
+        const grid = filterWrap?.nextElementSibling;
+        if (!filterWrap || !grid) return;
+        const cards = Array.from(grid.children);
+        const empty = document.createElement('div');
+        empty.className = 'hidden col-span-full rounded-2xl border border-outline-variant/30 bg-surface p-8 text-center';
+        empty.innerHTML = '<span class="material-symbols-outlined text-primary text-[32px]">search_off</span><h3 class="font-headline-md text-on-surface mt-3">Chưa có case phù hợp</h3><p class="text-on-surface-variant mt-2">Thử một nhóm khác hoặc quay lại sau nhen.</p>';
+        grid.appendChild(empty);
+        filterWrap.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                const category = cleanText(button);
+                filterWrap.querySelectorAll('button').forEach(item => {
+                    const active = item === button;
+                    item.classList.toggle('bg-primary', active);
+                    item.classList.toggle('text-on-primary', active);
+                    item.classList.toggle('bg-surface-container', !active);
+                });
+                cards.forEach(card => {
+                    const normalized = cleanText(card).toLowerCase();
+                    const aliases = category === 'SaaS & Fintech' ? ['saas', 'fintech'] : [category.toLowerCase()];
+                    card.hidden = category !== 'Tất cả' && !aliases.some(alias => normalized.includes(alias));
+                });
+                empty.classList.toggle('hidden', cards.some(card => !card.hidden));
+            });
+        });
+        grid.querySelectorAll('button').forEach(button => {
+            const label = cleanText(button);
+            if (label.includes('Bắt đầu case')) button.addEventListener('click', () => {
+                const role = cleanText(button.closest('div.bg-surface')?.querySelector('h3')) || 'Case Study';
+                location.href = `interview.html?role=${encodeURIComponent(role)}`;
+            });
+            if (label.includes('Nâng cấp ngay')) button.addEventListener('click', () => location.href = 'pricing.html');
+        });
+    }
+
+    function initPageActions() {
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                showDialog(cleanText(link), 'Nội dung này đang được hoàn thiện cho bản MVP. Các luồng chính vẫn hoạt động bình thường.');
+            });
+        });
+
+        document.querySelectorAll('button').forEach(button => {
+            const label = cleanText(button);
+            if (label.includes('Bắt đầu phỏng vấn miễn phí') || label === 'Bắt đầu miễn phí') {
+                button.addEventListener('click', () => location.href = 'interview.html');
+            } else if (label.includes('Xem cách hoạt động')) {
+                button.addEventListener('click', () => showDialog('Nexora hoạt động thế nào?', 'Tải CV, dán JD, luyện phỏng vấn và nhận báo cáo cải thiện theo phương pháp STAR.', { href: 'cv.html', label: 'Thử phân tích CV' }));
+            } else if (label === 'Đăng ký ngay') {
+                button.addEventListener('click', () => location.href = 'register.html');
+            } else if (label.includes('Liên hệ tư vấn') || label.includes('Liên hệ bộ phận Sales')) {
+                button.addEventListener('click', () => showDialog('Tư vấn doanh nghiệp', 'Để lại nhu cầu qua email, đội ngũ Nexora sẽ phản hồi trong bản demo.', { href: 'mailto:hello@nexora.vn?subject=Tu%20van%20Nexora', label: 'Gửi email tư vấn' }));
+            } else if (label.includes('Tải báo cáo PDF') || label === 'download Tải PDF') {
+                button.addEventListener('click', () => window.print());
+            } else if (label.includes('Tiếp tục học')) {
+                button.addEventListener('click', () => location.href = 'star.html?demo=1');
+            } else if (label === 'Đăng ký') {
+                button.addEventListener('click', () => location.href = 'pricing.html');
+            } else if (label === 'Đăng nhập bằng Google' || label === 'Đăng ký bằng Google') {
+                button.type = 'button';
+                button.addEventListener('click', () => {
+                    window.NexoraAuth?.setAuth({ name: 'Người dùng Demo', email: 'demo@nexora.vn', plan: 'Pro' });
+                    location.href = 'cv.html';
+                });
+            }
+        });
+    }
+
+    function initRegisterValidation() {
+        const form = document.getElementById('register-form');
+        if (!form) return;
+        form.addEventListener('submit', (event) => {
+            const terms = document.getElementById('terms');
+            const password = document.getElementById('password');
+            if (!terms?.checked) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                toast('Qb cần đồng ý điều khoản để tiếp tục.', 'error');
+                terms?.focus();
+            } else if ((password?.value || '').length < 6) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                toast('Mật khẩu cần ít nhất 6 ký tự.', 'error');
+                password?.focus();
+            }
+        }, true);
+    }
+
+    function init() {
+        initCvUpload();
+        initInterviewCv();
+        initPricingPlan();
+        initScenarioFilters();
+        initPageActions();
+        initRegisterValidation();
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
 })();
