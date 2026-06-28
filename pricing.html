@@ -75,7 +75,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter md:gap-stack-lg items-center relative z-10">
 
                 <!-- Tier 1: Miễn phí -->
-                <div
+                <div data-plan-card="Free"
                     class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-sm border border-outline-variant/30 flex flex-col h-full hover:shadow-md transition-shadow duration-300">
                     <div class="mb-stack-md">
                         <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Miễn phí</h3>
@@ -102,14 +102,14 @@
                             <span class="font-body-md text-body-md text-on-surface">Thư viện câu hỏi chung</span>
                         </li>
                     </ul>
-                    <a class="w-full py-3 px-4 rounded-xl font-label-md text-label-md border border-outline-variant text-on-surface hover:bg-surface-container-low hover:border-outline transition-all duration-200 text-center"
+                    <a data-plan-action class="w-full py-3 px-4 rounded-xl font-label-md text-label-md border border-outline-variant text-on-surface hover:bg-surface-container-low hover:border-outline transition-all duration-200 text-center"
                         href="register.html">Bắt đầu ngay</a>
                 </div>
 
                 <!-- Tier 2: Cá nhân (Highlighted) -->
-                <div
+                <div data-plan-card="Pro"
                     class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_10px_40px_rgba(53,37,205,0.1)] border-2 border-primary flex flex-col h-full relative transform md:scale-105 z-20">
-                    <div
+                    <div data-plan-badge
                         class="absolute top-0 right-0 -translate-y-1/2 translate-x-0 mr-stack-lg bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 shadow-sm">
                         <span class="material-symbols-outlined text-[16px] icon-fill text-tertiary">star</span>
                         Phổ biến nhất
@@ -156,12 +156,12 @@
                             <span class="font-body-md text-body-md text-on-surface">Báo cáo cải thiện cá nhân hóa</span>
                         </li>
                     </ul>
-                    <a class="w-full py-3 px-4 rounded-xl font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 text-center"
+                    <a data-plan-action class="w-full py-3 px-4 rounded-xl font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 text-center"
                         href="register.html">Nâng cấp Cá nhân</a>
                 </div>
 
                 <!-- Tier 3: Doanh nghiệp -->
-                <div
+                <div data-plan-card="Business"
                     class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-sm border border-outline-variant/30 flex flex-col h-full hover:shadow-md transition-shadow duration-300">
                     <div class="mb-stack-md">
                         <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Doanh nghiệp</h3>
@@ -193,7 +193,7 @@
                             <span class="font-body-md text-body-md text-on-surface">Hỗ trợ kỹ thuật ưu tiên 24/7</span>
                         </li>
                     </ul>
-                    <button
+                    <button data-plan-action
                         class="w-full py-3 px-4 rounded-xl font-label-md text-label-md bg-surface-container hover:bg-surface-container-high text-primary font-medium transition-all duration-200">Liên
                         hệ bộ phận Sales</button>
                 </div>
