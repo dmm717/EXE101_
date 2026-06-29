@@ -14,6 +14,7 @@
         rel="stylesheet">
     <link href="css/tailwind.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+    <script src="js/auth-guard.js" data-auth-page="protected"></script>
     <script src="js/common.js" defer></script>
     <script src="js/case-data.js" defer></script>
     <script src="js/case.js" defer></script>
@@ -84,17 +85,12 @@
                 <p id="case-question-helper" class="mt-3 max-w-[70ch] text-body-md text-on-surface-variant"></p>
 
                 <div class="mt-7">
-                    <label for="case-answer" class="mb-2 block text-label-md font-label-md text-on-surface">Câu trả lời của bạn</label>
-                    <textarea id="case-answer" rows="8" maxlength="2000" aria-describedby="case-answer-help case-answer-error"
-                        class="w-full resize-y rounded-xl border border-outline-variant bg-surface p-4 text-body-md leading-relaxed text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20"
-                        placeholder="Nhập câu trả lời của bạn..."></textarea>
-                    <div class="mt-2 flex items-start justify-between gap-4">
-                        <div>
-                            <p id="case-answer-help" class="text-label-sm text-on-surface-variant">Câu trả lời được lưu tự động trên thiết bị này.</p>
-                            <p id="case-answer-error" class="mt-1 hidden text-label-sm font-label-sm text-error" role="alert">Hãy nhập câu trả lời trước khi tiếp tục.</p>
-                        </div>
-                        <span id="case-character-count" class="shrink-0 text-label-sm tabular-nums text-on-surface-variant">0/2000</span>
-                    </div>
+                    <fieldset id="case-options" class="case-options" aria-describedby="case-answer-help case-answer-error case-feedback">
+                        <legend class="mb-3 block text-label-md font-label-md text-on-surface">Chọn 1 đáp án</legend>
+                    </fieldset>
+                    <p id="case-answer-help" class="mt-3 text-label-sm text-on-surface-variant">Đáp án đã chọn được lưu tự động trên thiết bị này.</p>
+                    <p id="case-answer-error" class="mt-1 hidden text-label-sm font-label-sm text-error" role="alert">Hãy chọn một đáp án trước khi tiếp tục.</p>
+                    <div id="case-feedback" class="case-feedback hidden" role="status" aria-live="polite"></div>
                 </div>
             </section>
 
@@ -124,6 +120,7 @@
             </div>
             <h1 id="case-complete-title" tabindex="-1" class="mt-6 font-headline-lg text-headline-lg-mobile text-on-surface md:text-headline-lg">Bạn đã hoàn thành case</h1>
             <p id="case-complete-message" class="mt-3 max-w-[58ch] text-body-md text-on-surface-variant"></p>
+            <div id="case-score-summary" class="case-score-summary" aria-label="Kết quả làm bài"></div>
             <div class="mt-8 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:justify-center">
                 <button id="case-restart" type="button"
                     class="inline-flex min-h-12 flex-1 items-center justify-center rounded-xl border border-primary px-5 text-label-md font-label-md text-primary hover:bg-primary-fixed/60">

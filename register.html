@@ -204,7 +204,7 @@
             localStorage.removeItem('nexora_avatar');
             
             window.NexoraAuth.setAuth({ name: fullname, plan: 'Pro' });
-            window.location.href = 'dashboard.html';
+            window.location.href = window.NexoraUI?.getSavedAuthDestination?.('dashboard.html') || 'dashboard.html';
         });
     </script>
 </body>

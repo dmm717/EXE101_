@@ -427,7 +427,12 @@
 (function () {
     'use strict';
 
-    const cleanText = (el) => (el?.innerText || '').replace(/\s+/g, ' ').trim();
+    const cleanText = (el) => {
+        if (!el) return '';
+        const clone = el.cloneNode(true);
+        clone.querySelectorAll('.material-symbols-outlined, .material-icons').forEach(i => i.remove());
+        return (clone.textContent || '').replace(/\s+/g, ' ').trim();
+    };
 
     function toast(message, tone = 'default') {
         document.querySelector('.nx-toast')?.remove();
@@ -463,7 +468,168 @@
         wrap.querySelector('.nx-dialog-close').focus();
     }
 
-    window.NexoraUI = { toast, showDialog };
+    const PROTECTED_ROUTES = new Set([
+        'account.html',
+        'case.html',
+        'cv.html',
+        'dashboard.html',
+        'interview.html',
+        'report.html',
+        'roadmap.html',
+        'scenarios.html',
+        'star.html'
+    ]);
+
+    function normalizeInternalDestination(href, fallback = 'dashboard.html') {
+        try {
+            const url = new URL(href || fallback, location.href);
+            if (url.origin !== location.origin) return fallback;
+            const file = url.pathname.split('/').pop() || 'index.html';
+            if (!file.endsWith('.html')) return fallback;
+            return `${file}${url.search}${url.hash}`;
+        } catch (error) {
+            return fallback;
+        }
+    }
+
+    function getSavedAuthDestination(fallback = 'dashboard.html') {
+        const params = new URLSearchParams(location.search);
+        const next = params.get('next') || sessionStorage.getItem('nexora_auth_next') || fallback;
+        return normalizeInternalDestination(next, fallback);
+    }
+
+    function saveAuthDestination(href) {
+        const next = normalizeInternalDestination(href, 'dashboard.html');
+        try {
+            sessionStorage.setItem('nexora_auth_next', next);
+        } catch (error) {}
+        return next;
+    }
+
+    function isProtectedHref(href) {
+        try {
+            const url = new URL(href, location.href);
+            if (url.origin !== location.origin) return false;
+            const file = url.pathname.split('/').pop() || 'index.html';
+            return PROTECTED_ROUTES.has(file);
+        } catch (error) {
+            return false;
+        }
+    }
+
+    function normalizeLabel(value) {
+        return (value || '')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    function showLoginRequiredModal(nextHref = 'dashboard.html') {
+        const next = saveAuthDestination(nextHref);
+        document.querySelector('.nx-auth-modal-backdrop')?.remove();
+        const wrap = document.createElement('div');
+        wrap.className = 'nx-auth-modal-backdrop';
+        wrap.innerHTML = `
+            <section class="nx-auth-modal" role="dialog" aria-modal="true" aria-labelledby="nx-auth-modal-title">
+                <button class="nx-auth-modal-close" type="button" aria-label="&#272;&#243;ng">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <div class="nx-auth-modal-icon" aria-hidden="true">
+                    <span class="material-symbols-outlined">lock</span>
+                </div>
+                <h2 id="nx-auth-modal-title">&#272;&#259;ng nh&#7853;p &#273;&#7875; ti&#7871;p t&#7909;c</h2>
+                <p>&#272;&#259;ng nh&#7853;p &#273;&#7875; l&#432;u ti&#7871;n &#273;&#7897; luy&#7879;n t&#7853;p v&#224; nh&#7853;n feedback chi ti&#7871;t t&#7915; AI.</p>
+                <a class="nx-auth-modal-primary" href="login.html?next=${encodeURIComponent(next)}">&#272;&#259;ng nh&#7853;p</a>
+                <button class="nx-auth-modal-google" type="button" data-auth-google-mvp>
+                    <svg class="nx-google-mark" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="#4285F4" d="M23.5 12.27c0-.82-.07-1.42-.23-2.04H12v3.86h6.62c-.13.96-.85 2.42-2.45 3.39l-.02.13 3.56 2.39.25.02c2.28-1.83 3.54-4.52 3.54-7.75Z"/>
+                        <path fill="#34A853" d="M12 23c3.26 0 5.99-.93 7.99-2.54l-3.81-2.98c-1.02.61-2.39 1.04-4.18 1.04-3.19 0-5.89-1.83-6.86-4.36l-.14.01-3.7 2.48-.05.12C3.24 20.48 7.3 23 12 23Z"/>
+                        <path fill="#FBBC05" d="M5.14 14.16A6.03 6.03 0 0 1 4.79 12c0-.75.13-1.48.34-2.16l-.01-.14-3.74-2.52-.12.05A10.2 10.2 0 0 0 .17 12c0 1.72.42 3.35 1.15 4.77l3.82-2.61Z"/>
+                        <path fill="#EA4335" d="M12 5.48c2.27 0 3.8.85 4.67 1.56l3.41-2.89C17.98 2.46 15.26 1.42 12 1.42c-4.7 0-8.76 2.52-10.75 6.17l3.82 2.62C6.03 7.68 8.81 5.48 12 5.48Z"/>
+                    </svg>
+                    <span>Ti&#7871;p t&#7909;c v&#7899;i Google</span>
+                </button>
+                <div class="nx-auth-modal-foot">
+                    <span>Ch&#432;a c&#243; t&#224;i kho&#7843;n?</span>
+                    <a href="register.html?next=${encodeURIComponent(next)}">&#272;&#259;ng k&#253; mi&#7877;n ph&#237;</a>
+                </div>
+            </section>`;
+        document.body.appendChild(wrap);
+        document.body.classList.add('nx-modal-open');
+
+        const close = () => {
+            wrap.remove();
+            document.body.classList.remove('nx-modal-open');
+            document.removeEventListener('keydown', onKeydown);
+        };
+        const onKeydown = (event) => {
+            if (event.key === 'Escape') close();
+        };
+
+        wrap.querySelector('.nx-auth-modal-close')?.addEventListener('click', close);
+        wrap.addEventListener('click', (event) => {
+            if (event.target === wrap) close();
+        });
+        document.addEventListener('keydown', onKeydown);
+        wrap.querySelector('.nx-auth-modal-close')?.focus();
+    }
+
+    function initAccessControl() {
+        document.addEventListener('click', (event) => {
+            if (window.NexoraAuth?.getAuth()) return;
+
+            const link = event.target.closest?.('a[href]');
+            if (link && isProtectedHref(link.getAttribute('href'))) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                showLoginRequiredModal(link.getAttribute('href'));
+                return;
+            }
+
+            const button = event.target.closest?.('button');
+            if (!button) return;
+            const label = cleanText(button);
+            const normalizedLabel = normalizeLabel(label);
+            const shouldProtectStart =
+                normalizedLabel.includes('bat dau phong van mien phi') ||
+                normalizedLabel === 'bat dau mien phi' ||
+                normalizedLabel.includes('tiep tuc hoc');
+            if (!shouldProtectStart) return;
+
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            showLoginRequiredModal(normalizedLabel.includes('tiep tuc hoc') ? 'star.html?demo=1' : 'interview.html');
+        }, true);
+
+        const params = new URLSearchParams(location.search);
+        const nextParam = params.get('next');
+        if (nextParam) {
+            const safeNext = encodeURIComponent(normalizeInternalDestination(nextParam, 'dashboard.html'));
+            document.querySelectorAll('a[href="login.html"]').forEach(link => {
+                link.href = `login.html?next=${safeNext}`;
+            });
+            document.querySelectorAll('a[href="register.html"]').forEach(link => {
+                link.href = `register.html?next=${safeNext}`;
+            });
+        }
+        if (!window.NexoraAuth?.getAuth() && params.get('loginRequired') === '1') {
+            showLoginRequiredModal(params.get('next') || 'dashboard.html');
+            params.delete('loginRequired');
+            params.delete('next');
+            const cleanUrl = `${location.pathname}${params.toString() ? `?${params}` : ''}${location.hash}`;
+            history.replaceState(null, '', cleanUrl);
+        }
+    }
+
+    window.NexoraUI = {
+        toast,
+        showDialog,
+        showLoginRequiredModal,
+        getSavedAuthDestination,
+        saveAuthDestination
+    };
 
     function initCvUpload() {
         const zone = document.getElementById('drop-zone');
@@ -669,7 +835,7 @@
                 button.type = 'button';
                 button.addEventListener('click', () => {
                     window.NexoraAuth?.setAuth({ name: 'Người dùng Demo', email: 'demo@nexora.vn', plan: 'Pro' });
-                    location.href = 'dashboard.html';
+                    location.href = getSavedAuthDestination('dashboard.html');
                 });
             }
         });
@@ -720,8 +886,10 @@
 
         const warmMainRoutes = () => {
             const homeRoute = window.NexoraAuth?.getAuth() ? 'dashboard.html' : 'index.html';
-            [homeRoute, 'cv.html', 'interview.html', 'scenarios.html', 'star.html', 'report.html', 'pricing.html']
-                .forEach(prefetch);
+            const warmRoutes = window.NexoraAuth?.getAuth()
+                ? [homeRoute, 'cv.html', 'interview.html', 'scenarios.html', 'star.html', 'report.html', 'pricing.html']
+                : [homeRoute, 'pricing.html'];
+            warmRoutes.forEach(prefetch);
         };
         if ('requestIdleCallback' in window) requestIdleCallback(warmMainRoutes, { timeout: 1500 });
         else setTimeout(warmMainRoutes, 600);
@@ -751,6 +919,7 @@
     }
 
     function init() {
+        initAccessControl();
         initCvUpload();
         initInterviewCv();
         initPricingPlan();
