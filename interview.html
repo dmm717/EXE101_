@@ -12,8 +12,8 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
-    <link href="css/tailwind.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/tailwind.css?v=20260630-3" rel="stylesheet">
+    <link href="css/styles.css?v=20260630-3" rel="stylesheet">
     <script src="js/auth-guard.js" data-auth-page="protected"></script>
     <script src="js/common.js" defer></script>
     <style>
@@ -34,6 +34,36 @@
         }
         .progress-bar {
             transition: width 0.1s linear;
+        }
+        .interview-video-panel {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            min-height: 0;
+        }
+        .candidate-camera-video {
+            transform: scaleX(-1);
+        }
+        .ai-avatar-stage::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 48% 36%, rgba(255,255,255,.08), transparent 34%);
+            animation: interviewer-light 4.2s ease-in-out infinite alternate;
+        }
+        .voice-wave span {
+            width: 3px;
+            border-radius: 999px;
+            background: currentColor;
+            animation: voice-wave .72s ease-in-out infinite alternate;
+        }
+        .voice-wave span:nth-child(2) { animation-delay: -.42s; }
+        .voice-wave span:nth-child(3) { animation-delay: -.18s; }
+        .voice-wave span:nth-child(4) { animation-delay: -.56s; }
+        @keyframes interviewer-light { from { opacity: .25; } to { opacity: .72; } }
+        @keyframes voice-wave { from { height: 5px; opacity: .55; } to { height: 15px; opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+            .ai-avatar-stage::after, .voice-wave span { animation: none !important; }
         }
     </style>
 </head>
@@ -208,30 +238,51 @@
             </div>
 
             <!-- Video frame -->
-            <div class="relative w-full min-h-[420px] md:min-h-[460px] rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(37,32,92,0.12)] bg-surface-container-highest border border-outline-variant/30">
-                <div data-phase-banner class="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-primary text-white px-6 py-2 rounded-full shadow-lg flex items-center gap-2">
+            <div data-avatar-stage data-speaking="true" class="ai-avatar-stage relative w-full rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(37,32,92,0.12)] bg-white border border-outline-variant/30 p-3 md:p-4">
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-start gap-3 md:gap-4">
+                    <!-- AI interviewer: giữ nguyên toàn bộ khung hình video -->
+                    <div class="interview-video-panel relative overflow-hidden rounded-xl bg-[#111827] border border-outline-variant/30">
+                        <video data-ai-speaking-video preload="auto" playsinline poster="img/interview-room.png"
+                            class="absolute inset-0 w-full h-full object-contain"
+                            src="assets/video/interviewer-speaking.mp4"></video>
+                        <video data-ai-idle-video preload="auto" playsinline muted loop poster="img/interview-room.png"
+                            class="hidden absolute inset-0 w-full h-full object-contain"
+                            src="assets/video/interviewer-idle.mp4"></video>
+                        <div data-ai-badge class="absolute top-3 left-3 bg-black/50 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-2 text-white text-label-sm font-bold uppercase tracking-wider border border-white/20">
+                            <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                            <span>AI Speaking</span>
+                            <span class="voice-wave h-4 flex items-center gap-[2px] text-primary" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+                        </div>
+                        <div class="absolute bottom-3 left-3 px-2.5 py-1 bg-black/50 backdrop-blur-md rounded-md text-xs text-white font-bold">AI Interviewer</div>
+                    </div>
+
+                    <!-- Candidate frame -->
+                    <div class="interview-video-panel relative overflow-hidden rounded-xl border border-outline-variant/30 shadow-inner bg-[#172033]">
+                        <div class="absolute top-3 left-3 z-10 px-2.5 py-1 bg-black/40 backdrop-blur-md rounded-md text-xs text-white font-bold">Bạn</div>
+                        <button data-camera-toggle type="button" class="absolute top-3 right-3 z-20 px-3 py-1.5 bg-black/50 hover:bg-black/70 backdrop-blur-md rounded-full text-xs text-white font-bold flex items-center gap-1.5 transition-colors">
+                            <span data-camera-icon class="material-symbols-outlined text-[16px]">videocam</span>
+                            <span data-camera-action>Bật camera</span>
+                        </button>
+                        <video data-candidate-video autoplay muted playsinline style="transform: scaleX(-1);" class="candidate-camera-video hidden absolute inset-0 w-full h-full object-cover"></video>
+                        <div data-candidate-fallback class="w-full h-full flex flex-col items-center justify-center text-white/80 bg-[radial-gradient(circle_at_top,_#394564,_#172033_72%)]">
+                            <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/20 shadow-[0_8px_30px_rgba(0,0,0,0.2)] flex items-center justify-center" aria-label="Ảnh đại diện mặc định">
+                                <span class="material-symbols-outlined text-[64px] text-white/75" aria-hidden="true">person</span>
+                            </div>
+                            <span data-camera-status class="text-sm mt-3">Camera đang tắt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-phase-banner class="relative z-10 w-fit mx-auto -mt-5 bg-primary text-white px-6 py-2 rounded-full shadow-lg flex items-center gap-2">
                     <span class="material-symbols-outlined animate-spin-slow">record_voice_over</span>
                     <span data-phase-text class="font-bold">AI đang đặt câu hỏi...</span>
                 </div>
-                <img alt="Người phỏng vấn AI trong phòng làm việc" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover object-[center_32%]"
-                    src="img/interview-room.png">
-                <!-- AI speaking badge -->
-                <div data-ai-badge class="absolute top-4 left-6 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-2 text-white text-label-sm font-bold uppercase tracking-wider border border-white/20">
-                    <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span> AI Speaking
-                </div>
-                <!-- Candidate PiP -->
-                <div class="absolute top-4 right-4 md:right-6 w-36 md:w-48 h-24 md:h-32 rounded-xl overflow-hidden border-2 border-white/30 shadow-lg z-10 bg-[#172033]">
-                    <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/35 backdrop-blur-md rounded-md text-[10px] text-white font-bold">Bạn</div>
-                    <div class="w-full h-full flex flex-col items-center justify-center text-white/80 bg-[radial-gradient(circle_at_top,_#394564,_#172033_72%)]">
-                        <div data-candidate-initial class="w-11 h-11 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-lg font-bold">U</div>
-                        <span class="text-[10px] mt-2">Camera preview</span>
-                    </div>
-                </div>
-                <!-- Caption câu hỏi AI -->
-                <div class="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 bg-[#111827]/85 backdrop-blur-md rounded-xl p-4 md:p-5 text-white border border-white/10 shadow-lg">
+
+                <!-- Caption nằm riêng để không che video -->
+                <div class="relative z-10 mt-3 bg-[#111827] rounded-xl p-4 md:p-5 text-white border border-white/10 shadow-lg">
                     <div class="flex items-start gap-4">
                         <span class="material-symbols-outlined text-tertiary-fixed-dim text-[24px]">smart_toy</span>
-                        <p class="font-body-lg text-body-lg leading-relaxed text-white">Đó là một cách tiếp cận hợp lý. Tuy nhiên, nếu hệ thống chữ ký số gặp lỗi trong quá trình phê duyệt ở phase 1 khiến giao dịch bị gián đoạn, trong khi stakeholder đang phàn nàn rằng bạn đã không làm tính năng phê duyệt đa cấp ngay từ đầu để tránh lỗi này. Bạn sẽ phản hồi ra sao?</p>
+                        <p data-ai-question class="font-body-lg text-body-lg leading-relaxed text-white">Đó là một cách tiếp cận hợp lý. Tuy nhiên, nếu hệ thống chữ ký số gặp lỗi trong quá trình phê duyệt ở phase 1 khiến giao dịch bị gián đoạn, trong khi stakeholder đang phàn nàn rằng bạn đã không làm tính năng phê duyệt đa cấp ngay từ đầu để tránh lỗi này. Bạn sẽ phản hồi ra sao?</p>
                     </div>
                 </div>
             </div>
@@ -361,14 +412,79 @@
 
                 const role = params.get('role') || 'Business Analyst';
                 document.querySelectorAll('[data-live-role]').forEach(el => el.textContent = role);
-                const currentUser = window.NexoraAuth?.getAuth();
-                const candidateInitial = document.querySelector('[data-candidate-initial]');
-                if (candidateInitial) candidateInitial.textContent = (currentUser?.name || 'U').charAt(0).toUpperCase();
+                // Camera ứng viên: chỉ xin quyền sau thao tác chủ động, fallback luôn là avatar.
+                const candidateVideo = document.querySelector('[data-candidate-video]');
+                const candidateFallback = document.querySelector('[data-candidate-fallback]');
+                const cameraToggle = document.querySelector('[data-camera-toggle]');
+                const cameraIcon = document.querySelector('[data-camera-icon]');
+                const cameraAction = document.querySelector('[data-camera-action]');
+                const cameraStatus = document.querySelector('[data-camera-status]');
+                let cameraStream = null;
+
+                const showCameraFallback = (message = 'Camera đang tắt') => {
+                    candidateVideo.classList.add('hidden');
+                    candidateFallback.classList.remove('hidden');
+                    cameraStatus.textContent = message;
+                    cameraIcon.textContent = 'videocam';
+                    cameraAction.textContent = 'Bật camera';
+                };
+
+                const stopCamera = () => {
+                    cameraStream?.getTracks().forEach(track => track.stop());
+                    cameraStream = null;
+                    candidateVideo.srcObject = null;
+                    showCameraFallback();
+                };
+
+                const startCamera = async () => {
+                    if (!navigator.mediaDevices?.getUserMedia) {
+                        showCameraFallback('Thiết bị không hỗ trợ camera');
+                        return;
+                    }
+                    cameraToggle.disabled = true;
+                    cameraIcon.textContent = 'progress_activity';
+                    cameraAction.textContent = 'Đang xin quyền...';
+                    try {
+                        cameraStream = await navigator.mediaDevices.getUserMedia({
+                            video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
+                            audio: false
+                        });
+                        candidateVideo.srcObject = cameraStream;
+                        await candidateVideo.play();
+                        candidateFallback.classList.add('hidden');
+                        candidateVideo.classList.remove('hidden');
+                        cameraIcon.textContent = 'videocam_off';
+                        cameraAction.textContent = 'Tắt camera';
+                    } catch (error) {
+                        cameraStream?.getTracks().forEach(track => track.stop());
+                        cameraStream = null;
+                        candidateVideo.srcObject = null;
+                        const denied = error?.name === 'NotAllowedError' || error?.name === 'SecurityError';
+                        showCameraFallback(denied ? 'Bạn chưa cấp quyền camera' : 'Không tìm thấy camera');
+                    } finally {
+                        cameraToggle.disabled = false;
+                    }
+                };
+
+                cameraToggle?.addEventListener('click', () => {
+                    if (cameraStream) stopCamera();
+                    else startCamera();
+                });
+                window.addEventListener('pagehide', () => {
+                    cameraStream?.getTracks().forEach(track => track.stop());
+                }, { once: true });
 
                 if (phase === 'listen') {
                     // Đến lượt user: banner + mic đỏ + finish enable
                     document.querySelector('[data-phase-text]').textContent = 'Đến lượt bạn trả lời...';
                     document.querySelector('[data-ai-badge]').classList.add('hidden');
+                    document.querySelector('[data-avatar-stage]')?.setAttribute('data-speaking', 'false');
+                    const speakingVideo = document.querySelector('[data-ai-speaking-video]');
+                    const idleVideo = document.querySelector('[data-ai-idle-video]');
+                    speakingVideo?.pause();
+                    speakingVideo?.classList.add('hidden');
+                    idleVideo?.classList.remove('hidden');
+                    idleVideo?.play().catch(() => {});
                     const micBtn = document.querySelector('[data-mic-btn]');
                     micBtn.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'cursor-wait');
                     micBtn.classList.add('bg-error', 'text-on-error', 'recording-pulse', 'hover:bg-error/90');
@@ -383,25 +499,63 @@
                     // Ẩn progress bar ở listen
                     document.querySelector('[data-progress-wrap]')?.classList.add('hidden');
                 } else {
-                    // SPEAK: AI đang nói → auto chuyển sang listen sau 8s + progress bar
-                    const totalSecs = 8;
-                    const banner = document.querySelector('[data-phase-banner]');
+                    // SPEAK: phát video AI có sẵn lời thoại và đồng bộ UI theo thời lượng thật.
+                    const speakingVideo = document.querySelector('[data-ai-speaking-video]');
+                    const idleVideo = document.querySelector('[data-ai-idle-video]');
                     const bar = document.querySelector('[data-progress-bar]');
+                    const progressPct = document.querySelector('[data-progress-pct]');
+                    const micMeta = document.querySelector('[data-mic-meta]');
+                    const micBtn = document.querySelector('[data-mic-btn]');
+                    const micIcon = document.querySelector('[data-mic-icon]');
+                    let finished = false;
+
                     document.querySelector('[data-progress-wrap]').classList.remove('hidden');
-                    let elapsed = 0;
                     bar.classList.remove('hidden');
-                    const tick = setInterval(() => {
-                        elapsed++;
-                        const pct = (elapsed / totalSecs) * 100;
-                        bar.style.width = (100 - pct) + '%';
-                        document.querySelector('[data-progress-pct]').textContent = Math.round(100 - pct) + '%';
-                        const rem = totalSecs - elapsed;
-                        document.querySelector('[data-mic-meta]').textContent = `${rem}s còn lại`;
-                        if (elapsed >= totalSecs) {
-                            clearInterval(tick);
-                            window.location.href = `interview.html?view=live&phase=listen&role=${encodeURIComponent(role)}&auth=1`;
-                        }
-                    }, 1000);
+
+                    const goToListen = () => {
+                        if (finished) return;
+                        finished = true;
+                        window.location.href = `interview.html?view=live&phase=listen&role=${encodeURIComponent(role)}&auth=1`;
+                    };
+
+                    idleVideo?.pause();
+                    idleVideo?.classList.add('hidden');
+                    speakingVideo.classList.remove('hidden');
+
+                    const updateVideoProgress = () => {
+                        if (!speakingVideo.duration || !Number.isFinite(speakingVideo.duration)) return;
+                        const remaining = Math.max(0, speakingVideo.duration - speakingVideo.currentTime);
+                        const remainingPct = Math.max(0, (remaining / speakingVideo.duration) * 100);
+                        bar.style.width = remainingPct + '%';
+                        progressPct.textContent = Math.round(remainingPct) + '%';
+                        micMeta.textContent = `${Math.ceil(remaining)}s còn lại`;
+                    };
+
+                    const playSpeakingVideo = () => {
+                        micBtn.classList.add('cursor-wait');
+                        micBtn.classList.remove('cursor-pointer');
+                        micIcon.textContent = 'hourglass_empty';
+                        document.querySelector('[data-mic-status]').textContent = 'AI đang nói...';
+                        speakingVideo.play().catch(() => {
+                            micBtn.classList.remove('cursor-wait');
+                            micBtn.classList.add('cursor-pointer');
+                            micIcon.textContent = 'play_arrow';
+                            document.querySelector('[data-mic-status]').textContent = 'Bấm để bắt đầu câu hỏi';
+                            micMeta.textContent = 'Trình duyệt đang chặn tự động phát video có âm thanh';
+                            micBtn.addEventListener('click', playSpeakingVideo, { once: true });
+                        });
+                    };
+
+                    speakingVideo.addEventListener('loadedmetadata', updateVideoProgress);
+                    speakingVideo.addEventListener('timeupdate', updateVideoProgress);
+                    speakingVideo.addEventListener('ended', goToListen, { once: true });
+                    speakingVideo.addEventListener('error', () => {
+                        document.querySelector('[data-mic-status]').textContent = 'Không thể phát video câu hỏi';
+                        micMeta.textContent = 'Vui lòng kiểm tra file video';
+                        document.querySelector('[data-avatar-stage]')?.setAttribute('data-speaking', 'false');
+                    }, { once: true });
+                    window.addEventListener('pagehide', () => speakingVideo.pause(), { once: true });
+                    playSpeakingVideo();
                 }
                 // speak: mặc định như HTML đã viết
 
@@ -417,6 +571,7 @@
 
                 // Khi user bấm "Chốt câu trả lời" -> mở modal hoàn tất (giả lập)
                 document.querySelector('[data-finish-btn]')?.addEventListener('click', () => {
+                    stopCamera();
                     doneModal.classList.remove('hidden');
                 });
             } else if (view === 'done') {
