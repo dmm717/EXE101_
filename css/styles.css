@@ -615,6 +615,7 @@ body > :is(nav, header):first-of-type > div {
     display: flex;
     width: max-content;
     animation: nx-logo-scroll 25s linear infinite;
+    will-change: transform;
 }
 
 .nx-logo-group {
@@ -670,12 +671,9 @@ body > :is(nav, header):first-of-type > div {
     transform: translateY(-2px);
 }
 
-.nx-logo-marquee:hover .nx-logo-marquee-track {
-    animation-play-state: paused;
-}
-
 @keyframes nx-logo-scroll {
-    to { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
 }
 
 @media (max-width: 640px) {
@@ -1116,6 +1114,14 @@ body > :is(nav, header):first-of-type > div {
         animation-duration: .001ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .001ms !important;
+    }
+
+    /* Dải logo là nội dung liên tục, vẫn phải loop thay vì đứng yên. */
+    .nx-logo-marquee-track {
+        animation-name: nx-logo-scroll !important;
+        animation-duration: 25s !important;
+        animation-timing-function: linear !important;
+        animation-iteration-count: infinite !important;
     }
 }
 
