@@ -199,8 +199,12 @@
         document.getElementById('register-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const fullname = (document.getElementById('fullname').value || '').trim() || 'Người dùng mới';
+            
+            // Clear old avatar
+            localStorage.removeItem('nexora_avatar');
+            
             window.NexoraAuth.setAuth({ name: fullname, plan: 'Pro' });
-            window.location.href = 'cv.html';
+            window.location.href = window.NexoraUI?.getSavedAuthDestination?.('dashboard.html') || 'dashboard.html';
         });
     </script>
 </body>
