@@ -126,8 +126,12 @@
             var emailInput = document.getElementById('email');
             var email = (emailInput && emailInput.value) ? emailInput.value : 'user@nexora.ai';
             var name = email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }) || 'User';
+            
+            // Clear any old avatar before logging in a new user
+            localStorage.removeItem('nexora_avatar');
+            
             window.NexoraAuth.setAuth({ name: name, email: email, plan: 'Pro' });
-            window.location.href = 'cv.html';
+            window.location.href = window.NexoraUI?.getSavedAuthDestination?.('dashboard.html') || 'dashboard.html';
         });
     </script>
 </body>

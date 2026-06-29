@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
     <link href="css/tailwind.css" rel="stylesheet"><link href="css/styles.css" rel="stylesheet">
+    <script src="js/auth-guard.js" data-auth-page="protected"></script>
     <script src="js/common.js" defer></script>
 </head>
 
@@ -24,7 +25,7 @@
             <!-- Brand -->
             <a href="index.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
             <!-- Links (Desktop) -->
-            <div class="hidden md:flex items-center gap-6 h-full">
+            <div class="hidden lg:flex items-center gap-6 h-full">
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
                     href="index.html">Tổng quan</a>
                 <a class="text-on-surface-variant hover:text-primary transition-colors flex items-center h-full text-label-md font-label-md"
@@ -61,20 +62,20 @@
         <div
             class="bg-surface rounded-xl shadow-sm border border-outline-variant/30 p-stack-sm mb-stack-lg overflow-x-auto no-scrollbar">
             <div class="flex items-center gap-3 min-w-max">
-                <button class="px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-colors">Tất
+                <button data-scenario-filter="all" class="px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md transition-colors">Tất
                     cả</button>
-                <button
+                <button data-scenario-filter="banking"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">Ngân
                     hàng</button>
-                <button
+                <button data-scenario-filter="ecommerce"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">eCommerce</button>
-                <button
+                <button data-scenario-filter="saas-fintech"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">SaaS &amp;
                     Fintech</button>
-                <button
+                <button data-scenario-filter="retail"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">Bán
                     lẻ</button>
-                <button
+                <button data-scenario-filter="logistics"
                     class="px-4 py-2 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md transition-colors border border-outline-variant/50">Logistics</button>
             </div>
         </div>
@@ -83,7 +84,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
 
             <!-- Card 1: Banking -->
-            <div
+            <div data-case-card data-case-category="banking"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] hover:border-primary-fixed transition-all duration-300 group">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
@@ -110,14 +111,14 @@
                         class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
                             class="material-symbols-outlined text-[14px]">schedule</span> 45 Phút</span>
                 </div>
-                <button
-                    class="w-full bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container">
+                <a href="case.html?id=ekyc-onboarding"
+                    class="w-full min-h-12 bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container inline-flex items-center justify-center">
                     Bắt đầu case
-                </button>
+                </a>
             </div>
 
             <!-- Card 2: eCommerce -->
-            <div
+            <div data-case-card data-case-category="ecommerce"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] hover:border-primary-fixed transition-all duration-300 group">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
@@ -143,58 +144,14 @@
                         class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
                             class="material-symbols-outlined text-[14px]">schedule</span> 60 Phút</span>
                 </div>
-                <button
-                    class="w-full bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container">
+                <a href="case.html?id=order-crisis"
+                    class="w-full min-h-12 bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container inline-flex items-center justify-center">
                     Bắt đầu case
-                </button>
+                </a>
             </div>
 
-            <!-- Card 3: Premium Locked (Glassmorphism overlay) -->
-            <div
-                class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col relative overflow-hidden">
-                <!-- Content (Dimmed) -->
-                <div class="opacity-40 filter blur-[1px]">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex gap-2">
-                            <span
-                                class="bg-surface-container-high text-on-surface-variant px-2 py-1 rounded-full text-label-sm font-label-sm">SaaS</span>
-                            <span
-                                class="bg-error-container text-on-error-container px-2 py-1 rounded-full text-label-sm font-label-sm">Chuyên
-                                gia</span>
-                        </div>
-                    </div>
-                    <h3 class="font-headline-md text-headline-md mb-2 text-on-background">Thiết kế kiến trúc
-                        Multi-tenant Scale lớn</h3>
-                    <p class="font-body-md text-body-md text-on-surface-variant mb-4">
-                        Chuyển đổi hệ thống từ single-tenant sang multi-tenant phục vụ 1 triệu active users đồng thời.
-                    </p>
-                    <div class="flex flex-wrap gap-2 mb-stack-md">
-                        <span
-                            class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
-                                class="material-symbols-outlined text-[14px]">architecture</span> System Design</span>
-                    </div>
-                </div>
-                <!-- Premium Overlay -->
-                <div
-                    class="absolute inset-0 bg-surface/60 backdrop-blur-[2px] flex flex-col items-center justify-center p-6 text-center z-10 border border-primary/20 rounded-xl">
-                    <div
-                        class="bg-tertiary-container text-on-tertiary-container p-3 rounded-full mb-3 shadow-lg">
-                        <span class="material-symbols-outlined text-2xl"
-                            style="font-variation-settings: 'FILL' 1;">lock</span>
-                    </div>
-                    <h4 class="font-headline-md text-headline-md text-on-background mb-1">Nội dung Độc quyền</h4>
-                    <p class="font-body-md text-body-md text-on-surface-variant mb-4">Tính năng này dành cho gói Plus trở
-                        lên.</p>
-                    <button
-                        class="bg-primary text-on-primary px-6 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-md flex items-center gap-2">
-                        <span>Nâng cấp ngay</span>
-                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Card 4: Logistics -->
-            <div
+            <!-- Card 3: Logistics -->
+            <div data-case-card data-case-category="logistics"
                 class="bg-surface rounded-xl shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20 p-stack-md flex flex-col hover:shadow-[0px_10px_30px_rgba(0,0,0,0.08)] hover:border-primary-fixed transition-all duration-300 group">
                 <div class="flex justify-between items-start mb-4">
                     <div class="flex gap-2">
@@ -220,46 +177,66 @@
                         class="text-label-sm font-label-sm text-outline border border-outline-variant/50 px-2 py-1 rounded flex items-center gap-1"><span
                             class="material-symbols-outlined text-[14px]">schedule</span> 45 Phút</span>
                 </div>
-                <button
-                    class="w-full bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container">
+                <a href="case.html?id=ride-matching"
+                    class="w-full min-h-12 bg-surface-container-high text-primary font-label-md text-label-md py-3 rounded-lg hover:bg-primary hover:text-on-primary transition-colors group-hover:bg-primary-container group-hover:text-on-primary-container inline-flex items-center justify-center">
                     Bắt đầu case
-                </button>
+                </a>
             </div>
 
         </div>
     </main>
 
     <!-- Footer Component (Generated from JSON) -->
-    <footer
-        class="bg-surface-container-lowest dark:bg-on-background w-full py-stack-lg border-t border-outline-variant/50 mt-auto">
-        <div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter items-start">
-            <div class="col-span-1 md:col-span-2">
-                <img src="img/logo.png" alt="Nexora" class="h-8 w-auto">
-                <p
-                    class="text-on-surface-variant text-body-md font-body-md max-w-sm opacity-80 hover:opacity-100 transition-opacity">
-                    © 2026 Nexora AI. Nền tảng luyện phỏng vấn thông minh hàng đầu Việt Nam.
-                </p>
-            </div>
-            <div class="col-span-1">
-                <ul class="space-y-2">
-                    <li><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm hover:underline"
-                            href="#">Về chúng tôi</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm hover:underline"
-                            href="#">Điều khoản sử dụng</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm hover:underline"
-                            href="#">Chính sách bảo mật</a></li>
-                </ul>
-            </div>
-            <div class="col-span-1">
-                <ul class="space-y-2">
-                    <li><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm hover:underline"
-                            href="#">Liên hệ</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm hover:underline"
-                            href="#">Hướng dẫn</a></li>
-                </ul>
+    <footer class="nx-footer">
+    <div class="nx-footer-panel">
+        <div class="nx-footer-brand">
+            <a class="nx-footer-logo" href="index.html" aria-label="Nexora">
+                <img src="img/logo.png" alt="Nexora">
+            </a>
+            <p class="nx-footer-description">N&#7873;n t&#7843;ng luy&#7879;n ph&#7887;ng v&#7845;n th&#244;ng minh gi&#250;p &#7913;ng vi&#234;n t&#7921; tin h&#417;n trong t&#7915;ng v&#242;ng tuy&#7875;n d&#7909;ng.</p>
+            <div class="nx-footer-social" aria-label="Mang xa hoi Nexora">
+                <a class="nx-footer-social-link" href="#" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8.2V6.5c0-.8.2-1.3 1.3-1.3H17V2.1C16.2 2 15.4 2 14.6 2c-2.5 0-4.2 1.5-4.2 4.3v1.9H7.6v3.5h2.8V22H14V11.7h2.8l.4-3.5H14Z"/></svg>
+                </a>
+                <a class="nx-footer-social-link" href="#" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 2c.4 2.4 1.8 3.9 4.1 4.1v3.3c-1.4.1-2.7-.3-4-1.1v6.2c0 5.5-6 7.2-9.5 4.3-2.3-1.9-2.6-5.5-.7-7.8 1.3-1.6 3.3-2.3 5.7-1.8v3.5c-.5-.2-1-.2-1.5-.1-1.4.3-2.2 1.6-1.8 2.9.4 1.4 2 2 3.2 1.2.8-.5 1.1-1.2 1.1-2.6V2h3.4Z"/></svg>
+                </a>
+                <a class="nx-footer-social-link" href="#" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.9 8.9H3.3V21h3.6V8.9ZM5.1 3C3.9 3 3 3.8 3 4.9s.9 1.9 2.1 1.9 2.1-.8 2.1-1.9S6.3 3 5.1 3Zm15.9 11c0-3.3-1.8-5.4-4.6-5.4-1.6 0-2.7.9-3.2 1.7V8.9H9.7V21h3.6v-6.1c0-1.6.8-2.7 2.2-2.7s2 1 2 2.8v6H21v-7Z"/></svg>
+                </a>
+                <a class="nx-footer-social-link" href="#" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 7.1c-.2-.9-.9-1.6-1.8-1.8C18.2 4.9 12 4.9 12 4.9s-6.2 0-7.8.4c-.9.2-1.6.9-1.8 1.8C2 8.7 2 12 2 12s0 3.3.4 4.9c.2.9.9 1.6 1.8 1.8 1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.6.4-4.9.4-4.9s0-3.3-.4-4.9ZM10 15.1V8.9l5.4 3.1-5.4 3.1Z"/></svg>
+                </a>
+                <a class="nx-footer-social-link" href="#" aria-label="Threads">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.2 2C6.4 2 3.4 5.8 3.4 12.2c0 6.2 3 9.8 8.8 9.8 5 0 8.2-2.8 8.2-7.1 0-3-1.5-5.1-4.2-5.9-.5-2.8-2.1-4.2-4.8-4.2-2.1 0-3.8.9-4.8 2.6l2.5 1.6c.5-.9 1.2-1.4 2.2-1.4 1.2 0 1.8.6 2 1.8h-1.8c-3.2 0-5.1 1.6-5.1 4.1 0 2.3 1.8 3.9 4.5 3.9 2.9 0 4.8-1.8 5.2-5.1 1 .6 1.5 1.5 1.5 2.7 0 2.6-2.1 4.3-5.4 4.3-4 0-6-2.5-6-7.1 0-4.8 2-7.4 6-7.4 2.5 0 4.2 1 5.3 3.1l2.5-1.4C18.4 3.5 15.8 2 12.2 2Zm-.8 12.7c-1.2 0-2-.5-2-1.3 0-.9.7-1.4 2.1-1.4h2c-.2 1.8-.9 2.7-2.1 2.7Z"/></svg>
+                </a>
+                <a class="nx-footer-social-link" href="#" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2Zm0 2.7c-1.7 0-3.1 1.4-3.1 3.1v8.4c0 1.7 1.4 3.1 3.1 3.1h8.4c1.7 0 3.1-1.4 3.1-3.1V7.8c0-1.7-1.4-3.1-3.1-3.1H7.8Zm4.2 3a4.3 4.3 0 1 1 0 8.6 4.3 4.3 0 0 1 0-8.6Zm0 2.6a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm4.7-2.9a1 1 0 1 1 0 2.1 1 1 0 0 1 0-2.1Z"/></svg>
+                </a>
             </div>
         </div>
-    </footer>
+        <nav class="nx-footer-column" aria-label="Cho ung vien">
+            <h2 class="nx-footer-heading">Cho &#7913;ng vi&#234;n</h2>
+            <a class="nx-footer-link" href="#">Ph&#226;n t&#237;ch CV</a>
+            <a class="nx-footer-link" href="#">Luy&#7879;n ph&#7887;ng v&#7845;n</a>
+            <a class="nx-footer-link" href="#">Kho t&#236;nh hu&#7889;ng</a>
+            <a class="nx-footer-link" href="#">Ph&#432;&#417;ng ph&#225;p STAR</a>
+        </nav>
+        <nav class="nx-footer-column" aria-label="Ho tro">
+            <h2 class="nx-footer-heading">H&#7895; tr&#7907;</h2>
+            <a class="nx-footer-link" href="#">&#272;i&#7873;u kho&#7843;n s&#7917; d&#7909;ng</a>
+            <a class="nx-footer-link" href="#">Ch&#237;nh s&#225;ch b&#7843;o m&#7853;t</a>
+            <a class="nx-footer-link" href="#">H&#432;&#7899;ng d&#7851;n</a>
+            <a class="nx-footer-link" href="#">Li&#234;n h&#7879;</a>
+        </nav>
+        <div class="nx-footer-column">
+            <h2 class="nx-footer-heading">Th&#244;ng tin c&#244;ng ty</h2>
+            <p class="nx-footer-text">Nexora AI</p>
+            <p class="nx-footer-text">MST: 0109904638</p>
+            <p class="nx-footer-text">L&#244; E2a-7, &#272;&#432;&#7901;ng D1, Khu C&#244;ng ngh&#7879; cao, Ph&#432;&#7901;ng T&#259;ng Nh&#417;n Ph&#250;, TP. H&#7891; Ch&#237; Minh</p>
+        </div>
+    </div>
+</footer>
 </body>
 
 </html>

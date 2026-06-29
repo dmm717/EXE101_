@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+    <title>Trang chủ - Nexora AI</title>
+    <script src="js/auth-guard.js" data-auth-page="protected"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="js/common.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+</head>
+
+<body class="min-h-[100dvh] bg-background font-body-md text-on-background antialiased">
+    <a href="#main-content"
+        class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-surface focus:px-4 focus:py-3 focus:text-primary focus:shadow-md">
+        Bỏ qua điều hướng
+    </a>
+
+    <nav class="fixed top-0 z-50 h-16 w-full border-b border-outline-variant/30 bg-surface/90 shadow-sm backdrop-blur-md">
+        <div class="mx-auto flex h-16 max-w-container-max items-center justify-between px-margin-mobile md:px-margin-desktop">
+            <a href="dashboard.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
+            <div class="hidden h-full items-center gap-6 lg:flex">
+                <a class="flex h-full items-center border-b-2 border-primary font-label-md text-label-md font-bold text-primary"
+                    href="dashboard.html">Trang chủ</a>
+                <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary"
+                    href="cv.html">Phân tích CV</a>
+                <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary"
+                    href="interview.html">Phỏng vấn AI</a>
+                <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary"
+                    href="scenarios.html">Tình huống</a>
+                <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary"
+                    href="star.html">STAR</a>
+                <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary"
+                    href="report.html">Báo cáo</a>
+                <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary"
+                    href="pricing.html">Bảng giá</a>
+            </div>
+            <div id="nav-slot" class="flex items-center gap-3"></div>
+        </div>
+    </nav>
+
+    <main id="main-content" class="mx-auto min-h-[100dvh] w-full max-w-container-max px-margin-mobile pb-12 pt-24 md:px-margin-desktop md:pb-16 md:pt-28">
+        <header>
+            <h1 class="font-headline-lg text-headline-lg-mobile text-on-surface md:text-headline-lg">
+                Chào mừng trở lại, <span id="dashboard-user-name">bạn</span>!
+            </h1>
+            <p class="mt-2 max-w-[68ch] text-body-md text-on-surface-variant">
+                Theo dõi hành trình luyện phỏng vấn và tiếp tục cải thiện từng kỹ năng cùng Nexora.
+            </p>
+        </header>
+
+        <section class="dashboard-stats-grid mt-8" aria-label="Tổng quan luyện tập">
+            <article class="dashboard-stat-card rounded-xl border border-outline-variant/40 bg-surface">
+                <div class="dashboard-stat-icon grid place-items-center rounded-xl bg-primary text-on-primary">
+                    <span class="material-symbols-outlined" aria-hidden="true">videocam</span>
+                </div>
+                <div class="dashboard-stat-content">
+                    <p class="dashboard-stat-label text-label-md text-on-surface-variant">Tổng số phỏng vấn</p>
+                    <p class="dashboard-stat-value text-[2rem] font-bold leading-none tabular-nums text-on-surface">0</p>
+                </div>
+            </article>
+
+            <article class="dashboard-stat-card rounded-xl border border-outline-variant/40 bg-surface">
+                <div class="dashboard-stat-icon grid place-items-center rounded-xl bg-primary-fixed text-primary">
+                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                </div>
+                <div class="dashboard-stat-content">
+                    <p class="dashboard-stat-label text-label-md text-on-surface-variant">Phỏng vấn đã hoàn thành</p>
+                    <p class="dashboard-stat-value text-[2rem] font-bold leading-none tabular-nums text-on-surface">0</p>
+                </div>
+            </article>
+
+            <article class="dashboard-stat-card rounded-xl border border-outline-variant/40 bg-surface">
+                <div class="dashboard-stat-icon grid place-items-center rounded-xl bg-surface-container-high text-primary">
+                    <span class="material-symbols-outlined" aria-hidden="true">assignment</span>
+                </div>
+                <div class="dashboard-stat-content">
+                    <p class="dashboard-stat-label text-label-md text-on-surface-variant">Case đã hoàn thành</p>
+                    <p class="dashboard-stat-value text-[2rem] font-bold leading-none tabular-nums text-on-surface">0</p>
+                </div>
+            </article>
+
+            <article class="dashboard-stat-card rounded-xl border border-outline-variant/40 bg-surface">
+                <div class="dashboard-stat-icon grid place-items-center rounded-xl bg-tertiary-fixed text-tertiary">
+                    <span class="material-symbols-outlined" aria-hidden="true">bar_chart</span>
+                </div>
+                <div class="dashboard-stat-content">
+                    <p class="dashboard-stat-label text-label-md text-on-surface-variant">Điểm trung bình</p>
+                    <p class="dashboard-stat-value text-[2rem] font-bold leading-none tabular-nums text-on-surface">0.0</p>
+                </div>
+            </article>
+        </section>
+
+        <section class="mt-6 rounded-xl border border-outline-variant/40 bg-surface p-4 md:p-5" aria-labelledby="dashboard-search-title">
+            <h2 id="dashboard-search-title" class="sr-only">Tìm kiếm và lọc hoạt động</h2>
+            <label for="dashboard-search" class="sr-only">Tìm kiếm hoạt động</label>
+            <div class="relative">
+                <span class="material-symbols-outlined pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-outline" aria-hidden="true">search</span>
+                <input id="dashboard-search" type="search"
+                    class="min-h-12 w-full rounded-xl border border-outline-variant/50 bg-surface-container-lowest py-3 pl-12 pr-4 text-body-md text-on-surface placeholder:text-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    placeholder="Tìm kiếm hoạt động luyện tập...">
+            </div>
+            <div class="dashboard-filter-row mt-4">
+                <div class="dashboard-select-wrap">
+                    <label for="dashboard-category" class="sr-only">Danh mục</label>
+                    <select id="dashboard-category"
+                        class="dashboard-select border border-outline-variant/50 bg-surface-container-lowest text-label-md text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="all">Tất cả danh mục</option>
+                        <option value="interview">Phỏng vấn AI</option>
+                        <option value="case">Case tình huống</option>
+                        <option value="star">Luyện tập STAR</option>
+                    </select>
+                    <span class="dashboard-select-icon material-symbols-outlined" aria-hidden="true">expand_more</span>
+                </div>
+
+                <div class="dashboard-select-wrap">
+                    <label for="dashboard-difficulty" class="sr-only">Độ khó</label>
+                    <select id="dashboard-difficulty"
+                        class="dashboard-select border border-outline-variant/50 bg-surface-container-lowest text-label-md text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="all">Độ khó: Bất kỳ</option>
+                        <option value="easy">Dễ</option>
+                        <option value="medium">Trung bình</option>
+                        <option value="hard">Khó</option>
+                    </select>
+                    <span class="dashboard-select-icon material-symbols-outlined" aria-hidden="true">expand_more</span>
+                </div>
+            </div>
+            <p id="dashboard-filter-status" class="sr-only" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="mt-6 overflow-hidden rounded-xl border border-outline-variant/40 bg-surface" aria-labelledby="recent-activity-title">
+            <div class="border-b border-outline-variant/40 px-5 py-4 md:px-6">
+                <h2 id="recent-activity-title" class="font-headline-md text-headline-md text-on-surface">Hoạt động gần đây</h2>
+            </div>
+
+            <div id="dashboard-empty-state" class="flex min-h-72 flex-col items-center justify-center px-5 py-10 text-center">
+                <div class="grid h-14 w-14 place-items-center rounded-2xl bg-primary-fixed text-primary">
+                    <span id="dashboard-empty-icon" class="material-symbols-outlined text-[30px]" aria-hidden="true">assignment_turned_in</span>
+                </div>
+                <h3 id="dashboard-empty-title" class="mt-5 font-headline-md text-headline-md text-on-surface">Chưa có hoạt động nào</h3>
+                <p id="dashboard-empty-description" class="mt-2 max-w-[52ch] text-body-md text-on-surface-variant">
+                    Các cuộc phỏng vấn và case tình huống bạn hoàn thành sẽ xuất hiện tại đây.
+                </p>
+                <a id="dashboard-empty-action" href="interview.html"
+                    class="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 font-label-md text-label-md text-on-primary shadow-[0_4px_8px_rgba(53,37,205,0.22)] hover:bg-primary-container">
+                    Bắt đầu luyện tập
+                    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">arrow_forward</span>
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

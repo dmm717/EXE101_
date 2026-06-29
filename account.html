@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+    <title>Quản lý tài khoản - Nexora AI</title>
+    <script src="js/auth-guard.js" data-auth-page="protected"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link href="css/tailwind.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <style>
+/* ═══════════════════════════════════════════════════════
+   NEXORA ACCOUNT PAGE — DESIGN SYSTEM
+═══════════════════════════════════════════════════════ */
+
+/* Card shared */
+.ac-card {
+    background: #ffffff;
+    border: 1px solid rgba(71,68,91,.16);
+    border-radius: 16px;
+    box-shadow: 0 1px 4px rgba(37,32,92,.04);
+}
+
+/* ── Tabs ───────────────────────────────────────────── */
+.ac-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid rgba(71,68,91,.2);
+    background: transparent;
+    color: #6b6882;
+    transition: all .16s;
+    white-space: nowrap;
+}
+.ac-tab.active {
+    background: #3525cd;
+    color: #fff;
+    border-color: #3525cd;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(53,37,205,.24);
+}
+.ac-tab:not(.active):hover {
+    background: rgba(53,37,205,.06);
+    color: #3525cd;
+    border-color: rgba(53,37,205,.3);
+}
+.ac-tab-panel { display: none; }
+.ac-tab-panel.active { display: block; }
+
+/* ── Field label ────────────────────────────────────── */
+.ac-label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #6b6882;
+    margin-bottom: 6px;
+    letter-spacing: .01em;
+}
+
+/* ── Input ──────────────────────────────────────────── */
+.ac-input {
+    display: block;
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid rgba(71,68,91,.22);
+    border-radius: 10px;
+    background: #f9f9ff;
+    font-size: 14px;
+    color: #1c1b2e;
+    font-family: inherit;
+    outline: none;
+    transition: border-color .16s, box-shadow .16s;
+}
+.ac-input:focus {
+    border-color: #3525cd;
+    box-shadow: 0 0 0 3px rgba(53,37,205,.10);
+    background: #fff;
+}
+.ac-input:disabled {
+    background: #f0effa;
+    color: #9896b4;
+    cursor: not-allowed;
+    border-color: rgba(71,68,91,.12);
+}
+textarea.ac-input {
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    resize: none;
+    line-height: 1.55;
+}
+select.ac-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238c87ab' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* ── Hint text ──────────────────────────────────────── */
+.ac-hint {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #9896b4;
+}
+
+/* ── Avatar ─────────────────────────────────────────── */
+.ac-avatar-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
+.ac-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #3525cd;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    user-select: none;
+}
+.ac-avatar-cam {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #3525cd;
+    border: 2px solid #f9f9ff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background .15s;
+}
+.ac-avatar-cam:hover { background: #2318a8; }
+.ac-avatar-cam .material-symbols-outlined { font-size: 12px; color: #fff; }
+
+/* ── Section header ─────────────────────────────────── */
+.ac-section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(71,68,91,.12);
+}
+.ac-section-head .material-symbols-outlined {
+    font-size: 20px;
+    color: #3525cd;
+}
+.ac-section-head h2 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1c1b2e;
+    margin: 0;
+}
+
+/* ── Primary button ─────────────────────────────────── */
+.ac-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    height: 42px;
+    padding: 0 22px;
+    border-radius: 10px;
+    background: #3525cd;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(53,37,205,.26);
+    transition: background .15s, transform .12s, box-shadow .15s;
+}
+.ac-btn-primary:hover { background: #2318a8; box-shadow: 0 6px 18px rgba(53,37,205,.32); }
+.ac-btn-primary:active { transform: scale(.97); }
+.ac-btn-primary .material-symbols-outlined { font-size: 17px; }
+
+/* ── Outline button ─────────────────────────────────── */
+.ac-btn-outline {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: #fff;
+    color: #1c1b2e;
+    font-size: 13.5px;
+    font-weight: 600;
+    border: 1px solid rgba(71,68,91,.24);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s;
+}
+.ac-btn-outline:hover { background: #f5f4ff; border-color: rgba(53,37,205,.3); }
+
+/* ── Accordion ──────────────────────────────────────── */
+.ac-acc-wrap {
+    border: 1px solid rgba(71,68,91,.16);
+    border-radius: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+.ac-acc-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 18px;
+    height: 52px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background .14s;
+    gap: 12px;
+}
+.ac-acc-trigger:hover { background: #f9f9ff; }
+.ac-acc-trigger-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.ac-acc-trigger-left .material-symbols-outlined {
+    font-size: 20px;
+    color: #3525cd;
+    flex-shrink: 0;
+}
+.ac-acc-trigger-left span.label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1b2e;
+    white-space: nowrap;
+}
+.ac-acc-chevron {
+    font-size: 20px;
+    color: #9896b4;
+    flex-shrink: 0;
+    transition: transform .24s ease;
+}
+.ac-acc-trigger[aria-expanded="true"] .ac-acc-chevron {
+    transform: rotate(180deg);
+}
+.ac-acc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .28s ease;
+}
+.ac-acc-body.open { grid-template-rows: 1fr; }
+.ac-acc-body > div { overflow: hidden; }
+.ac-acc-inner {
+    border-top: 1px solid rgba(71,68,91,.10);
+    padding: 16px 18px 18px;
+}
+
+/* ── Toggle switch ──────────────────────────────────── */
+.ac-toggle {
+    position: relative;
+    width: 42px; height: 23px;
+    border-radius: 12px;
+    background: rgba(71,68,91,.22);
+    cursor: pointer;
+    transition: background .2s;
+    flex-shrink: 0;
+    border: none;
+    padding: 0;
+}
+.ac-toggle.on { background: #3525cd; }
+.ac-toggle::after {
+    content: '';
+    position: absolute;
+    top: 2.5px; left: 2.5px;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.2);
+    transition: transform .2s cubic-bezier(.4,0,.2,1);
+}
+.ac-toggle.on::after { transform: translateX(19px); }
+
+/* ── Notification row ───────────────────────────────── */
+.ac-notif-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(71,68,91,.08);
+}
+.ac-notif-row:last-child { border-bottom: none; padding-bottom: 0; }
+.ac-notif-row:first-child { padding-top: 0; }
+.ac-notif-row p.title { font-size: 13.5px; font-weight: 600; color: #1c1b2e; margin: 0 0 2px; }
+.ac-notif-row p.sub   { font-size: 12px; color: #9896b4; margin: 0; }
+
+/* ── Logout row card ────────────────────────────────── */
+.ac-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+    border: 1px solid rgba(71,68,91,.16);
+    border-radius: 12px;
+    background: #fff;
+}
+.ac-action-row-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: #f4f3fb;
+}
+.ac-action-row-icon .material-symbols-outlined { font-size: 19px; color: #6b6882; }
+.ac-action-row-text { min-width: 0; }
+.ac-action-row-text p.title { font-size: 13.5px; font-weight: 600; color: #1c1b2e; margin: 0 0 1px; }
+.ac-action-row-text p.sub   { font-size: 12px; color: #9896b4; margin: 0; }
+
+/* ── Danger zone ────────────────────────────────────── */
+.ac-danger-zone {
+    padding: 14px 18px;
+    border: 1px solid rgba(186,26,26,.22);
+    border-radius: 12px;
+    background: rgba(186,26,26,.035);
+}
+.ac-danger-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+}
+.ac-danger-header .material-symbols-outlined { font-size: 17px; color: #ba1a1a; }
+.ac-danger-header span.txt { font-size: 12.5px; font-weight: 700; color: #ba1a1a; }
+.ac-danger-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+.ac-danger-row p.title { font-size: 13.5px; font-weight: 600; color: #1c1b2e; margin: 0 0 2px; }
+.ac-danger-row p.sub   { font-size: 12px; color: #9896b4; margin: 0; }
+.ac-btn-danger {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 9px;
+    border: 1px solid rgba(186,26,26,.35);
+    background: transparent;
+    color: #ba1a1a;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s;
+    flex-shrink: 0;
+}
+.ac-btn-danger:hover { background: rgba(186,26,26,.07); }
+
+/* ── History table ──────────────────────────────────── */
+.ac-table { width: 100%; border-collapse: collapse; }
+.ac-table th {
+    padding: 11px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: #9896b4;
+    text-align: left;
+    border-bottom: 1px solid rgba(71,68,91,.12);
+    white-space: nowrap;
+}
+.ac-table td {
+    padding: 13px 16px;
+    font-size: 13.5px;
+    color: #1c1b2e;
+    border-bottom: 1px solid rgba(71,68,91,.07);
+}
+.ac-table tr:last-child td { border-bottom: none; }
+.badge-ok  { display:inline-block; padding:2px 10px; border-radius:6px; font-size:12px; font-weight:600; background:#e9fdf4; color:#15803d; }
+.badge-pnd { display:inline-block; padding:2px 10px; border-radius:6px; font-size:12px; font-weight:600; background:#fff7ed; color:#c2410c; }
+
+/* Plan usage */
+.ac-plan-card {
+    position: relative;
+    overflow: hidden;
+    padding: 18px;
+}
+.ac-plan-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 92% 10%, rgba(53,37,205,.11), transparent 30%),
+        linear-gradient(180deg, rgba(245,244,255,.76), rgba(255,255,255,0));
+    pointer-events: none;
+}
+.ac-plan-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.ac-plan-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+.ac-plan-kicker {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #3525cd;
+    font-size: 12px;
+    font-weight: 700;
+}
+.ac-plan-kicker .material-symbols-outlined { font-size: 18px; }
+.ac-plan-name {
+    margin: 5px 0 0;
+    color: #1c1b2e;
+    font-size: 18px;
+    font-weight: 800;
+}
+.ac-plan-percent {
+    min-width: 84px;
+    text-align: right;
+}
+.ac-plan-percent strong {
+    display: block;
+    color: #3525cd;
+    font-size: 30px;
+    line-height: 1;
+}
+.ac-plan-percent span {
+    display: block;
+    margin-top: 4px;
+    color: #6b6882;
+    font-size: 12px;
+    font-weight: 600;
+}
+.ac-plan-meter {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(71,68,91,.12);
+}
+.ac-plan-meter > span {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #3525cd, #7c5cff);
+    transition: width .28s ease;
+}
+.ac-plan-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+.ac-plan-stat {
+    padding: 10px;
+    border: 1px solid rgba(71,68,91,.12);
+    border-radius: 11px;
+    background: rgba(255,255,255,.72);
+}
+.ac-plan-stat b {
+    display: block;
+    color: #1c1b2e;
+    font-size: 14px;
+}
+.ac-plan-stat span {
+    display: block;
+    margin-top: 2px;
+    color: #6b6882;
+    font-size: 11.5px;
+}
+.ac-plan-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+.ac-plan-note {
+    margin: 0;
+    color: #6b6882;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+.ac-plan-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 10px;
+    background: #3525cd;
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.ac-plan-link:hover { background: #2318a8; }
+
+@media (max-width: 560px) {
+    .ac-plan-top,
+    .ac-plan-foot {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .ac-plan-percent { text-align: left; }
+    .ac-plan-meta { grid-template-columns: 1fr; }
+}
+
+/* ── Delete modal ───────────────────────────────────── */
+#ac-modal {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.46);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+#ac-modal.open { display: flex; }
+.ac-modal-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 26px 26px 22px;
+    width: 100%; max-width: 390px;
+    box-shadow: 0 24px 64px rgba(37,32,92,.2);
+    animation: nx-page-in .18s ease both;
+}
+.ac-modal-icon {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    background: #fef2f2;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.ac-modal-icon .material-symbols-outlined { font-size: 22px; color: #ba1a1a; }
+    </style>
+    <script src="js/common.js" defer></script>
+    <script src="js/account.js" defer></script>
+</head>
+
+<body class="min-h-[100dvh] bg-background font-body-md text-on-background antialiased">
+<a href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-surface focus:px-4 focus:py-3 focus:text-primary focus:shadow-md">
+    Bỏ qua điều hướng
+</a>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="fixed top-0 z-50 h-16 w-full border-b border-outline-variant/30 bg-surface/90 shadow-sm backdrop-blur-md">
+    <div class="mx-auto flex h-16 max-w-container-max items-center justify-between px-margin-mobile md:px-margin-desktop">
+        <a href="dashboard.html"><img src="img/logo.png" alt="Nexora" class="h-12 w-auto"></a>
+        <div class="hidden h-full items-center gap-6 lg:flex">
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="dashboard.html">Trang chủ</a>
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="cv.html">Phân tích CV</a>
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="interview.html">Phỏng vấn AI</a>
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="scenarios.html">Tình huống</a>
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="star.html">STAR</a>
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="report.html">Báo cáo</a>
+            <a class="flex h-full items-center font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="pricing.html">Bảng giá</a>
+        </div>
+        <div id="nav-slot" class="flex items-center gap-3"></div>
+    </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main id="main-content"
+    class="mx-auto w-full max-w-container-max px-margin-mobile pb-16 pt-24 md:px-margin-desktop md:pt-28">
+
+    <!-- Page header -->
+    <div class="mb-6">
+        <h1 class="font-headline-lg text-headline-lg-mobile text-on-surface md:text-headline-lg">Quản lý tài khoản</h1>
+        <p class="mt-1.5 text-body-md text-on-surface-variant">Quản lý cài đặt và tùy chọn tài khoản</p>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="mb-6 flex items-center gap-2" role="tablist">
+        <button id="tab-btn-profile" class="ac-tab active" onclick="acTab('profile')">
+            <span class="material-symbols-outlined" style="font-size:17px">manage_accounts</span>
+            Chỉnh sửa hồ sơ
+        </button>
+        <button id="tab-btn-history" class="ac-tab" onclick="acTab('history')">
+            <span class="material-symbols-outlined" style="font-size:17px">receipt_long</span>
+            Lịch sử mua hàng
+        </button>
+    </div>
+
+    <!-- ════ TAB: HỒ SƠ ════ -->
+    <div id="ac-tab-profile" class="ac-tab-panel active">
+        <!--
+            Two-column grid:
+              · Left  (fixed ~440px) : profile card
+              · Right (fills rest)   : settings stack
+            lg:items-start keeps both columns pinned to top
+        -->
+        <div style="display:grid; grid-template-columns:440px 1fr; gap:20px; align-items:start;"
+             class="grid-cols-1 lg:grid-account">
+            <!-- ── LEFT CARD ── -->
+            <div class="ac-card" style="padding:24px;">
+
+                <!-- Section title -->
+                <div class="ac-section-head">
+                    <span class="material-symbols-outlined">person</span>
+                    <h2>Thông tin hồ sơ</h2>
+                </div>
+
+                <!-- Avatar row -->
+                <div style="display:flex; align-items:center; gap:14px; margin-bottom:22px;">
+                    <div class="ac-avatar-wrap">
+                        <div id="profile-avatar" class="ac-avatar">U</div>
+                        <label for="avatar-input" class="ac-avatar-cam" title="Đổi ảnh">
+                            <span class="material-symbols-outlined">photo_camera</span>
+                        </label>
+                        <input id="avatar-input" type="file" accept="image/*" style="display:none">
+                    </div>
+                    <div>
+                        <p style="font-size:13.5px;font-weight:600;color:#1c1b2e;margin:0 0 3px;">Ảnh hồ sơ</p>
+                        <p style="font-size:12px;color:#9896b4;margin:0;">JPG, PNG hoặc GIF. Tối đa 2MB</p>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <form id="profile-form" onsubmit="return false" style="display:flex;flex-direction:column;gap:14px;">
+
+                    <!-- Họ và tên -->
+                    <div>
+                        <label for="input-name" class="ac-label">Họ và tên <span style="color:#3525cd">*</span></label>
+                        <input id="input-name" type="text" class="ac-input" placeholder="Nguyễn Văn A">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="input-email" class="ac-label">Email</label>
+                        <input id="input-email" type="email" class="ac-input" disabled>
+                        <p class="ac-hint">Không thể thay đổi email</p>
+                    </div>
+
+                    <!-- Phone + DOB (2 cols) -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div>
+                            <label for="input-phone" class="ac-label">Điện thoại</label>
+                            <input id="input-phone" type="tel" class="ac-input" placeholder="0901 234 567">
+                        </div>
+                        <div>
+                            <label for="input-dob" class="ac-label">Ngày sinh</label>
+                            <input id="input-dob" type="date" class="ac-input">
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <div>
+                        <label for="input-bio" class="ac-label">Giới thiệu</label>
+                        <textarea id="input-bio" class="ac-input" rows="3" maxlength="1000"
+                            placeholder="Viết vài dòng về bản thân..."></textarea>
+                        <p class="ac-hint">Tối đa 1000 ký tự</p>
+                    </div>
+
+                    <!-- Save button -->
+                    <div style="display:flex;justify-content:flex-end;padding-top:4px;">
+                        <button id="save-profile" type="button" class="ac-btn-primary">
+                            <span class="material-symbols-outlined">save</span>
+                            Lưu thay đổi
+                        </button>
+                    </div>
+
+                </form>
+            </div><!-- /LEFT CARD -->
+
+            <!-- ── RIGHT STACK ── -->
+            <div style="display:flex;flex-direction:column;gap:10px;">
+
+                <!-- Plan usage -->
+                <section class="ac-card ac-plan-card" aria-labelledby="account-plan-title">
+                    <div class="ac-plan-inner">
+                        <div class="ac-plan-top">
+                            <div>
+                                <div class="ac-plan-kicker">
+                                    <span class="material-symbols-outlined" aria-hidden="true">workspace_premium</span>
+                                    <span>G&#243;i c&#7911;a b&#7841;n</span>
+                                </div>
+                                <h2 id="account-plan-title" class="ac-plan-name">Nexora</h2>
+                            </div>
+                            <div class="ac-plan-percent">
+                                <strong id="account-plan-percent">0%</strong>
+                                <span>c&#242;n l&#7841;i</span>
+                            </div>
+                        </div>
+
+                        <div class="ac-plan-meter" role="progressbar" aria-label="Dung l&#432;&#7907;ng g&#243;i c&#242;n l&#7841;i"
+                            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                            <span id="account-plan-meter"></span>
+                        </div>
+
+                        <div class="ac-plan-meta">
+                            <div class="ac-plan-stat">
+                                <b id="account-plan-used">0</b>
+                                <span>&#272;&#227; d&#249;ng</span>
+                            </div>
+                            <div class="ac-plan-stat">
+                                <b id="account-plan-left">0</b>
+                                <span>C&#242;n l&#7841;i</span>
+                            </div>
+                            <div class="ac-plan-stat">
+                                <b id="account-plan-total">0</b>
+                                <span>T&#7893;ng th&#225;ng n&#224;y</span>
+                            </div>
+                        </div>
+
+                        <div class="ac-plan-foot">
+                            <p id="account-plan-note" class="ac-plan-note">Theo d&#245;i s&#7889; l&#432;&#7907;t luy&#7879;n t&#7853;p c&#242;n l&#7841;i trong chu k&#7923; hi&#7879;n t&#7841;i.</p>
+                            <a id="account-plan-action" class="ac-plan-link" href="pricing.html">N&#226;ng c&#7845;p g&#243;i</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Accordion: Language -->
+                <div class="ac-acc-wrap">
+                    <button class="ac-acc-trigger" id="acc-lang-btn" aria-expanded="false"
+                            onclick="acAccToggle('acc-lang')">
+                        <span class="ac-acc-trigger-left">
+                            <span class="material-symbols-outlined">translate</span>
+                            <span class="label">Cài đặt ngôn ngữ</span>
+                        </span>
+                        <span class="material-symbols-outlined ac-acc-chevron">expand_more</span>
+                    </button>
+                    <div id="acc-lang-body" class="ac-acc-body">
+                        <div>
+                            <div class="ac-acc-inner" style="display:flex;flex-direction:column;gap:12px;">
+                                <div>
+                                    <label for="select-language" class="ac-label">Ngôn ngữ hiển thị</label>
+                                    <select id="select-language" class="ac-input">
+                                        <option value="vi">🇻🇳 Tiếng Việt</option>
+                                        <option value="en">🇺🇸 English</option>
+                                    </select>
+                                </div>
+                                <div style="display:flex;justify-content:flex-end;">
+                                    <button onclick="acSaveLang()" class="ac-btn-primary" style="height:38px;padding:0 18px;font-size:13px;">
+                                        Lưu ngôn ngữ
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion: Password -->
+                <div class="ac-acc-wrap">
+                    <button class="ac-acc-trigger" id="acc-pwd-btn" aria-expanded="false"
+                            onclick="acAccToggle('acc-pwd')">
+                        <span class="ac-acc-trigger-left">
+                            <span class="material-symbols-outlined">lock</span>
+                            <span class="label">Đổi mật khẩu</span>
+                        </span>
+                        <span class="material-symbols-outlined ac-acc-chevron">expand_more</span>
+                    </button>
+                    <div id="acc-pwd-body" class="ac-acc-body">
+                        <div>
+                            <div class="ac-acc-inner" style="display:flex;flex-direction:column;gap:12px;">
+                                <div>
+                                    <label for="current-password" class="ac-label">Mật khẩu hiện tại</label>
+                                    <input id="current-password" type="password" class="ac-input" placeholder="••••••••">
+                                </div>
+                                <div>
+                                    <label for="new-password" class="ac-label">Mật khẩu mới</label>
+                                    <input id="new-password" type="password" class="ac-input" placeholder="••••••••">
+                                </div>
+                                <div>
+                                    <label for="confirm-password" class="ac-label">Xác nhận mật khẩu</label>
+                                    <input id="confirm-password" type="password" class="ac-input" placeholder="••••••••">
+                                </div>
+                                <div style="display:flex;justify-content:flex-end;">
+                                    <button id="change-password-btn" class="ac-btn-primary" style="height:38px;padding:0 18px;font-size:13px;">
+                                        Đổi mật khẩu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion: Notifications -->
+                <div class="ac-acc-wrap">
+                    <button class="ac-acc-trigger" id="acc-notif-btn" aria-expanded="false"
+                            onclick="acAccToggle('acc-notif')">
+                        <span class="ac-acc-trigger-left">
+                            <span class="material-symbols-outlined">notifications</span>
+                            <span class="label">Tùy chọn thông báo</span>
+                        </span>
+                        <span class="material-symbols-outlined ac-acc-chevron">expand_more</span>
+                    </button>
+                    <div id="acc-notif-body" class="ac-acc-body">
+                        <div>
+                            <div class="ac-acc-inner">
+                                <div class="ac-notif-row">
+                                    <div>
+                                        <p class="title">Email thông báo</p>
+                                        <p class="sub">Nhận cập nhật và báo cáo qua email</p>
+                                    </div>
+                                    <button id="toggle-email" class="ac-toggle on" role="switch" aria-checked="true"
+                                        onclick="acToggle('toggle-email','notif-email')"></button>
+                                    <input id="notif-email" type="checkbox" checked style="display:none">
+                                </div>
+                                <div class="ac-notif-row">
+                                    <div>
+                                        <p class="title">Thông báo hệ thống</p>
+                                        <p class="sub">Nhận thông báo quan trọng từ Nexora</p>
+                                    </div>
+                                    <button id="toggle-system" class="ac-toggle on" role="switch" aria-checked="true"
+                                        onclick="acToggle('toggle-system','notif-system')"></button>
+                                    <input id="notif-system" type="checkbox" checked style="display:none">
+                                </div>
+                                <div class="ac-notif-row">
+                                    <div>
+                                        <p class="title">Thông báo khuyến mãi</p>
+                                        <p class="sub">Nhận ưu đãi và tin tức mới nhất</p>
+                                    </div>
+                                    <button id="toggle-promo" class="ac-toggle" role="switch" aria-checked="false"
+                                        onclick="acToggle('toggle-promo','notif-promo')"></button>
+                                    <input id="notif-promo" type="checkbox" style="display:none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logout row -->
+                <div class="ac-action-row">
+                    <div class="ac-action-row-icon">
+                        <span class="material-symbols-outlined">logout</span>
+                    </div>
+                    <div class="ac-action-row-text" style="flex:1">
+                        <p class="title">Đăng xuất</p>
+                        <p class="sub">Đăng xuất khỏi tài khoản trên thiết bị này.</p>
+                    </div>
+                    <button id="account-logout" class="ac-btn-outline">Đăng xuất</button>
+                </div>
+
+                <!-- Danger zone -->
+                <div class="ac-danger-zone">
+                    <div class="ac-danger-header">
+                        <span class="material-symbols-outlined">warning</span>
+                        <span class="txt">Hành động không thể hoàn tác</span>
+                    </div>
+                    <div class="ac-danger-row">
+                        <div style="min-width:0">
+                            <p class="title">Xóa tài khoản</p>
+                            <p class="sub">Khi bạn xóa tài khoản, không thể khôi phục lại. Vui lòng cân nhắc kỹ.</p>
+                        </div>
+                        <button id="account-delete" class="ac-btn-danger">Xóa tài khoản</button>
+                    </div>
+                </div>
+
+            </div><!-- /RIGHT STACK -->
+        </div><!-- /grid -->
+    </div><!-- /TAB PROFILE -->
+
+    <!-- ════ TAB: LỊCH SỬ ════ -->
+    <div id="ac-tab-history" class="ac-tab-panel">
+        <div class="ac-card" style="overflow:hidden;">
+            <div style="padding:16px 20px; border-bottom:1px solid rgba(71,68,91,.12);">
+                <h2 style="font-size:15px;font-weight:700;color:#1c1b2e;margin:0;">Lịch sử mua hàng</h2>
+            </div>
+            <div style="overflow-x:auto;">
+                <table class="ac-table" style="min-width:500px">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Gói dịch vụ</th>
+                            <th>Ngày mua</th>
+                            <th>Số tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-tbody">
+                        <tr>
+                            <td colspan="5" style="text-align:center;padding:60px 16px;">
+                                <div style="width:52px;height:52px;border-radius:14px;background:#f0effa;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                                    <span class="material-symbols-outlined" style="font-size:26px;color:#3525cd;">receipt</span>
+                                </div>
+                                <p style="font-size:15px;font-weight:600;color:#1c1b2e;margin:0 0 6px;">Chưa có lịch sử mua hàng</p>
+                                <p style="font-size:13px;color:#9896b4;margin:0;">Các gói dịch vụ bạn mua sẽ xuất hiện ở đây.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- /TAB HISTORY -->
+
+</main>
+
+<!-- ═══ MODAL XÓA TÀI KHOẢN ═══ -->
+<div id="ac-modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
+    <div class="ac-modal-box">
+        <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;">
+            <div class="ac-modal-icon">
+                <span class="material-symbols-outlined">warning</span>
+            </div>
+            <div>
+                <h3 id="modal-h" style="font-size:16px;font-weight:700;color:#1c1b2e;margin:0 0 6px;">Xác nhận xóa tài khoản</h3>
+                <p style="font-size:13.5px;color:#6b6882;margin:0;line-height:1.55;">
+                    Hành động này <strong style="color:#1c1b2e;">không thể hoàn tác</strong>.
+                    Toàn bộ dữ liệu của bạn sẽ bị xóa vĩnh viễn.
+                </p>
+            </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:10px;">
+            <button id="confirm-cancel" class="ac-btn-outline" style="height:40px;">Hủy bỏ</button>
+            <button id="confirm-delete"
+                style="height:40px;padding:0 20px;border-radius:10px;background:#ba1a1a;color:#fff;font-size:13.5px;font-weight:600;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(186,26,26,.28);">
+                Xóa tài khoản
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- legacy compat -->
+<div id="confirm-backdrop" style="display:none"></div>
+
+<!-- ═══ RESPONSIVE GRID ═══ -->
+<style>
+@media (max-width: 900px) {
+    [style*="grid-template-columns:440px 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
+<script>
+/* ── Tab ────────────────────────────────────────────── */
+function acTab(id) {
+    ['profile','history'].forEach(function(t) {
+        var b = document.getElementById('tab-btn-' + t);
+        var p = document.getElementById('ac-tab-' + t);
+        var on = t === id;
+        if (b) { b.classList.toggle('active', on); b.setAttribute('aria-selected', on); }
+        if (p) { p.classList.toggle('active', on); }
+    });
+}
+
+/* ── Accordion ──────────────────────────────────────── */
+function acAccToggle(id) {
+    var btn  = document.getElementById(id + '-btn');
+    var body = document.getElementById(id + '-body');
+    if (!btn || !body) return;
+    var open = body.classList.contains('open');
+    body.classList.toggle('open', !open);
+    btn.setAttribute('aria-expanded', String(!open));
+}
+
+/* ── Toggle switch ──────────────────────────────────── */
+function acToggle(trackId, cbId) {
+    var t = document.getElementById(trackId);
+    var c = document.getElementById(cbId);
+    if (!t || !c) return;
+    c.checked = !c.checked;
+    t.classList.toggle('on', c.checked);
+    t.setAttribute('aria-checked', String(c.checked));
+}
+
+/* ── Save language ──────────────────────────────────── */
+function acSaveLang() {
+    var lang = (document.getElementById('select-language') || {}).value || 'vi';
+    var user = (window.NexoraAuth && window.NexoraAuth.getAuth()) || {};
+    if (window.NexoraAuth && window.NexoraAuth.setAuth)
+        window.NexoraAuth.setAuth(Object.assign({}, user, { lang: lang }));
+    if (window.NexoraUI && window.NexoraUI.toast) window.NexoraUI.toast('Đã lưu ngôn ngữ');
+}
+
+/* ── Modal ──────────────────────────────────────────── */
+function acOpenModal()  { document.getElementById('ac-modal').classList.add('open'); }
+function acCloseModal() { document.getElementById('ac-modal').classList.remove('open'); }
+
+/* ── DOMContentLoaded ───────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+
+    /* delete modal wiring */
+    var del = document.getElementById('account-delete');
+    if (del) del.addEventListener('click', acOpenModal);
+
+    var cc = document.getElementById('confirm-cancel');
+    if (cc) cc.addEventListener('click', acCloseModal);
+
+    var modal = document.getElementById('ac-modal');
+    if (modal) modal.addEventListener('click', function (e) { if (e.target === this) acCloseModal(); });
+
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') acCloseModal(); });
+
+    var cd = document.getElementById('confirm-delete');
+    if (cd) cd.addEventListener('click', function () {
+        if (window.NexoraAuth && window.NexoraAuth.logout) window.NexoraAuth.logout();
+        localStorage.removeItem('nexora_cv_name');
+        localStorage.removeItem('nexora_auth');
+        if (window.NexoraUI && window.NexoraUI.toast) window.NexoraUI.toast('Tài khoản đã bị xóa', 'error');
+        setTimeout(function () { location.href = 'index.html'; }, 700);
+    });
+
+    /* avatar preview */
+    var ai = document.getElementById('avatar-input');
+    var av = document.getElementById('profile-avatar');
+    if (ai && av) {
+        ai.addEventListener('change', function (e) {
+            var f = e.target.files[0];
+            if (!f) return;
+            if (f.size > 2 * 1024 * 1024) {
+                if (window.NexoraUI && window.NexoraUI.toast) window.NexoraUI.toast('Ảnh vượt quá 2MB', 'error');
+                return;
+            }
+            var r = new FileReader();
+            r.onload = function (ev) {
+                av.style.backgroundImage = 'url(' + ev.target.result + ')';
+                av.textContent = '';
+            };
+            r.readAsDataURL(f);
+        });
+    }
+
+    /* purchase history */
+    var orders = JSON.parse(localStorage.getItem('nexora_orders') || '[]');
+    if (orders.length) {
+        var tbody = document.getElementById('history-tbody');
+        if (tbody) {
+            tbody.innerHTML = orders.map(function (o) {
+                var sc = o.status === 'success' ? 'badge-ok' : 'badge-pnd';
+                var sl = o.status === 'success' ? 'Thành công' : 'Chờ xử lý';
+                return '<tr>' +
+                    '<td style="font-family:monospace;font-size:12px;color:#9896b4">' + (o.id||'—') + '</td>' +
+                    '<td>' + (o.plan||'—') + '</td>' +
+                    '<td style="color:#9896b4">' + (o.date||'—') + '</td>' +
+                    '<td style="font-weight:600">' + (o.amount||'—') + '</td>' +
+                    '<td><span class="' + sc + '">' + sl + '</span></td>' +
+                    '</tr>';
+            }).join('');
+        }
+    }
+
+    /* notification prefs */
+    var u = (window.NexoraAuth && window.NexoraAuth.getAuth()) || {};
+    if (u.notifEmail  === false) acToggle('toggle-email',  'notif-email');
+    if (u.notifSystem === false) acToggle('toggle-system', 'notif-system');
+    if (u.notifPromo  === true)  acToggle('toggle-promo',  'notif-promo');
+});
+
+/* nxAccToggle / nxTab / nxToggle aliases (account.js compatibility) */
+var nxAccToggle = acAccToggle;
+var nxTab       = acTab;
+var nxToggle    = acToggle;
+var nxOpenModal = acOpenModal;
+</script>
+</body>
+</html>
