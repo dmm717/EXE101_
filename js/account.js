@@ -59,6 +59,70 @@
         if (el) el.value = val;
     }
 
+    function toNumber(value, fallback) {
+        var number = Number(value);
+        return Number.isFinite(number) && number >= 0 ? number : fallback;
+    }
+
+    function getPlanConfig(plan) {
+        var normalized = String(plan || 'Free').toLowerCase();
+        if (normalized.indexOf('business') >= 0 || normalized.indexOf('doanh') >= 0) {
+            return { name: 'G\u00f3i Doanh nghi\u1ec7p', key: 'Business', limit: 500 };
+        }
+        if (normalized.indexOf('pro') >= 0 || normalized.indexOf('c\u00e1 nh\u00e2n') >= 0 || normalized.indexOf('ca nhan') >= 0) {
+            return { name: 'G\u00f3i C\u00e1 nh\u00e2n', key: 'Pro', limit: 100 };
+        }
+        return { name: 'G\u00f3i Mi\u1ec5n ph\u00ed', key: 'Free', limit: 2 };
+    }
+
+    function getStoredPlanUsage(user) {
+        var direct = user.planUsed ?? user.usageUsed ?? user.monthlyUsed;
+        if (direct !== undefined && direct !== null) return toNumber(direct, 0);
+
+        var stored = localStorage.getItem('nexora_plan_used') ||
+            localStorage.getItem('nexora_monthly_used') ||
+            localStorage.getItem('nexora_interview_count');
+        return toNumber(stored, 0);
+    }
+
+    function renderPlanUsage() {
+        var user = (window.NexoraAuth && window.NexoraAuth.getAuth()) || {};
+        var config = getPlanConfig(user.plan);
+        var limit = toNumber(user.planLimit || localStorage.getItem('nexora_plan_limit'), config.limit);
+        var used = Math.min(getStoredPlanUsage(user), limit);
+        var left = Math.max(limit - used, 0);
+        var percent = limit > 0 ? Math.round((left / limit) * 100) : 0;
+
+        var title = q('#account-plan-title');
+        var percentEl = q('#account-plan-percent');
+        var meter = q('#account-plan-meter');
+        var meterWrap = q('.ac-plan-meter');
+        var usedEl = q('#account-plan-used');
+        var leftEl = q('#account-plan-left');
+        var totalEl = q('#account-plan-total');
+        var note = q('#account-plan-note');
+        var action = q('#account-plan-action');
+
+        if (title) title.textContent = config.name;
+        if (percentEl) percentEl.textContent = percent + '%';
+        if (meter) meter.style.width = percent + '%';
+        if (meterWrap) {
+            meterWrap.setAttribute('aria-valuenow', String(percent));
+            meterWrap.setAttribute('aria-valuetext', percent + '% con lai');
+        }
+        if (usedEl) usedEl.textContent = String(used);
+        if (leftEl) leftEl.textContent = String(left);
+        if (totalEl) totalEl.textContent = String(limit);
+        if (note) {
+            note.textContent = percent <= 20
+                ? 'Dung l\u01b0\u1ee3ng g\u00f3i s\u1eafp h\u1ebft. B\u1ea1n c\u00f3 th\u1ec3 n\u00e2ng c\u1ea5p \u0111\u1ec3 ti\u1ebfp t\u1ee5c luy\u1ec7n t\u1eadp tho\u1ea3i m\u00e1i.'
+                : 'Theo d\u00f5i s\u1ed1 l\u01b0\u1ee3t luy\u1ec7n t\u1eadp c\u00f2n l\u1ea1i trong chu k\u1ef3 hi\u1ec7n t\u1ea1i.';
+        }
+        if (action) {
+            action.textContent = 'N\u00e2ng c\u1ea5p';
+        }
+    }
+
     /* ── Save profile ────────────────────────────────────── */
     function saveProfile() {
         var user    = (window.NexoraAuth && window.NexoraAuth.getAuth()) || {};
@@ -189,6 +253,7 @@
     /* ── Bootstrap ───────────────────────────────────────── */
     function init() {
         loadProfile();
+        renderPlanUsage();
         initActions();
     }
 
