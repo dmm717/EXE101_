@@ -342,7 +342,7 @@
     </div>
 
     <!-- ================= FOOTER (chỉ hiện ở setup) ================= -->
-    <footer class="nx-footer">
+    <footer data-view="setup-footer" class="nx-footer">
     <div class="nx-footer-panel">
         <div class="nx-footer-brand">
             <a class="nx-footer-logo" href="index.html" aria-label="Nexora">
@@ -406,7 +406,7 @@
 
             if (view === 'live') {
                 setupMain.classList.add('hidden');
-                setupFooter.classList.add('hidden');
+                setupFooter?.classList.add('hidden');
                 liveMain.classList.remove('hidden');
                 document.body.classList.add('min-h-[100dvh]');
 
@@ -576,7 +576,7 @@
                 });
             } else if (view === 'done') {
                 setupMain.classList.add('hidden');
-                setupFooter.classList.add('hidden');
+                setupFooter?.classList.add('hidden');
                 doneModal.classList.remove('hidden');
                 document.body.classList.add('min-h-[100dvh]');
             } else {
