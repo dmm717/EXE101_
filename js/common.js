@@ -743,9 +743,8 @@
         if (!cards.length) return;
         const user = window.NexoraAuth?.getAuth();
         if (!user) return;
-        const aliases = { 'Miễn phí': 'Free', Free: 'Free', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
+        const aliases = { 'Miễn phí': 'Free', Free: 'Free', Basic: 'Basic', Weekly: 'Weekly', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
         const current = aliases[user.plan] || 'Free';
-        const order = { Free: 0, Pro: 1, Business: 2 };
 
         cards.forEach(card => {
             const plan = card.dataset.planCard;
@@ -768,14 +767,47 @@
                     action.classList.add('nx-plan-disabled');
                     action.addEventListener('click', event => event.preventDefault());
                 }
-            } else if (action && order[plan] < order[current]) {
-                action.textContent = 'Đã bao gồm trong gói';
-                action.removeAttribute('href');
-                action.setAttribute('aria-disabled', 'true');
-                action.classList.add('nx-plan-disabled-subtle');
-                action.addEventListener('click', event => event.preventDefault());
             }
         });
+    }
+
+    function initPricingMotion() {
+        const grid = document.querySelector('[data-pricing-motion]');
+        if (!grid || !('IntersectionObserver' in window)) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const cards = Array.from(grid.querySelectorAll('.nx-price-card'));
+        if (reduceMotion || !cards.length) return;
+
+        cards.forEach((card, index) => card.style.setProperty('--nx-card-index', index));
+        grid.classList.add('nx-pricing-motion-ready');
+
+        const observer = new IntersectionObserver((entries) => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            grid.classList.add('nx-pricing-in-view');
+            observer.disconnect();
+        }, { threshold: 0.12, rootMargin: '0px 0px -24px' });
+        observer.observe(grid);
+
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            cards.forEach(card => {
+                card.addEventListener('pointermove', event => {
+                    const rect = card.getBoundingClientRect();
+                    const x = (event.clientX - rect.left) / rect.width - 0.5;
+                    const y = (event.clientY - rect.top) / rect.height - 0.5;
+                    card.style.setProperty('--nx-tilt-x', `${(-y * 2.2).toFixed(2)}deg`);
+                    card.style.setProperty('--nx-tilt-y', `${(x * 2.2).toFixed(2)}deg`);
+                    card.style.setProperty('--nx-glow-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+                    card.style.setProperty('--nx-glow-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+                });
+                card.addEventListener('pointerleave', () => {
+                    card.style.removeProperty('--nx-tilt-x');
+                    card.style.removeProperty('--nx-tilt-y');
+                    card.style.removeProperty('--nx-glow-x');
+                    card.style.removeProperty('--nx-glow-y');
+                });
+            });
+        }
     }
 
     function initScenarioFilters() {
@@ -923,6 +955,7 @@
         initCvUpload();
         initInterviewCv();
         initPricingPlan();
+        initPricingMotion();
         initScenarioFilters();
         initPageActions();
         initRegisterValidation();
