@@ -471,13 +471,9 @@
     const PROTECTED_ROUTES = new Set([
         'account.html',
         'case.html',
-        'cv.html',
         'dashboard.html',
-        'interview.html',
         'report.html',
-        'roadmap.html',
-        'scenarios.html',
-        'star.html'
+        'roadmap.html'
     ]);
 
     function normalizeInternalDestination(href, fallback = 'dashboard.html') {
@@ -581,6 +577,15 @@
             if (window.NexoraAuth?.getAuth()) return;
 
             const link = event.target.closest?.('a[href]');
+            if (link?.matches('[data-plan-action]')) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                const pricingPage = location.pathname.endsWith('/index.html') || location.pathname.endsWith('/')
+                    ? 'index.html#pricing-heading'
+                    : 'pricing.html#pricing-heading';
+                showLoginRequiredModal(pricingPage);
+                return;
+            }
             if (link && isProtectedHref(link.getAttribute('href'))) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
@@ -595,6 +600,10 @@
             const shouldProtectStart =
                 normalizedLabel.includes('bat dau phong van mien phi') ||
                 normalizedLabel === 'bat dau mien phi' ||
+                normalizedLabel.includes('bat dau phong van') ||
+                normalizedLabel.includes('tao bo cau hoi') ||
+                normalizedLabel.includes('phan tich ngay') ||
+                normalizedLabel.includes('cai thien cau tra loi') ||
                 normalizedLabel.includes('tiep tuc hoc');
             if (!shouldProtectStart) return;
 
@@ -659,6 +668,12 @@
             analyze.setAttribute('aria-disabled', String(!ready));
         };
 
+        const requireLogin = () => {
+            if (window.NexoraAuth?.getAuth()) return false;
+            showLoginRequiredModal('cv.html#upload-section');
+            return true;
+        };
+
         const useFile = (file) => {
             if (!file) return;
             const allowed = /\.(pdf|doc|docx)$/i.test(file.name);
@@ -674,11 +689,13 @@
             toast('Đã thêm CV. Giờ dán JD để phân tích.');
         };
 
-        zone.addEventListener('click', () => fileInput.click());
+        zone.addEventListener('click', () => {
+            if (!requireLogin()) fileInput.click();
+        });
         zone.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
-                fileInput.click();
+                if (!requireLogin()) fileInput.click();
             }
         });
         fileInput.addEventListener('change', () => useFile(fileInput.files[0]));
@@ -687,6 +704,7 @@
         zone.addEventListener('dragover', event => event.preventDefault());
         zone.addEventListener('drop', event => {
             event.preventDefault();
+            if (requireLogin()) return;
             useFile(event.dataTransfer.files[0]);
         });
         jd?.addEventListener('input', updateState);
@@ -719,7 +737,13 @@
         const savedName = localStorage.getItem('nexora_cv_name');
         if (savedName) nameEl.textContent = savedName;
 
-        changeBtn.addEventListener('click', () => input.click());
+        changeBtn.addEventListener('click', () => {
+            if (!window.NexoraAuth?.getAuth()) {
+                showLoginRequiredModal('interview.html');
+                return;
+            }
+            input.click();
+        });
         input.addEventListener('change', () => {
             const file = input.files?.[0];
             if (!file) return;
@@ -950,6 +974,73 @@
         });
     }
 
+    function initHeroFeatureCarousel() {
+        const carousel = document.querySelector('[data-hero-carousel]');
+        if (!carousel) return;
+
+        const slides = Array.from(carousel.querySelectorAll('[data-hero-slide]'));
+        const dots = Array.from(carousel.querySelectorAll('[data-hero-dot]'));
+        const label = carousel.querySelector('[data-hero-slide-label]');
+        const labels = [
+            'Phỏng vấn AI theo CV và JD',
+            'Phân tích CV và chỉ ra điểm cần cải thiện',
+            'Luyện tư duy qua tình huống thực chiến',
+            'Cấu trúc câu trả lời với STAR Builder'
+        ];
+        if (slides.length < 2) return;
+
+        let current = 0;
+        let timer = null;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        slides.forEach((slide, index) => {
+            slide.hidden = false;
+            slide.setAttribute('aria-hidden', String(index !== current));
+        });
+
+        const show = (next) => {
+            current = (next + slides.length) % slides.length;
+            slides.forEach((slide, index) => {
+                const active = index === current;
+                slide.classList.toggle('is-active', active);
+                slide.setAttribute('aria-hidden', String(!active));
+            });
+            dots.forEach((dot, index) => {
+                const active = index === current;
+                dot.classList.toggle('is-active', active);
+                dot.setAttribute('aria-selected', String(active));
+            });
+            if (label) label.textContent = labels[current];
+        };
+
+        const stop = () => {
+            if (timer) clearInterval(timer);
+            timer = null;
+        };
+        const start = () => {
+            stop();
+            if (!reduceMotion) timer = setInterval(() => show(current + 1), 6500);
+        };
+
+        carousel.querySelector('[data-hero-prev]')?.addEventListener('click', () => {
+            show(current - 1);
+            start();
+        });
+        carousel.querySelector('[data-hero-next]')?.addEventListener('click', () => {
+            show(current + 1);
+            start();
+        });
+        dots.forEach(dot => dot.addEventListener('click', () => {
+            show(Number(dot.dataset.heroDot));
+            start();
+        }));
+        carousel.addEventListener('pointerenter', stop);
+        carousel.addEventListener('pointerleave', start);
+        carousel.addEventListener('focusin', stop);
+        carousel.addEventListener('focusout', start);
+        start();
+    }
+
     function init() {
         initAccessControl();
         initCvUpload();
@@ -961,6 +1052,7 @@
         initRegisterValidation();
         initNavigationPerformance();
         initSharedNavStyle();
+        initHeroFeatureCarousel();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
