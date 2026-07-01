@@ -698,6 +698,65 @@ body > :is(nav, header):first-of-type > div {
     }
 }
 
+/* Mascot appears only where it guides an empty or first-use state. */
+.nx-mascot {
+    display: block;
+    width: 132px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 8px rgba(47, 38, 126, .12));
+}
+
+.nx-mascot-interview {
+    width: 142px;
+    margin-bottom: 4px;
+}
+
+.nx-mascot-dashboard { width: 124px; }
+
+.nx-auth-mascot {
+    position: absolute;
+    top: 84px;
+    right: -176px;
+    display: none;
+    width: 154px;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.nx-auth-mascot span {
+    position: relative;
+    z-index: 1;
+    margin-bottom: -2px;
+    padding: 9px 12px;
+    color: #37334e;
+    border: 1px solid rgba(53, 37, 205, .16);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(35, 31, 79, .08);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .nx-auth-mascot { display: flex; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .nx-auth-mascot .nx-mascot {
+        animation: nx-mascot-breathe 3.8s cubic-bezier(.37,0,.63,1) infinite;
+        transform-origin: 50% 90%;
+    }
+}
+
+@keyframes nx-mascot-breathe {
+    0%, 100% { transform: translateY(0) rotate(-.5deg); }
+    50% { transform: translateY(-5px) rotate(.5deg); }
+}
+
 .nx-mobile-nav-current {
     color: #3525cd !important;
     font-weight: 700 !important;
