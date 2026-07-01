@@ -14,7 +14,7 @@
         rel="stylesheet">
     <link href="css/tailwind.css?v=20260630-3" rel="stylesheet">
     <link href="css/styles.css?v=20260630-3" rel="stylesheet">
-    <script src="js/auth-guard.js" data-auth-page="protected"></script>
+    <script src="js/auth-guard.js" data-auth-page="public"></script>
     <script src="js/common.js" defer></script>
     <style>
         .recording-pulse {
@@ -595,7 +595,7 @@
                     const isAuth = checkAuth();
                     const jd = document.getElementById('step-jd').value.trim();
                     if (!jd) {
-                        window.NexoraUI?.toast('Qb dán JD trước khi tạo kịch bản nhen.', 'error');
+                        window.NexoraUI?.toast('Bạn vui lòng dán JD trước khi tạo kịch bản nhé.', 'error');
                         document.getElementById('step-jd').focus();
                         return;
                     }

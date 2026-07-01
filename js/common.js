@@ -700,7 +700,7 @@
             if (!selectedFile || !jd?.value.trim()) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                toast(!selectedFile ? 'Qb chọn CV trước nhen.' : 'Qb dán mô tả công việc trước nhen.', 'error');
+                toast(!selectedFile ? 'Bạn vui lòng chọn CV trước nhé.' : 'Bạn vui lòng dán mô tả công việc trước nhé.', 'error');
             }
         }, true);
         updateState();
@@ -882,7 +882,7 @@
             if (!terms?.checked) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                toast('Qb cần đồng ý điều khoản để tiếp tục.', 'error');
+                toast('Bạn cần đồng ý với điều khoản để tiếp tục.', 'error');
                 terms?.focus();
             } else if ((password?.value || '').length < 6) {
                 event.preventDefault();
