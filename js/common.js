@@ -471,9 +471,13 @@
     const PROTECTED_ROUTES = new Set([
         'account.html',
         'case.html',
+        'cv.html',
         'dashboard.html',
+        'interview.html',
         'report.html',
-        'roadmap.html'
+        'roadmap.html',
+        'scenarios.html',
+        'star.html'
     ]);
 
     function normalizeInternalDestination(href, fallback = 'dashboard.html') {
@@ -577,15 +581,6 @@
             if (window.NexoraAuth?.getAuth()) return;
 
             const link = event.target.closest?.('a[href]');
-            if (link?.matches('[data-plan-action]')) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                const pricingPage = location.pathname.endsWith('/index.html') || location.pathname.endsWith('/')
-                    ? 'index.html#pricing-heading'
-                    : 'pricing.html#pricing-heading';
-                showLoginRequiredModal(pricingPage);
-                return;
-            }
             if (link && isProtectedHref(link.getAttribute('href'))) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
@@ -600,10 +595,6 @@
             const shouldProtectStart =
                 normalizedLabel.includes('bat dau phong van mien phi') ||
                 normalizedLabel === 'bat dau mien phi' ||
-                normalizedLabel.includes('bat dau phong van') ||
-                normalizedLabel.includes('tao bo cau hoi') ||
-                normalizedLabel.includes('phan tich ngay') ||
-                normalizedLabel.includes('cai thien cau tra loi') ||
                 normalizedLabel.includes('tiep tuc hoc');
             if (!shouldProtectStart) return;
 
@@ -668,12 +659,6 @@
             analyze.setAttribute('aria-disabled', String(!ready));
         };
 
-        const requireLogin = () => {
-            if (window.NexoraAuth?.getAuth()) return false;
-            showLoginRequiredModal('cv.html#upload-section');
-            return true;
-        };
-
         const useFile = (file) => {
             if (!file) return;
             const allowed = /\.(pdf|doc|docx)$/i.test(file.name);
@@ -689,13 +674,11 @@
             toast('Đã thêm CV. Giờ dán JD để phân tích.');
         };
 
-        zone.addEventListener('click', () => {
-            if (!requireLogin()) fileInput.click();
-        });
+        zone.addEventListener('click', () => fileInput.click());
         zone.addEventListener('keydown', (event) => {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
-                if (!requireLogin()) fileInput.click();
+                fileInput.click();
             }
         });
         fileInput.addEventListener('change', () => useFile(fileInput.files[0]));
@@ -704,7 +687,6 @@
         zone.addEventListener('dragover', event => event.preventDefault());
         zone.addEventListener('drop', event => {
             event.preventDefault();
-            if (requireLogin()) return;
             useFile(event.dataTransfer.files[0]);
         });
         jd?.addEventListener('input', updateState);
@@ -718,7 +700,7 @@
             if (!selectedFile || !jd?.value.trim()) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                toast(!selectedFile ? 'Bạn vui lòng chọn CV trước nhé.' : 'Bạn vui lòng dán mô tả công việc trước nhé.', 'error');
+                toast(!selectedFile ? 'Qb chọn CV trước nhen.' : 'Qb dán mô tả công việc trước nhen.', 'error');
             }
         }, true);
         updateState();
@@ -737,13 +719,7 @@
         const savedName = localStorage.getItem('nexora_cv_name');
         if (savedName) nameEl.textContent = savedName;
 
-        changeBtn.addEventListener('click', () => {
-            if (!window.NexoraAuth?.getAuth()) {
-                showLoginRequiredModal('interview.html');
-                return;
-            }
-            input.click();
-        });
+        changeBtn.addEventListener('click', () => input.click());
         input.addEventListener('change', () => {
             const file = input.files?.[0];
             if (!file) return;
@@ -768,8 +744,8 @@
         const user = window.NexoraAuth?.getAuth();
         if (!user) return;
         const aliases = { 'Miễn phí': 'Free', Free: 'Free', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
-        const aliases = { 'Miễn phí': 'Free', Free: 'Free', Basic: 'Basic', Weekly: 'Weekly', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' }; main
         const current = aliases[user.plan] || 'Free';
+        const order = { Free: 0, Pro: 1, Business: 2 };
 
         cards.forEach(card => {
             const plan = card.dataset.planCard;
@@ -784,62 +760,22 @@
                     card.appendChild(badge);
                 }
                 badge.className = 'nx-current-plan-badge';
-                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${current}`;
+                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${user.plan}`;
                 if (action) {
                     action.textContent = 'Đang sử dụng';
                     action.removeAttribute('href');
                     action.setAttribute('aria-disabled', 'true');
                     action.classList.add('nx-plan-disabled');
                     action.addEventListener('click', event => event.preventDefault());
-                } 
+                }
             } else if (action && order[plan] < order[current]) {
                 action.textContent = 'Đã bao gồm trong gói';
                 action.removeAttribute('href');
                 action.setAttribute('aria-disabled', 'true');
                 action.classList.add('nx-plan-disabled-subtle');
                 action.addEventListener('click', event => event.preventDefault());
- main
             }
         });
-    }
-
-    function initPricingMotion() {
-        const grid = document.querySelector('[data-pricing-motion]');
-        if (!grid || !('IntersectionObserver' in window)) return;
-
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const cards = Array.from(grid.querySelectorAll('.nx-price-card'));
-        if (reduceMotion || !cards.length) return;
-
-        cards.forEach((card, index) => card.style.setProperty('--nx-card-index', index));
-        grid.classList.add('nx-pricing-motion-ready');
-
-        const observer = new IntersectionObserver((entries) => {
-            if (!entries.some(entry => entry.isIntersecting)) return;
-            grid.classList.add('nx-pricing-in-view');
-            observer.disconnect();
-        }, { threshold: 0.12, rootMargin: '0px 0px -24px' });
-        observer.observe(grid);
-
-        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-            cards.forEach(card => {
-                card.addEventListener('pointermove', event => {
-                    const rect = card.getBoundingClientRect();
-                    const x = (event.clientX - rect.left) / rect.width - 0.5;
-                    const y = (event.clientY - rect.top) / rect.height - 0.5;
-                    card.style.setProperty('--nx-tilt-x', `${(-y * 2.2).toFixed(2)}deg`);
-                    card.style.setProperty('--nx-tilt-y', `${(x * 2.2).toFixed(2)}deg`);
-                    card.style.setProperty('--nx-glow-x', `${((x + 0.5) * 100).toFixed(1)}%`);
-                    card.style.setProperty('--nx-glow-y', `${((y + 0.5) * 100).toFixed(1)}%`);
-                });
-                card.addEventListener('pointerleave', () => {
-                    card.style.removeProperty('--nx-tilt-x');
-                    card.style.removeProperty('--nx-tilt-y');
-                    card.style.removeProperty('--nx-glow-x');
-                    card.style.removeProperty('--nx-glow-y');
-                });
-            });
-        }
     }
 
     function initScenarioFilters() {
@@ -914,7 +850,7 @@
             if (!terms?.checked) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
-                toast('Bạn cần đồng ý với điều khoản để tiếp tục.', 'error');
+                toast('Qb cần đồng ý điều khoản để tiếp tục.', 'error');
                 terms?.focus();
             } else if ((password?.value || '').length < 6) {
                 event.preventDefault();
@@ -982,85 +918,16 @@
         });
     }
 
-    function initHeroFeatureCarousel() {
-        const carousel = document.querySelector('[data-hero-carousel]');
-        if (!carousel) return;
-
-        const slides = Array.from(carousel.querySelectorAll('[data-hero-slide]'));
-        const dots = Array.from(carousel.querySelectorAll('[data-hero-dot]'));
-        const label = carousel.querySelector('[data-hero-slide-label]');
-        const labels = [
-            'Phỏng vấn AI theo CV và JD',
-            'Phân tích CV và chỉ ra điểm cần cải thiện',
-            'Luyện tư duy qua tình huống thực chiến',
-            'Cấu trúc câu trả lời với STAR Builder'
-        ];
-        if (slides.length < 2) return;
-
-        let current = 0;
-        let timer = null;
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        slides.forEach((slide, index) => {
-            slide.hidden = false;
-            slide.setAttribute('aria-hidden', String(index !== current));
-        });
-
-        const show = (next) => {
-            current = (next + slides.length) % slides.length;
-            slides.forEach((slide, index) => {
-                const active = index === current;
-                slide.classList.toggle('is-active', active);
-                slide.setAttribute('aria-hidden', String(!active));
-            });
-            dots.forEach((dot, index) => {
-                const active = index === current;
-                dot.classList.toggle('is-active', active);
-                dot.setAttribute('aria-selected', String(active));
-            });
-            if (label) label.textContent = labels[current];
-        };
-
-        const stop = () => {
-            if (timer) clearInterval(timer);
-            timer = null;
-        };
-        const start = () => {
-            stop();
-            if (!reduceMotion) timer = setInterval(() => show(current + 1), 6500);
-        };
-
-        carousel.querySelector('[data-hero-prev]')?.addEventListener('click', () => {
-            show(current - 1);
-            start();
-        });
-        carousel.querySelector('[data-hero-next]')?.addEventListener('click', () => {
-            show(current + 1);
-            start();
-        });
-        dots.forEach(dot => dot.addEventListener('click', () => {
-            show(Number(dot.dataset.heroDot));
-            start();
-        }));
-        carousel.addEventListener('pointerenter', stop);
-        carousel.addEventListener('pointerleave', start);
-        carousel.addEventListener('focusin', stop);
-        carousel.addEventListener('focusout', start);
-        start();
-    }
-
     function init() {
         initAccessControl();
         initCvUpload();
         initInterviewCv();
         initPricingPlan();
-        initPricingMotion();
         initScenarioFilters();
         initPageActions();
         initRegisterValidation();
         initNavigationPerformance();
         initSharedNavStyle();
-        initHeroFeatureCarousel();
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
