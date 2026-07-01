@@ -12,6 +12,131 @@
     background-size: 32px 32px;
 }
 
+.nx-hero-feature-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 1px solid rgba(111, 101, 180, .2);
+    border-radius: 24px;
+    background: #f7f7ff;
+    box-shadow: 0 28px 64px rgba(48, 42, 112, .16), inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.nx-hero-carousel-viewport {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f2f1ff;
+}
+
+.nx-hero-feature-slide {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    transform: translateX(18px) scale(.985);
+    transition: opacity .38s cubic-bezier(.16, 1, .3, 1), transform .38s cubic-bezier(.16, 1, .3, 1);
+}
+
+.nx-hero-feature-slide.is-active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.nx-hero-feature-slide img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.nx-hero-carousel-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 58px;
+    padding: 10px 14px 10px 18px;
+    border-top: 1px solid rgba(111, 101, 180, .14);
+    background: rgba(255, 255, 255, .92);
+}
+
+.nx-hero-carousel-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    color: #28243f;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.nx-hero-carousel-copy .material-symbols-outlined {
+    color: #4f3ee8;
+    font-size: 19px;
+}
+
+.nx-hero-carousel-controls,
+.nx-hero-carousel-dots {
+    display: flex;
+    align-items: center;
+}
+
+.nx-hero-carousel-controls { gap: 9px; }
+.nx-hero-carousel-dots { gap: 6px; }
+
+.nx-hero-carousel-controls > button {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid rgba(79, 62, 232, .18);
+    border-radius: 10px;
+    color: #4f3ee8;
+    background: #f7f6ff;
+    transition: transform .2s ease, background-color .2s ease;
+}
+
+.nx-hero-carousel-controls > button:hover { background: #eeecff; }
+.nx-hero-carousel-controls > button:active { transform: scale(.96); }
+.nx-hero-carousel-controls .material-symbols-outlined { font-size: 17px; }
+
+.nx-hero-carousel-dots button {
+    width: 7px;
+    height: 7px;
+    border: 0;
+    border-radius: 999px;
+    background: #c8c3ee;
+    transition: width .25s ease, background-color .25s ease;
+}
+
+.nx-hero-carousel-dots button.is-active {
+    width: 20px;
+    background: #4f3ee8;
+}
+
+@media (max-width: 639px) {
+    .nx-hero-feature-carousel { border-radius: 16px; }
+    .nx-hero-carousel-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 12px;
+    }
+    .nx-hero-carousel-copy {
+        font-size: 11px;
+    }
+    .nx-hero-carousel-controls { align-self: flex-end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nx-hero-feature-slide,
+    .nx-hero-carousel-dots button { transition: none; }
+}
+
 .glass-panel {
     background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
@@ -427,6 +552,336 @@ body > :is(nav, header):first-of-type > div {
     background: rgba(79, 70, 229, .055) !important;
 }
 
+.nx-pricing-wrap {
+    width: min(100% - 32px, 1320px);
+    margin: 0 auto 96px;
+}
+
+.nx-pricing-intro {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.nx-pricing-intro h2 {
+    max-width: 620px;
+    color: #151526;
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -.035em;
+}
+
+.nx-pricing-intro p {
+    max-width: 430px;
+    color: #696879;
+    font-size: 14px;
+    text-align: right;
+}
+
+.nx-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    align-items: stretch;
+}
+
+.nx-price-card {
+    --nx-tilt-x: 0deg;
+    --nx-tilt-y: 0deg;
+    --nx-glow-x: 50%;
+    --nx-glow-y: 50%;
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 510px;
+    padding: 28px 24px 24px;
+    overflow: hidden;
+    flex-direction: column;
+    border: 1px solid rgba(70, 68, 98, .14);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 12px 40px rgba(35, 31, 79, .055);
+    transform: perspective(900px) rotateX(var(--nx-tilt-x)) rotateY(var(--nx-tilt-y));
+    transform-style: preserve-3d;
+    transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease, border-color .28s ease, filter .5s ease, opacity .5s ease;
+}
+
+.nx-price-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(420px circle at var(--nx-glow-x) var(--nx-glow-y), rgba(100, 82, 255, .12), transparent 44%);
+    transition: opacity .25s ease;
+}
+
+.nx-price-card:hover::after { opacity: 1; }
+
+.nx-price-card > :not(.nx-current-plan-badge):not(.nx-price-badge) {
+    position: relative;
+    z-index: 1;
+}
+
+.nx-price-card > :is(.nx-current-plan-badge, .nx-price-badge) { z-index: 2; }
+
+.nx-price-card:hover {
+    z-index: 2;
+    transform: perspective(900px) translateY(-8px) rotateX(var(--nx-tilt-x)) rotateY(var(--nx-tilt-y));
+    border-color: rgba(53, 37, 205, .34);
+    box-shadow: 0 24px 56px rgba(35, 31, 79, .13);
+}
+
+.nx-pricing-motion-ready .nx-price-card {
+    opacity: 0;
+    filter: blur(6px);
+    transform: perspective(900px) translateY(24px) scale(.985);
+}
+
+.nx-pricing-motion-ready.nx-pricing-in-view .nx-price-card {
+    opacity: 1;
+    filter: blur(0);
+    transform: perspective(900px) translateY(0) scale(1);
+    transition-delay: calc(var(--nx-card-index, 0) * 70ms);
+}
+
+.nx-pricing-motion-ready.nx-pricing-in-view .nx-price-card:hover {
+    transform: perspective(900px) translateY(-8px) rotateX(var(--nx-tilt-x)) rotateY(var(--nx-tilt-y));
+    transition-delay: 0ms;
+}
+
+.nx-price-card-featured {
+    border: 2px solid #4f3ee8;
+    background: linear-gradient(180deg, #f7f5ff 0%, #fff 42%);
+    box-shadow: 0 20px 52px rgba(53, 37, 205, .14);
+}
+
+.nx-price-card-pro {
+    color: #fff;
+    border-color: #17152d;
+    background: radial-gradient(circle at 85% 0%, #5546d9 0%, #211d55 38%, #17152d 78%);
+}
+
+.nx-price-badge {
+    position: absolute;
+    top: 0;
+    right: 22px;
+    padding: 7px 12px;
+    color: #fff;
+    border-radius: 0 0 10px 10px;
+    background: #4f3ee8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .02em;
+}
+
+.nx-price-card-head {
+    min-height: 112px;
+}
+
+.nx-price-name {
+    margin-bottom: 12px;
+    color: #171626;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -.025em;
+}
+
+.nx-price-desc {
+    color: #6b697a;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.nx-price-value {
+    display: flex;
+    min-height: 72px;
+    align-items: baseline;
+    gap: 6px;
+    margin: 12px 0 4px;
+}
+
+.nx-price-value strong {
+    color: #171626;
+    font-size: clamp(1.85rem, 2.6vw, 2.7rem);
+    font-weight: 700;
+    letter-spacing: -.055em;
+    white-space: nowrap;
+    transition: transform .28s cubic-bezier(.22,1,.36,1), color .2s ease;
+}
+
+.nx-price-card:hover .nx-price-value strong { transform: translateY(-3px); }
+
+.nx-price-value span {
+    color: #767484;
+    font-size: 13px;
+}
+
+.nx-price-duration {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 22px;
+    color: #4f3ee8;
+    border-bottom: 1px solid rgba(70, 68, 98, .12);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.nx-price-duration .material-symbols-outlined,
+.nx-pricing-note .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.nx-price-features {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 13px;
+    padding: 23px 0 28px;
+}
+
+.nx-price-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    color: #353444;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.nx-price-features .material-symbols-outlined {
+    flex: none;
+    color: #4f3ee8;
+    font-size: 18px;
+    font-weight: 700;
+    transition: transform .22s cubic-bezier(.22,1,.36,1), color .2s ease;
+}
+
+.nx-price-features li:hover .material-symbols-outlined { transform: scale(1.12) translateX(2px); }
+
+.nx-price-card-pro :is(.nx-price-name, .nx-price-value strong) { color: #fff; }
+.nx-price-card-pro :is(.nx-price-desc, .nx-price-value span) { color: rgba(255, 255, 255, .68); }
+.nx-price-card-pro .nx-price-duration { color: #c9c2ff; border-bottom-color: rgba(255, 255, 255, .14); }
+.nx-price-card-pro .nx-price-features li { color: rgba(255, 255, 255, .88); }
+.nx-price-card-pro .nx-price-features .material-symbols-outlined { color: #c9c2ff; }
+
+.nx-price-action {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.nx-price-action:hover { transform: translateY(-2px); }
+.nx-price-action:active { transform: translateY(0) scale(.97); }
+.nx-price-action-secondary { color: #302e42; border: 1px solid rgba(70, 68, 98, .25); background: #fff; }
+.nx-price-action-secondary:hover { border-color: #4f3ee8; color: #3525cd; background: #f7f5ff; }
+.nx-price-action-primary { color: #fff; background: #4f3ee8; box-shadow: 0 10px 24px rgba(53, 37, 205, .22); }
+.nx-price-action-primary:hover { background: #3525cd; }
+.nx-price-action-dark { color: #17152d; background: #fff; }
+.nx-price-action-dark:hover { background: #eeeaff; }
+
+.nx-pricing-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+    color: #6b697a;
+    font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+    .nx-pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+    .nx-pricing-intro { display: block; }
+    .nx-pricing-intro p { margin-top: 8px; text-align: left; }
+    .nx-pricing-grid { grid-template-columns: 1fr; }
+    .nx-price-card { min-height: 0; }
+    .nx-pricing-note { align-items: flex-start; justify-content: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nx-pricing-motion-ready .nx-price-card,
+    .nx-pricing-motion-ready.nx-pricing-in-view .nx-price-card,
+    .nx-pricing-motion-ready.nx-pricing-in-view .nx-price-card:hover {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* Mascot appears only where it guides an empty or first-use state. */
+.nx-mascot {
+    display: block;
+    width: 132px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 8px rgba(47, 38, 126, .12));
+}
+
+.nx-mascot-interview {
+    width: 142px;
+    margin-bottom: 4px;
+}
+
+.nx-mascot-dashboard { width: 124px; }
+
+.nx-auth-mascot {
+    position: absolute;
+    top: 84px;
+    right: -176px;
+    display: none;
+    width: 154px;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+.nx-auth-mascot span {
+    position: relative;
+    z-index: 1;
+    margin-bottom: -2px;
+    padding: 9px 12px;
+    color: #37334e;
+    border: 1px solid rgba(53, 37, 205, .16);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(35, 31, 79, .08);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .nx-auth-mascot { display: flex; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .nx-auth-mascot .nx-mascot {
+        animation: nx-mascot-breathe 3.8s cubic-bezier(.37,0,.63,1) infinite;
+        transform-origin: 50% 90%;
+    }
+}
+
+@keyframes nx-mascot-breathe {
+    0%, 100% { transform: translateY(0) rotate(-.5deg); }
+    50% { transform: translateY(-5px) rotate(.5deg); }
+}
+
 .nx-mobile-nav-current {
     color: #3525cd !important;
     font-weight: 700 !important;
@@ -579,6 +1034,18 @@ body > :is(nav, header):first-of-type > div {
     box-shadow: 0 18px 55px rgba(53, 37, 205, .14) !important;
 }
 
+.nx-price-card-pro.nx-current-plan {
+    border-color: #6f61ff !important;
+    background: radial-gradient(circle at 85% 0%, #6253ed 0%, #292363 38%, #17152d 78%);
+    box-shadow: 0 24px 64px rgba(35, 28, 112, .28) !important;
+}
+
+.nx-price-card .nx-current-plan-badge {
+    top: 12px;
+    right: 18px;
+    transform: none;
+}
+
 .nx-current-plan-badge {
     position: absolute;
     top: 0;
@@ -615,6 +1082,7 @@ body > :is(nav, header):first-of-type > div {
     display: flex;
     width: max-content;
     animation: nx-logo-scroll 25s linear infinite;
+    will-change: transform;
 }
 
 .nx-logo-group {
@@ -670,12 +1138,9 @@ body > :is(nav, header):first-of-type > div {
     transform: translateY(-2px);
 }
 
-.nx-logo-marquee:hover .nx-logo-marquee-track {
-    animation-play-state: paused;
-}
-
 @keyframes nx-logo-scroll {
-    to { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
 }
 
 @media (max-width: 640px) {
@@ -1116,6 +1581,14 @@ body > :is(nav, header):first-of-type > div {
         animation-duration: .001ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .001ms !important;
+    }
+
+    /* Dải logo là nội dung liên tục, vẫn phải loop thay vì đứng yên. */
+    .nx-logo-marquee-track {
+        animation-name: nx-logo-scroll !important;
+        animation-duration: 25s !important;
+        animation-timing-function: linear !important;
+        animation-iteration-count: infinite !important;
     }
 }
 

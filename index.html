@@ -14,8 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
     <link href="css/tailwind.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <script src="js/common.js" defer></script>
+    <link href="css/styles.css?v=20260630-1" rel="stylesheet">
+    <script src="js/common.js?v=20260701-2" defer></script>
 </head>
 
 <body
@@ -85,134 +85,48 @@
                         </button>
                     </div>
                 </div>
-                <!-- Visual SaaS Mockup -->
-                <div class="relative w-full aspect-[4/3] max-w-2xl mx-auto lg:ml-auto">
-                    <!-- Glassmorphism Card Wrapper -->
-                    <div
-                        class="absolute inset-0 bg-surface-container-lowest/80 backdrop-blur-xl rounded-[24px] border border-outline-variant/30 shadow-[0_10px_40px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col">
-                        <!-- Mockup Header -->
-                        <div
-                            class="h-12 border-b border-outline-variant/20 flex items-center px-4 gap-2 bg-surface/50">
-                            <div class="w-3 h-3 rounded-full bg-error/80"></div>
-                            <div class="w-3 h-3 rounded-full bg-surface-tint/50"></div>
-                            <div class="w-3 h-3 rounded-full bg-primary/80"></div>
-                            <div class="ml-4 font-label-sm text-label-sm text-on-surface-variant opacity-70">
-                                nexora.ai/dashboard</div>
+                <!-- Gemini-generated product feature carousel -->
+                <section class="nx-hero-feature-carousel" data-hero-carousel aria-label="Các tính năng chính của Nexora">
+                    <div class="nx-hero-carousel-viewport" aria-live="polite">
+                        <figure class="nx-hero-feature-slide is-active" data-hero-slide>
+                            <img src="img/slide-interview-ai-gemini.jpg?v=3"
+                                alt="Giao diện Phỏng vấn AI của Nexora" width="574" height="275"
+                                fetchpriority="high" decoding="async">
+                        </figure>
+                        <figure class="nx-hero-feature-slide" data-hero-slide hidden>
+                            <img src="img/slide-cv-analysis-gemini.jpg?v=3"
+                                alt="Giao diện Phân tích CV bằng AI của Nexora" width="590" height="345" loading="lazy" decoding="async">
+                        </figure>
+                        <figure class="nx-hero-feature-slide" data-hero-slide hidden>
+                            <img src="img/slide-scenarios-gemini.jpg?v=3"
+                                alt="Giao diện luyện Tình huống thực chiến của Nexora" width="590" height="345" loading="lazy" decoding="async">
+                        </figure>
+                        <figure class="nx-hero-feature-slide" data-hero-slide hidden>
+                            <img src="img/slide-star-builder-gemini.jpg?v=3"
+                                alt="Giao diện STAR Builder của Nexora" width="590" height="345" loading="lazy" decoding="async">
+                        </figure>
+                    </div>
+                    <div class="nx-hero-carousel-footer">
+                        <div class="nx-hero-carousel-copy">
+                            <span class="material-symbols-outlined" aria-hidden="true">graphic_eq</span>
+                            <span data-hero-slide-label>Phỏng vấn AI theo CV và JD</span>
                         </div>
-                        <!-- Mockup Content Area -->
-                        <div
-                            class="flex-1 p-6 grid grid-cols-12 gap-4 bg-surface-container-lowest relative">
-                            <!-- Blurred ambient background behind mockup content -->
-                            <div
-                                class="absolute top-0 right-0 w-64 h-64 bg-tertiary-fixed/30 rounded-full blur-3xl -z-10">
+                        <div class="nx-hero-carousel-controls">
+                            <button type="button" data-hero-prev aria-label="Tính năng trước">
+                                <span class="material-symbols-outlined">arrow_back</span>
+                            </button>
+                            <div class="nx-hero-carousel-dots" role="tablist" aria-label="Chọn tính năng">
+                                <button class="is-active" type="button" data-hero-dot="0" role="tab" aria-selected="true" aria-label="Phỏng vấn AI"></button>
+                                <button type="button" data-hero-dot="1" role="tab" aria-selected="false" aria-label="Phân tích CV"></button>
+                                <button type="button" data-hero-dot="2" role="tab" aria-selected="false" aria-label="Tình huống"></button>
+                                <button type="button" data-hero-dot="3" role="tab" aria-selected="false" aria-label="STAR Builder"></button>
                             </div>
-                            <!-- Main Analysis Area -->
-                            <div class="col-span-8 flex flex-col gap-4">
-                                <!-- Question Bubble -->
-                                <div
-                                    class="bg-surface-container-low rounded-2xl p-4 rounded-tl-sm border border-outline-variant/20 shadow-sm relative">
-                                    <div
-                                        class="absolute -left-2 top-4 w-4 h-4 bg-surface-container-low border-l border-t border-outline-variant/20 rotate-[-45deg]">
-                                    </div>
-                                    <div class="flex items-start gap-3">
-                                        <div
-                                            class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary shrink-0">
-                                            <span class="material-symbols-outlined text-[16px]"
-                                                data-icon="smart_toy">smart_toy</span>
-                                        </div>
-                                        <div>
-                                            <p class="font-label-sm text-label-sm text-primary mb-1">Nexora AI</p>
-                                            <p class="font-body-md text-body-md text-on-surface leading-snug">"Dựa
-                                                trên CV của bạn, hãy mô tả một dự án gần đây mà bạn phải giải quyết
-                                                xung đột trong nhóm làm việc."</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- User Answer Placeholder (Blurred) -->
-                                <div
-                                    class="bg-surface-container-lowest rounded-2xl p-4 rounded-tr-sm border border-outline-variant/20 shadow-sm relative self-end w-[85%]">
-                                    <div
-                                        class="absolute -right-2 top-4 w-4 h-4 bg-surface-container-lowest border-r border-t border-outline-variant/20 rotate-[45deg]">
-                                    </div>
-                                    <div class="flex items-center gap-2 text-on-surface-variant/50">
-                                        <span class="material-symbols-outlined animate-pulse"
-                                            data-icon="mic">mic</span>
-                                        <span
-                                            class="font-body-md text-body-md blur-[2px] select-none">Đang ghi âm câu
-                                            trả lời của ứng viên...</span>
-                                    </div>
-                                </div>
-                                <!-- Star Method Hint -->
-                                <div
-                                    class="mt-auto bg-gradient-to-r from-surface to-surface-container-low p-4 rounded-xl border-l-4 border-tertiary">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <span class="material-symbols-outlined text-tertiary text-[18px]"
-                                            data-icon="lightbulb">lightbulb</span>
-                                        <span
-                                            class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Gợi
-                                            ý phương pháp STAR</span>
-                                    </div>
-                                    <div class="flex gap-2">
-                                        <span
-                                            class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-semibold text-on-surface">S</span>
-                                        <span
-                                            class="px-2 py-1 bg-surface-container-highest rounded text-[10px] font-semibold text-on-surface">T</span>
-                                        <span
-                                            class="px-2 py-1 bg-surface-container-lowest border border-outline-variant/30 rounded text-[10px] font-semibold text-on-surface-variant">A</span>
-                                        <span
-                                            class="px-2 py-1 bg-surface-container-lowest border border-outline-variant/30 rounded text-[10px] font-semibold text-on-surface-variant">R</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Sidebar Metrics Area -->
-                            <div class="col-span-4 flex flex-col gap-4">
-                                <!-- Fit Score -->
-                                <div
-                                    class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center text-center">
-                                    <span
-                                        class="font-label-sm text-label-sm text-on-surface-variant mb-2">Mức độ phù
-                                        hợp CV/JD</span>
-                                    <div class="relative w-16 h-16 flex items-center justify-center">
-                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                            <path class="text-surface-container-high"
-                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="currentColor" stroke-width="3"></path>
-                                            <path class="text-primary"
-                                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                                                fill="none" stroke="currentColor" stroke-dasharray="73, 100"
-                                                stroke-width="3"></path>
-                                        </svg>
-                                        <span
-                                            class="absolute font-headline-md text-headline-md text-on-surface">73<span
-                                                class="text-[12px]">%</span></span>
-                                    </div>
-                                </div>
-                                <!-- Readiness Score -->
-                                <div
-                                    class="bg-surface-container-lowest border border-outline-variant/20 p-4 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col items-center justify-center text-center">
-                                    <span class="font-label-sm text-label-sm text-on-surface-variant mb-2">Điểm
-                                        sẵn sàng</span>
-                                    <div class="text-headline-md font-headline-md text-tertiary">72<span
-                                            class="text-body-md font-body-md text-outline">/100</span></div>
-                                </div>
-                                <!-- Mini Chart Placeholder -->
-                                <div
-                                    class="flex-1 bg-surface-container-lowest border border-outline-variant/20 rounded-xl p-3 flex flex-col">
-                                    <span
-                                        class="font-label-sm text-label-sm text-on-surface-variant mb-2 text-center">Biểu
-                                        đồ kỹ năng</span>
-                                    <div
-                                        class="flex-1 w-full bg-surface-container-low rounded-lg relative overflow-hidden flex items-end px-2 gap-1 pb-2 pt-4">
-                                        <div class="w-full bg-primary/20 rounded-t-sm h-[40%]"></div>
-                                        <div class="w-full bg-primary/50 rounded-t-sm h-[70%]"></div>
-                                        <div class="w-full bg-primary rounded-t-sm h-[85%]"></div>
-                                        <div class="w-full bg-primary/40 rounded-t-sm h-[60%]"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <button type="button" data-hero-next aria-label="Tính năng tiếp theo">
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </section>
 
@@ -349,118 +263,79 @@
             </div>
         </section>
 
-        <!-- Pricing Grid -->
-        <section data-nx-section class="py-stack-lg bg-surface-container-lowest border-t border-outline-variant/30">
-            <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-                <div class="text-center mb-stack-lg">
-                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Bảng giá linh hoạt</h2>
-                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Chọn gói phù hợp
-                        với lộ trình phát triển sự nghiệp của bạn.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-8 items-center">
-                    <!-- Free Plan -->
-                    <div class="bg-surface rounded-[24px] p-8 border border-outline-variant/30 flex flex-col h-full">
-                        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Miễn phí</h3>
-                        <div class="mb-6">
-                            <span class="font-display text-[40px] font-bold text-on-surface">0đ</span>
-                        </div>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-8 flex-1">Trải nghiệm các
-                            tính năng cơ bản để làm quen với hệ thống.</p>
-                        <ul class="flex flex-col gap-4 mb-8">
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-surface">1 lượt phân tích CV /
-                                    tuần</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-surface">Phỏng vấn thử cơ bản</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-outline-variant"
-                                    data-icon="cancel">cancel</span>
-                                <span
-                                    class="font-body-md text-body-md text-on-surface-variant opacity-70">Gợi ý theo
-                                    phương pháp STAR</span>
-                            </li>
-                        </ul>
-                        <button
-                            class="w-full bg-surface-container-high text-on-surface font-label-md text-label-md py-3 rounded-xl hover:bg-surface-container-highest transition-colors">Bắt
-                            đầu miễn phí</button>
-                    </div>
-                    <!-- Highlighted Plan -->
-                    <div
-                        class="bg-primary rounded-[24px] p-8 shadow-[0_10px_40px_rgba(53,37,205,0.2)] flex flex-col h-full relative transform md:-translate-y-4">
-                        <div
-                            class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-tertiary text-on-tertiary font-label-sm text-label-sm px-4 py-1.5 rounded-full uppercase tracking-wider font-bold">
-                            Phổ biến nhất</div>
-                        <h3 class="font-headline-md text-headline-md text-on-primary mb-2">Cá nhân</h3>
-                        <div class="mb-6">
-                            <span class="font-display text-[40px] font-bold text-on-primary">99k</span>
-                            <span class="text-on-primary-container font-body-md text-body-md">/tháng</span>
-                        </div>
-                        <p class="font-body-md text-body-md text-on-primary-container mb-8 flex-1">Phù hợp cho sinh
-                            viên và fresher đang tích cực tìm việc.</p>
-                        <ul class="flex flex-col gap-4 mb-8">
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-on-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-primary">Không giới hạn phân tích
-                                    CV</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-on-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-primary">Luyện phỏng vấn theo JD cụ
-                                    thể</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-on-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-primary">Nhận báo cáo chi tiết &amp;
-                                    gợi ý STAR</span>
-                            </li>
-                        </ul>
-                        <button
-                            class="w-full bg-on-primary text-primary font-label-md text-label-md py-3 rounded-xl hover:bg-surface transition-colors shadow-sm">Đăng
-                            ký ngay</button>
-                    </div>
-                    <!-- Enterprise Plan -->
-                    <div class="bg-surface rounded-[24px] p-8 border border-outline-variant/30 flex flex-col h-full">
-                        <h3 class="font-headline-md text-headline-md text-on-surface mb-2">Doanh nghiệp</h3>
-                        <div class="mb-6">
-                            <span class="font-display text-[32px] font-bold text-on-surface">Liên hệ</span>
-                        </div>
-                        <p class="font-body-md text-body-md text-on-surface-variant mb-8 flex-1">Dành cho trường
-                            đại học và đội ngũ tuyển dụng nhân sự.</p>
-                        <ul class="flex flex-col gap-4 mb-8">
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-surface">Tất cả tính năng của gói
-                                    Cá nhân</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-surface">Quản lý nhiều tài
-                                    khoản</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-primary"
-                                    data-icon="check_circle">check_circle</span>
-                                <span class="font-body-md text-body-md text-on-surface">Tùy chỉnh tiêu chí đánh
-                                    giá</span>
-                            </li>
-                        </ul>
-                        <button
-                            class="w-full bg-surface-container-high text-on-surface font-label-md text-label-md py-3 rounded-xl hover:bg-surface-container-highest transition-colors">Liên
-                            hệ tư vấn</button>
-                    </div>
-                </div>
+        <section data-nx-section class="nx-pricing-wrap" aria-labelledby="pricing-heading">
+            <div class="nx-pricing-intro">
+                <h2 id="pricing-heading">Chọn nhịp luyện tập phù hợp</h2>
+                <p>Thanh toán một lần, sử dụng trọn thời hạn. Không tự động gia hạn.</p>
             </div>
+
+            <div class="nx-pricing-grid" data-pricing-motion>
+                <article data-plan-card="Free" class="nx-price-card">
+                    <div class="nx-price-card-head">
+                        <p class="nx-price-name">Free</p>
+                        <p class="nx-price-desc">Làm quen với Nexora trước khi bắt đầu luyện tập nghiêm túc.</p>
+                    </div>
+                    <div class="nx-price-value"><strong>0đ</strong><span>/ mãi mãi</span></div>
+                    <p class="nx-price-duration"><span class="material-symbols-outlined">all_inclusive</span>Không giới hạn thời gian</p>
+                    <ul class="nx-price-features">
+                        <li><span class="material-symbols-outlined">check</span>Phân tích CV cơ bản</li>
+                        <li><span class="material-symbols-outlined">check</span>01 lượt phỏng vấn mẫu</li>
+                        <li><span class="material-symbols-outlined">check</span>Thư viện câu hỏi phổ biến</li>
+                    </ul>
+                    <a data-plan-action class="nx-price-action nx-price-action-secondary" href="register.html">Bắt đầu miễn phí</a>
+                </article>
+
+                <article data-plan-card="Basic" class="nx-price-card">
+                    <div class="nx-price-card-head">
+                        <p class="nx-price-name">Basic</p>
+                        <p class="nx-price-desc">Trải nghiệm đầy đủ các công cụ cốt lõi trước khi chọn gói dài hơn.</p>
+                    </div>
+                    <div class="nx-price-value"><strong>49.000đ</strong><span>/ gói</span></div>
+                    <p class="nx-price-duration"><span class="material-symbols-outlined">schedule</span>Sử dụng trong 3 ngày</p>
+                    <ul class="nx-price-features">
+                        <li><span class="material-symbols-outlined">description</span>01 lượt phân tích CV chuyên sâu với JD</li>
+                        <li><span class="material-symbols-outlined">smart_toy</span>03 lượt mô phỏng phỏng vấn cùng AI</li>
+                        <li><span class="material-symbols-outlined">psychology</span>Trải nghiệm kho tình huống chuyên ngành</li>
+                        <li><span class="material-symbols-outlined">construction</span>STAR Builder và báo cáo sau phỏng vấn</li>
+                    </ul>
+                    <a data-plan-action class="nx-price-action nx-price-action-secondary" href="register.html">Mua ngay</a>
+                </article>
+
+                <article data-plan-card="Weekly" class="nx-price-card nx-price-card-featured">
+                    <div data-plan-badge class="nx-price-badge">Phổ biến nhất</div>
+                    <div class="nx-price-card-head">
+                        <p class="nx-price-name">Weekly</p>
+                        <p class="nx-price-desc">Luyện tập chuyên sâu trong hai tuần với hạn mức thoải mái hơn.</p>
+                    </div>
+                    <div class="nx-price-value"><strong>189.000đ</strong><span>/ gói</span></div>
+                    <p class="nx-price-duration"><span class="material-symbols-outlined">calendar_month</span>Sử dụng trong 14 ngày</p>
+                    <ul class="nx-price-features">
+                        <li><span class="material-symbols-outlined">description</span>05 lượt phân tích CV chuyên sâu với JD</li>
+                        <li><span class="material-symbols-outlined">smart_toy</span>20 lượt mô phỏng phỏng vấn cùng AI</li>
+                        <li><span class="material-symbols-outlined">psychology</span>Không giới hạn Tình huống và STAR Builder</li>
+                        <li><span class="material-symbols-outlined">assessment</span>Báo cáo chi tiết sau mỗi buổi luyện tập</li>
+                    </ul>
+                    <a data-plan-action class="nx-price-action nx-price-action-primary" href="register.html">Mua ngay</a>
+                </article>
+
+                <article data-plan-card="Pro" class="nx-price-card nx-price-card-pro">
+                    <div class="nx-price-card-head">
+                        <p class="nx-price-name">Pro</p>
+                        <p class="nx-price-desc">Lộ trình dài hạn cho ứng viên muốn chinh phục nhiều cơ hội.</p>
+                    </div>
+                    <div class="nx-price-value"><strong>599.000đ</strong><span>/ gói</span></div>
+                    <p class="nx-price-duration"><span class="material-symbols-outlined">workspace_premium</span>Sử dụng trong 90 ngày</p>
+                    <ul class="nx-price-features">
+                        <li><span class="material-symbols-outlined">all_inclusive</span>Không giới hạn phân tích CV và phỏng vấn AI</li>
+                        <li><span class="material-symbols-outlined">psychology</span>Không giới hạn Tình huống và STAR Builder</li>
+                        <li><span class="material-symbols-outlined">analytics</span>Phân tích chuyên sâu kỹ năng và cảm xúc</li>
+                        <li><span class="material-symbols-outlined">monitoring</span>Theo dõi tiến bộ bằng báo cáo cá nhân hóa</li>
+                    </ul>
+                    <a data-plan-action class="nx-price-action nx-price-action-dark" href="register.html">Mua ngay</a>
+                </article>
+            </div>
+
+            <p class="nx-pricing-note"><span class="material-symbols-outlined">verified_user</span>Thanh toán an toàn · Kích hoạt ngay · Hỗ trợ trong suốt thời hạn gói</p>
         </section>
 
         <!-- Footer (JSON Component) -->
