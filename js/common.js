@@ -743,7 +743,11 @@
         if (!cards.length) return;
         const user = window.NexoraAuth?.getAuth();
         if (!user) return;
+<<<<<<< Updated upstream
         const aliases = { 'Miễn phí': 'Free', Free: 'Free', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
+=======
+        const aliases = { 'Miễn phí': 'Free', Free: 'Free', Basic: 'Basic', Weekly: 'Weekly', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Pro', 'Doanh nghiệp': 'Pro' };
+>>>>>>> Stashed changes
         const current = aliases[user.plan] || 'Free';
         const order = { Free: 0, Pro: 1, Business: 2 };
 
@@ -760,7 +764,7 @@
                     card.appendChild(badge);
                 }
                 badge.className = 'nx-current-plan-badge';
-                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${user.plan}`;
+                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${current}`;
                 if (action) {
                     action.textContent = 'Đang sử dụng';
                     action.removeAttribute('href');
@@ -768,11 +772,18 @@
                     action.classList.add('nx-plan-disabled');
                     action.addEventListener('click', event => event.preventDefault());
                 }
+<<<<<<< Updated upstream
             } else if (action && order[plan] < order[current]) {
                 action.textContent = 'Đã bao gồm trong gói';
                 action.removeAttribute('href');
                 action.setAttribute('aria-disabled', 'true');
                 action.classList.add('nx-plan-disabled-subtle');
+=======
+                return;
+            }
+
+            if (action) {
+>>>>>>> Stashed changes
                 action.addEventListener('click', event => event.preventDefault());
             }
         });
