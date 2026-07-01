@@ -771,6 +771,45 @@
         });
     }
 
+    function initPricingMotion() {
+        const grid = document.querySelector('[data-pricing-motion]');
+        if (!grid || !('IntersectionObserver' in window)) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const cards = Array.from(grid.querySelectorAll('.nx-price-card'));
+        if (reduceMotion || !cards.length) return;
+
+        cards.forEach((card, index) => card.style.setProperty('--nx-card-index', index));
+        grid.classList.add('nx-pricing-motion-ready');
+
+        const observer = new IntersectionObserver((entries) => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            grid.classList.add('nx-pricing-in-view');
+            observer.disconnect();
+        }, { threshold: 0.12, rootMargin: '0px 0px -24px' });
+        observer.observe(grid);
+
+        if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            cards.forEach(card => {
+                card.addEventListener('pointermove', event => {
+                    const rect = card.getBoundingClientRect();
+                    const x = (event.clientX - rect.left) / rect.width - 0.5;
+                    const y = (event.clientY - rect.top) / rect.height - 0.5;
+                    card.style.setProperty('--nx-tilt-x', `${(-y * 2.2).toFixed(2)}deg`);
+                    card.style.setProperty('--nx-tilt-y', `${(x * 2.2).toFixed(2)}deg`);
+                    card.style.setProperty('--nx-glow-x', `${((x + 0.5) * 100).toFixed(1)}%`);
+                    card.style.setProperty('--nx-glow-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+                });
+                card.addEventListener('pointerleave', () => {
+                    card.style.removeProperty('--nx-tilt-x');
+                    card.style.removeProperty('--nx-tilt-y');
+                    card.style.removeProperty('--nx-glow-x');
+                    card.style.removeProperty('--nx-glow-y');
+                });
+            });
+        }
+    }
+
     function initScenarioFilters() {
         if (!/scenarios\.html$/.test(location.pathname)) return;
         const filterWrap = document.querySelector('.no-scrollbar');
@@ -916,6 +955,7 @@
         initCvUpload();
         initInterviewCv();
         initPricingPlan();
+        initPricingMotion();
         initScenarioFilters();
         initPageActions();
         initRegisterValidation();
