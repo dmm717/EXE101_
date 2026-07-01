@@ -65,14 +65,48 @@
     }
 
     function getPlanConfig(plan) {
-        var normalized = String(plan || 'Free').toLowerCase();
-        if (normalized.indexOf('business') >= 0 || normalized.indexOf('doanh') >= 0) {
-            return { name: 'G\u00f3i Doanh nghi\u1ec7p', key: 'Business', limit: 500 };
+        var normalized = String(plan || 'Free').trim().toLowerCase();
+
+        if (normalized === 'basic') {
+            return {
+                name: 'G\u00f3i Basic',
+                key: 'Basic',
+                interviewLimit: 3,
+                duration: '3 ng\u00e0y',
+                note: 'G\u00f3i Basic g\u1ed3m 01 l\u01b0\u1ee3t ph\u00e2n t\u00edch CV chuy\u00ean s\u00e2u v\u00e0 03 l\u01b0\u1ee3t ph\u1ecfng v\u1ea5n AI.'
+            };
         }
-        if (normalized.indexOf('pro') >= 0 || normalized.indexOf('c\u00e1 nh\u00e2n') >= 0 || normalized.indexOf('ca nhan') >= 0) {
-            return { name: 'G\u00f3i C\u00e1 nh\u00e2n', key: 'Pro', limit: 100 };
+        if (normalized === 'weekly') {
+            return {
+                name: 'G\u00f3i Weekly',
+                key: 'Weekly',
+                interviewLimit: 20,
+                duration: '14 ng\u00e0y',
+                note: 'G\u00f3i Weekly g\u1ed3m 05 l\u01b0\u1ee3t ph\u00e2n t\u00edch CV chuy\u00ean s\u00e2u v\u00e0 20 l\u01b0\u1ee3t ph\u1ecfng v\u1ea5n AI.'
+            };
         }
-        return { name: 'G\u00f3i Mi\u1ec5n ph\u00ed', key: 'Free', limit: 2 };
+        if (
+            normalized === 'pro' ||
+            normalized.indexOf('c\u00e1 nh\u00e2n') >= 0 ||
+            normalized.indexOf('ca nhan') >= 0 ||
+            normalized.indexOf('business') >= 0 ||
+            normalized.indexOf('doanh') >= 0
+        ) {
+            return {
+                name: 'G\u00f3i Pro',
+                key: 'Pro',
+                interviewLimit: null,
+                duration: '90 ng\u00e0y',
+                note: 'Kh\u00f4ng gi\u1edbi h\u1ea1n ph\u00e2n t\u00edch CV v\u00e0 ph\u1ecfng v\u1ea5n AI trong 90 ng\u00e0y.'
+            };
+        }
+        return {
+            name: 'G\u00f3i Free',
+            key: 'Free',
+            interviewLimit: 1,
+            duration: 'Kh\u00f4ng gi\u1edbi h\u1ea1n',
+            note: 'G\u00f3i Free g\u1ed3m ph\u00e2n t\u00edch CV c\u01a1 b\u1ea3n v\u00e0 01 l\u01b0\u1ee3t ph\u1ecfng v\u1ea5n m\u1eabu.'
+        };
     }
 
     function getStoredPlanUsage(user) {
@@ -88,10 +122,14 @@
     function renderPlanUsage() {
         var user = (window.NexoraAuth && window.NexoraAuth.getAuth()) || {};
         var config = getPlanConfig(user.plan);
-        var limit = toNumber(user.planLimit || localStorage.getItem('nexora_plan_limit'), config.limit);
-        var used = Math.min(getStoredPlanUsage(user), limit);
-        var left = Math.max(limit - used, 0);
-        var percent = limit > 0 ? Math.round((left / limit) * 100) : 0;
+        var isUnlimited = config.interviewLimit === null;
+        var limit = isUnlimited
+            ? null
+            : toNumber(user.planLimit, config.interviewLimit);
+        var used = getStoredPlanUsage(user);
+        if (!isUnlimited) used = Math.min(used, limit);
+        var left = isUnlimited ? null : Math.max(limit - used, 0);
+        var percent = isUnlimited ? 100 : (limit > 0 ? Math.round((left / limit) * 100) : 0);
 
         var title = q('#account-plan-title');
         var percentEl = q('#account-plan-percent');
@@ -100,26 +138,34 @@
         var usedEl = q('#account-plan-used');
         var leftEl = q('#account-plan-left');
         var totalEl = q('#account-plan-total');
+        var usedLabel = q('#account-plan-used-label');
+        var leftLabel = q('#account-plan-left-label');
+        var totalLabel = q('#account-plan-total-label');
+        var percentLabel = q('#account-plan-percent-label');
         var note = q('#account-plan-note');
         var action = q('#account-plan-action');
 
         if (title) title.textContent = config.name;
-        if (percentEl) percentEl.textContent = percent + '%';
+        if (percentEl) percentEl.textContent = isUnlimited ? '\u221e' : percent + '%';
+        if (percentLabel) percentLabel.textContent = isUnlimited ? 'kh\u00f4ng gi\u1edbi h\u1ea1n' : 'l\u01b0\u1ee3t c\u00f2n l\u1ea1i';
         if (meter) meter.style.width = percent + '%';
         if (meterWrap) {
             meterWrap.setAttribute('aria-valuenow', String(percent));
-            meterWrap.setAttribute('aria-valuetext', percent + '% con lai');
+            meterWrap.setAttribute('aria-valuetext', isUnlimited ? 'Kh\u00f4ng gi\u1edbi h\u1ea1n' : percent + '% l\u01b0\u1ee3t ph\u1ecfng v\u1ea5n c\u00f2n l\u1ea1i');
         }
         if (usedEl) usedEl.textContent = String(used);
-        if (leftEl) leftEl.textContent = String(left);
-        if (totalEl) totalEl.textContent = String(limit);
+        if (leftEl) leftEl.textContent = isUnlimited ? '\u221e' : String(left);
+        if (totalEl) totalEl.textContent = config.duration;
+        if (usedLabel) usedLabel.textContent = 'Ph\u1ecfng v\u1ea5n \u0111\u00e3 d\u00f9ng';
+        if (leftLabel) leftLabel.textContent = 'L\u01b0\u1ee3t c\u00f2n l\u1ea1i';
+        if (totalLabel) totalLabel.textContent = 'Th\u1eddi h\u1ea1n g\u00f3i';
         if (note) {
-            note.textContent = percent <= 20
+            note.textContent = !isUnlimited && percent <= 20
                 ? 'Dung l\u01b0\u1ee3ng g\u00f3i s\u1eafp h\u1ebft. B\u1ea1n c\u00f3 th\u1ec3 n\u00e2ng c\u1ea5p \u0111\u1ec3 ti\u1ebfp t\u1ee5c luy\u1ec7n t\u1eadp tho\u1ea3i m\u00e1i.'
-                : 'Theo d\u00f5i s\u1ed1 l\u01b0\u1ee3t luy\u1ec7n t\u1eadp c\u00f2n l\u1ea1i trong chu k\u1ef3 hi\u1ec7n t\u1ea1i.';
+                : config.note;
         }
         if (action) {
-            action.textContent = 'N\u00e2ng c\u1ea5p';
+            action.textContent = config.key === 'Pro' ? 'Xem b\u1ea3ng gi\u00e1' : 'N\u00e2ng c\u1ea5p g\u00f3i';
         }
     }
 

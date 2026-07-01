@@ -767,7 +767,8 @@
         if (!cards.length) return;
         const user = window.NexoraAuth?.getAuth();
         if (!user) return;
-        const aliases = { 'Miễn phí': 'Free', Free: 'Free', Basic: 'Basic', Weekly: 'Weekly', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
+        const aliases = { 'Miễn phí': 'Free', Free: 'Free', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' };
+        const aliases = { 'Miễn phí': 'Free', Free: 'Free', Basic: 'Basic', Weekly: 'Weekly', 'Cá nhân': 'Pro', Pro: 'Pro', Business: 'Business', 'Doanh nghiệp': 'Business' }; main
         const current = aliases[user.plan] || 'Free';
 
         cards.forEach(card => {
@@ -783,14 +784,21 @@
                     card.appendChild(badge);
                 }
                 badge.className = 'nx-current-plan-badge';
-                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${user.plan}`;
+                badge.innerHTML = `<span class="material-symbols-outlined text-[17px]">verified</span> Gói hiện tại: ${current}`;
                 if (action) {
                     action.textContent = 'Đang sử dụng';
                     action.removeAttribute('href');
                     action.setAttribute('aria-disabled', 'true');
                     action.classList.add('nx-plan-disabled');
                     action.addEventListener('click', event => event.preventDefault());
-                }
+                } 
+            } else if (action && order[plan] < order[current]) {
+                action.textContent = 'Đã bao gồm trong gói';
+                action.removeAttribute('href');
+                action.setAttribute('aria-disabled', 'true');
+                action.classList.add('nx-plan-disabled-subtle');
+                action.addEventListener('click', event => event.preventDefault());
+ main
             }
         });
     }
